@@ -1,0 +1,61 @@
+{% from 'macro/icon.twig' import svg %}
+<section class="bg-black-second py-[80px] lg:py-[125px]">
+  <div class="container">
+    <div class="text-center flex items-center justify-center flex-col">
+      <h2
+          data-aos="fade-up"
+          class="text-white font-light text-[40px] lg:text-[64px] leading-none mb-8 lg:mb-12"
+      >
+        Customizable design
+      </h2>
+      <div class="relative">
+        {% set imageOptions = {
+          class: 'w-[499px] h-[624px] object-cover',
+          width: '499',
+          height: '624',
+          loading: 'lazy'
+        } %}
+        <div data-aos="fade">
+          {{ picture('/assets/images/brakes.png', 'brakes', imageOptions) | raw }}
+        </div>
+
+
+        {% set buttonBaseClasses = "absolute text-white flex lg:flex-row flex-col lg:items-center gap-[18px] cursor-pointer" %}
+
+        {% include './_custom-button.twig' with {
+          title: 'Custom logo',
+          className: buttonBaseClasses ~ ' lg:top-[130px] lg:-left-[80px] top-[120px] left-[47px] text-wrap lg:max-w-none max-w-[80px]',
+          data_aos: 'fade-up'
+        } only %}
+
+        {% include './_custom-button.twig' with {
+          title: 'Unique shape to fit your brakes',
+          className: buttonBaseClasses ~ ' lg:top-[325px] lg:-right-[202px] top-[230px] right-0 lg:flex-row-reverse lg:max-w-[310px] max-w-[120px] text-wrap',
+          data_aos: 'fade-down'
+        } only %}
+
+        {% include './_custom-button.twig' with {
+          title: 'Color of your choice',
+          className: buttonBaseClasses ~ ' lg:bottom-[120px] lg:-left-[10px] flex-col-reverse bottom-[120px] left-[220px] lg:max-w-none max-w-[93px] text-wrap',
+          data_aos: 'fade-up'
+        } only %}
+      </div>
+    </div>
+
+    <div
+        data-aos="fade-up"
+        class="max-w-[1170px] bg-[#d9d9d9] rounded-[30px] lg:rounded-[100px] p-[34px] lg:gap-0 gap-7 text-black-second flex flex-wrap items-center justify-between mx-auto mt-16 lg:mt-24"
+    >
+      <p class="text-xl lg:text-[24px] lg:leading-[33px] lg:text-left text-center w-full lg:w-auto lg:flex-1 lg:pr-8">
+        Order a unique style with color and logo of your choice
+      </p>
+      <button
+          type="button"
+          class="flex items-center justify-between rounded-[57px] border border-black-second py-[14px] px-[18px] text-sm leading-[18px] uppercase w-full lg:w-auto lg:min-w-[200px] cursor-pointer hover:bg-black-second hover:text-white transition-all duration-300 ease group"
+      >
+        <span class="flex-grow text-center lg:text-left">INQUIRE</span>
+        {{ svg('chevron-left', 'w-[10px] h-[10px] fill-[#0A0A0A] group-hover:fill-white transition-colors duration-300 ease rotate-180') }}
+      </button>
+    </div>
+  </div>
+</section>

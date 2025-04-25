@@ -1,0 +1,41 @@
+{
+  "footer_lists": [
+    {
+      "title": "Bremsor",
+      "items": [
+        "about",
+        "customer reviews",
+        "customer gallery",
+        "wholesale",
+        "contact us"
+      ]
+    },
+    {
+      "title": "Caliper Covers",
+      "items": ["shop", "custom order", "installation", "faq", "blog"]
+    },
+    {
+      "title": "Policies",
+      "items": [
+        "Terms and conditions",
+        "privacy policy",
+        "return policy",
+        "shipping",
+        "cookies"
+      ]
+    }
+  ],
+  "socials": ["instagram", "youtube", "facebook", "tik-tok", "pinterest"],
+  "methods": [
+    "/assets/images/links/1.png",
+    "/assets/images/links/2.png",
+    "/assets/images/links/3.png",
+    "/assets/images/links/4.png",
+    "/assets/images/links/5.png",
+    "/assets/images/links/6.png",
+    "/assets/images/links/7.png",
+    "/assets/images/links/8.png",
+    "/assets/images/links/9.png",
+    "/assets/images/links/10.png"
+  ]
+}

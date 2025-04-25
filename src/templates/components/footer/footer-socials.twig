@@ -1,0 +1,11 @@
+{% from './../../macro/icon.twig' import svg %}
+
+<div class="{{ className | default('') }}">
+  {% if items %}
+    {% for social_name in items %}
+      <a href="/" class="w-[45px] h-[45px] text-black-second bg-white rounded-full">
+        {{ svg(social_name, '') }}
+      </a>
+    {% endfor %}
+  {% endif %}
+</div>

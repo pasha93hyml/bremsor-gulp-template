@@ -1,0 +1,64 @@
+{% from './../macro/icon.twig' import svg %}
+
+<header
+    data-header
+    class="w-full fixed lg:h-25 lg:top-12.5 flex items-center top-11.5 z-50 transition:background-color duration-500 bg-black-second/65"
+>
+
+  {% include './../components/header/mobile-menu.twig' %}
+  {% include './../components/header/shop-list.twig' with { brands: brands.brandsList } %}
+
+  <div class="container">
+    <div class="w-full flex items-center gap-2 py-[18px] lg:py-7">
+      <button
+          type="button"
+          class="lg:hidden text-white"
+          data-mobile-toggle
+      >
+        {{ svg('burger-menu') }}
+      </button>
+      <nav class="nav hidden lg:block" data-desktop-only>
+        <ul class="flex items-center gap-5 uppercase text-sm font-bold text-white">
+          <li class="hover:text-white/40 transition duration-300 ease">
+            <button
+                type="button"
+                data-shop-toggle
+                class="uppercase cursor-pointer"
+            >
+              shop
+            </button>
+          </li>
+          <li class="hover:text-white/40 transition duration-300 ease">
+            <a href="/">custom order</a>
+          </li>
+          <li class="hover:text-white/40 transition duration-300 ease">
+            <a href="/">installation</a>
+          </li>
+          <li class="hover:text-white/40 transition duration-300 ease">
+            <a href="/">about</a>
+          </li>
+        </ul>
+      </nav>
+      <a href="/" class="mx-auto">
+        <img
+            src="/assets/images/{{ isMobile ? 'logo-mobile.png' : 'logo.png' }}"
+            alt="bremsor logo"
+            width="{{ isMobile ? 113 : 169 }}"
+            height="{{ isMobile ? 10 : 15 }}"
+            class="w-[113px] aspect-[113/10] lg:w-[169px] lg:aspect-[169/15]"
+        />
+      </a>
+      {% include './../components/shared/search.twig' with {
+        placeholder: 'FIND YOUR CALIPER COVERS',
+        class: 'hidden lg:flex items-center gap-5'
+      } %}
+
+      <button
+          type="button"
+          class="text-white w-[45px] h-[45px] flex items-center justify-center rounded-full border border-white group hover:bg-white/10 transition-colors duration-300 cursor-pointer"
+      >
+        {{ svgInline('cart') }}
+      </button>
+    </div>
+  </div>
+</header>

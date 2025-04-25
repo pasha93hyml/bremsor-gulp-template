@@ -1,0 +1,83 @@
+{
+  "brandsList": [
+    {
+      "title": "A",
+      "list": ["Acura", "Audi"]
+    },
+    {
+      "title": "B",
+      "list": ["BMW", "Buick"]
+    },
+    {
+      "title": "C",
+      "list": ["Cadillac", "Chevrolet", "Chrysler", "Citroen"]
+    },
+    {
+      "title": "D",
+      "list": ["Dodge"]
+    },
+    {
+      "title": "F",
+      "list": ["Ferrari", "Fiat", "Ford"]
+    },
+    {
+      "title": "G",
+      "list": ["Genesis", "GMC"]
+    },
+    {
+      "title": "H",
+      "list": ["Honda", "Hummer", "Hyundai"]
+    },
+    {
+      "title": "I",
+      "list": ["Infiniti", "Isuzu"]
+    },
+    {
+      "title": "J",
+      "list": ["Jaguar", "Jeep"]
+    },
+    {
+      "title": "K",
+      "list": ["Kia"]
+    },
+    {
+      "title": "L",
+      "list": ["Lamborghini", "Land Rover", "Lexus", "Lincoln"]
+    },
+    {
+      "title": "M",
+      "list": [
+        "Maserati",
+        "Mazda",
+        "McLaren",
+        "Mercedes-Benz",
+        "Mini",
+        "Mitsubishi"
+      ]
+    },
+    {
+      "title": "N",
+      "list": ["Nissan"]
+    },
+    {
+      "title": "P",
+      "list": ["Peugeot", "Polaris", "Polestar", "Porsche"]
+    },
+    {
+      "title": "R",
+      "list": ["Renault", "Rolls Royce"]
+    },
+    {
+      "title": "S",
+      "list": ["Saab", "Scion", "Smart", "Subaru", "Suzuk"]
+    },
+    {
+      "title": "T",
+      "list": ["Tesla", "Toyota"]
+    },
+    {
+      "title": "V",
+      "list": ["Volkswagen", "Volvo"]
+    }
+  ]
+}

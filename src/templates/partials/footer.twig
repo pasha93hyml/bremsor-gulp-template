@@ -1,0 +1,73 @@
+{% from 'macro/icon.twig' import svg %}
+
+<footer class="w-full bg-black-second mt-auto">
+  <div class="container">
+    <div class="border-t border-t-white/45 pt-8 mb-[80px] md:mb-0 md:pt-[100px]">
+      <div class="md:hidden flex items-center justify-center w-full">
+        <a href="/">
+          {% set mobileLogoOptions = {
+            class: 'w-[113px] aspect-[113/10] md:hidden',
+            width: '113',
+            height: '10',
+            loading: 'lazy'
+          } %}
+          {{ picture('/assets/images/logo-mobile.png', 'bremsor logo', mobileLogoOptions) | raw }}
+        </a>
+      </div>
+    </div>
+
+    <div class="flex items-start gap-12 md:gap-7 flex-wrap md:justify-start">
+      {% if footer.footer_lists %}
+        {% for list in footer.footer_lists %}
+          {% set isLast = loop.last %}
+          {% set orderClass = isLast ? 'max-md:order-4' : 'max-md:order-' ~ loop.index %}
+          {% set listClasses = 'max-md:w-[calc(50%_-_30px)] max-md:flex max-md:flex-col ' ~ orderClass %}
+          {% include './../components/footer/footer-list.twig' with { title: list.title, items: list.items, className: listClasses } only %}
+        {% endfor %}
+      {% endif %}
+
+      {% include './../components/footer/footer-schedule.twig' with { className: 'md:ml-5 max-md:order-3 max-md:w-[calc(50%_-_30px)]' } only %}
+
+      {% if footer.socials %}
+        {% include './../components/footer/footer-socials.twig' with { items: footer.socials, className: 'flex gap-5 mx-auto max-md:order-6' } only %}
+      {% endif %}
+
+      {% include './../components/shared/sign-up.twig' with { className: 'flex flex-col gap-6 md:gap-[34px] text-white max-md:order-5 max-md:mt-[50px] max-md:mb-[30px] md:w-[unset] w-full' } only %}
+    </div>
+
+    <div
+        class="text-white flex items-center flex-wrap gap-y-9 md:gap-y-5 justify-center md:justify-between pb-9 md:pb-[109px] mt-[96px] md:mt-[158px]">
+      <div class="max-md:order-3">
+        © 2025 Bremsor Caliper Covers. All Rights Reserved
+      </div>
+      <div class="flex gap-[60px] max-md:order-1">
+        <button
+            type="button"
+            class="flex items-center gap-[5px] cursor-pointer"
+        >
+          ENG
+          {{ svg('arrow-select') }}
+        </button>
+        <button
+            type="button"
+            class="flex items-center gap-[10px] cursor-pointer"
+        >
+          {% set flagOptions = { width: '30', height: '25', loading: 'lazy' } %}
+          {{ picture('/assets/images/flags/usa.png', 'usa flag', flagOptions) | raw }}
+          USD
+          {{ svg('arrow-select') }}
+        </button>
+      </div>
+      <div
+          class="flex flex-wrap lg:flex-nowrap items-center gap-[18px] max-md:justify-center md:gap-[21px] max-md:mt-4 max-md:order-2">
+        {% if footer.methods %}
+          {% for method_src in footer.methods %}
+
+            {% set paymentOptions = { width: '51', height: '31', loading: 'lazy' } %}
+            {{ picture(method_src, 'payment method', paymentOptions) | raw }}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</footer>

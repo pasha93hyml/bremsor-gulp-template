@@ -1,0 +1,83 @@
+{% from 'macro/icon.twig' import icon %}
+
+<section class="py-[100px] lg:py-[140px]">
+  <div class="container">
+    <h2
+        data-aos="fade-up"
+        class="capitalize text-[40px] lg:text-[62px] text-white font-light text-center mb-[51px] lg:mb-[146px]"
+    >
+      What Sets Us Apart
+    </h2>
+
+    <div
+        class="relative grid grid-cols-[24.3%_27%_24.3%_24.3%] lg:grid-cols-4 text-white max-w-[1170px] mx-auto gap-x-0">
+
+      <div data-aos="fade-up"
+           class="flex flex-col items-stretch justify-end">
+        <h5 class="text-[10px] lg:text-xl uppercase text-white border-r border-[#d9d9d9]/50 pb-[5px] lg:pb-[15px] lg:py-[5px] lg:mb-[10px] text-center mb-[3px]">
+          feature
+        </h5>
+      </div>
+      <div data-aos="fade-up"
+           class="text-[10px] lg:text-xl text-white border-r border-[#d9d9d9]/50 lg:py-[5px] mb-[3px] lg:mb-[10px] w-full flex justify-center">
+        {% if table.logo_border_src %}
+          {% set logoOptions = {
+            class: 'lg:w-[149px] w-[86px] lg:h-[31px] h-[18px] lg:translate-y-0 -translate-y-[3px]',
+            width: '149',
+            height: '31',
+            loading: 'lazy'
+          } %}
+          {{ picture(table.logo_border_src, 'Bremsor Logo', logoOptions) | raw }}
+        {% else %}
+          <span class="text-sm lg:text-lg">BREMSOR</span>
+        {% endif %}
+      </div>
+      <div data-aos="fade-up" class="flex flex-col items-stretch justify-end">
+        <h5 class="text-[10px] lg:text-xl uppercase text-white border-r border-[#d9d9d9]/50 pb-[5px] lg:pb-[15px] lg:py-[5px] lg:mb-[10px] text-center mb-[3px]">
+          plastic covers
+        </h5>
+      </div>
+      <div data-aos="fade-up" class="flex flex-col items-stretch justify-end">
+        <h5 class="text-[10px] lg:text-xl uppercase text-center text-white pb-[5px] lg:pb-[15px] lg:py-[5px] lg:mb-[10px]  mb-[3px]">
+          metal covers
+        </h5>
+      </div>
+
+      <ul class="grid grid-cols-[.243fr_.27fr_.243fr_.243fr] lg:grid-cols-4 border-[#d9d9d9]/50 border-t border-b auto-rows-fr col-span-full relative">
+
+
+      {% if table and table.comparisonData %}
+        {% for item in table.comparisonData %}
+          {% set col_index = loop.index0 % 4 %}
+
+          {% set base_classes = 'flex items-center text-white uppercase py-2 lg:py-4 border border-[#d9d9d9]/50' %}
+
+          {% set conditional_classes = [
+            (col_index == 0 ? 'font-bold pl-[3px] lg:pl-[15px] text-[10px] lg:text-[16px]' : 'pl-[3px] lg:pl-[15px] text-[8px] lg:text-[16px]'),
+            (col_index == 3 ? 'border-r-0' : ''),
+            (col_index == 0 ? 'border-l-0' : '')
+          ] | join(' ') %}
+
+          {% set aos_animation = (loop.index0 == 0 or loop.index0 % 2 == 1) ? 'fade-right' : 'fade-left' %}
+
+          <li
+              data-aos="{{ aos_animation }}"
+              class="{{ base_classes }} {{ conditional_classes }}"
+          >
+            {{ item }}
+          </li>
+        {% endfor %}
+
+
+        <div
+            class="absolute inset-y-0 w-[51%] lg:w-[50%] bg-gradient-to-l from-[#707070] to-[#0A0A0A] opacity-20 z-0"></div>
+
+
+      {% else %}
+        <p class="text-white col-span-full text-center py-4">Comparison data not found.</p>
+      {% endif %}
+      </ul>
+
+    </div>
+  </div>
+</section>

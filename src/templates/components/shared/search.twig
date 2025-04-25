@@ -1,0 +1,12 @@
+{% from './../../macro/icon.twig' import svg %}
+
+<div class="{{ class|default('') }}">
+  <div class="text-white relative border border-white rounded-[100px] py-[12.5px] px-5 w-full lg:w-[350px] flex items-center lg:mr-3">
+      <input
+          type="text"
+          class="text-white lg:h-4.5 placeholder:text-white placeholder:text-sm outline-0 text-sm leading-none w-full pr-[45px]"
+          placeholder="{{ placeholder|default('Search') }}"
+      />
+    {{ svg('search', 'absolute right-4 top-[50%] translate-y-[-50%]') }}
+  </div>
+</div>

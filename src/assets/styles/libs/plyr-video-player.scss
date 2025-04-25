@@ -1,0 +1,22 @@
+.plyr__control.plyr__control--overlaid {
+
+  background: transparent;
+  border: 1px solid white;
+
+  @media screen and (min-width: 1024px) {
+  &:hover {
+    background: var(--green);
+    border-color: var(--green);
+  }
+
+  }
+
+  svg {
+    fill: white;
+  }
+}
+
+.plyr__controls {
+  opacity: 0;
+}
+

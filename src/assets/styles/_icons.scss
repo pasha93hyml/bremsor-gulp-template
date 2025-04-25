@@ -1,0 +1,35 @@
+.svg-icon {
+  @apply inline-flex items-center justify-center;
+
+  &--sm {
+    @apply w-4 h-4;
+  }
+
+  &--md {
+    @apply w-6 h-6;
+  }
+
+  &--lg {
+    @apply w-8 h-8;
+  }
+
+  &--xl {
+    @apply w-12 h-12;
+  }
+
+  &--primary {
+    @apply text-black-second;
+  }
+
+  &--secondary {
+    @apply text-white;
+  }
+
+  &--success {
+    @apply text-green-main;
+  }
+}
+
+.svg-icon:not([class*='svg-icon--sm']):not([class*='svg-icon--md']):not([class*='svg-icon--lg']):not([class*='svg-icon--xl']) {
+  @apply w-6 h-6;
+}

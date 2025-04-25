@@ -1,0 +1,66 @@
+@use "tailwindcss";
+
+@use "node_modules/plyr/dist/plyr.css";
+@use "node_modules/aos/dist/aos.css";
+@use "node_modules/img-comparison-slider/dist/styles.css";
+@use "node_modules/keen-slider/keen-slider.min.css";
+
+@use "sass:color";
+@use "./utilities";
+
+@use "./variables";
+
+@use "./libs/comparsion-slider";
+@use "libs/plyr-video-player";
+
+@font-face {
+  font-family: "Rivera";
+  src:
+    url("/assets/fonts/rivera/RivieraNightsTrial-Light.woff2") format("woff2"),
+    url("/assets/fonts/rivera/RivieraNightsTrial-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Rivera";
+  src:
+    url("/assets/fonts/rivera/RivieraNightsTrial-Regular.woff2") format("woff2"),
+    url("/assets/fonts/rivera/RivieraNightsTrial-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Rivera";
+  src:
+    url("/assets/fonts/rivera/RivieraNightsTrial-Bold.woff2") format("woff2"),
+    url("/assets/fonts/rivera/RivieraNightsTrial-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+#site-loader {
+  transition: opacity 0.5s ease;
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+
+@layer components {
+  .btn {
+    @apply inline-block px-4 py-2 rounded font-semibold transition-colors;
+  }
+
+  .btn-primary {
+    @apply bg-blue-500 text-white hover:bg-blue-600;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-700 text-white hover:bg-gray-800;
+  }
+}

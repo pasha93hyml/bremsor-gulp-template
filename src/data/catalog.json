@@ -1,0 +1,13 @@
+{
+  "catalog_items": [
+    {
+      "image_src": "/assets/images/catalog/mercedes.jpg",
+      "title": "Mercedes-Benz"
+    },
+    { "image_src": "/assets/images/catalog/audi.jpg", "title": "Audi" },
+    { "image_src": "/assets/images/catalog/bmw.jpg", "title": "BMW" },
+    { "image_src": "/assets/images/catalog/porsche.jpg", "title": "Porsche" },
+    { "image_src": "/assets/images/catalog/ford.jpg", "title": "Ford" },
+    { "image_src": "/assets/images/catalog/dodge.jpg", "title": "Dodge" }
+  ]
+}

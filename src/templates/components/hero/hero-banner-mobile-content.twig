@@ -1,0 +1,31 @@
+{% from './../../macro/icon.twig' import icon %}
+
+<div
+    class="lg:hidden absolute top-33 left-4 right-4 flex flex-col items-center justify-center gap-6 text-white bg-black-second/85 pt-[52px] pb-[34px] px-6 rounded-[20px] -z-10 opacity-0 transition-opacity duration-200 ease"
+    data-mobile-banner
+>
+  <h4 class="font-bold text-[32px] uppercase leading-[127%]">
+    Get $50 Back for Your Content!
+  </h4>
+  <p class="md:text-center text-[20px] leading-[145%] capitalize tracking-[0.03em]">
+    Submit High-Quality Photos and Videos of Your Caliper Covers. Get
+    Rewarded for Your Style – $50 Back for Approved Content Submissions
+  </p>
+  <div class="flex items-center justify-center gap-[18px] mt-auto">
+    <a
+        href="#"
+        class="flex items-center justify-center rounded-[57px] border border-white py-[14px] px-[14px] text-sm font-bold text-white leading-[18px] uppercase"
+    >
+      learn more
+    </a>
+    <a
+        href="#"
+        class="flex items-center justify-center rounded-[57px] border border-white py-[14px] px-[10px] text-sm font-bold text-black-second bg-white leading-[18px] uppercase"
+    >
+      custom gallery
+    </a>
+  </div>
+  <button type="button" class="absolute top-5 right-4" data-mobile-close-banner>
+    {{ icon('close', '') }}
+  </button>
+</div>

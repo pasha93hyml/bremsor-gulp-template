@@ -1,0 +1,48 @@
+{% from 'macro/icon.twig' import svg %}
+
+<section class="bg-black-second lg:pt-[100px]">
+  <div class="container">
+    <h2
+        data-aos="fade-up"
+        class="text-white text-[40px] lg:text-8xl font-light leading-[136%] text-center mb-[50px] lg:mb-[100px]"
+    >
+      Before & After
+    </h2>
+  </div>
+
+  <div data-aos="fade" class="w-full select-none">
+    <img-comparison-slider
+        class="relative w-full aspect-[1920/1080] cursor-ew-resize outline-none"
+        value="50"
+    >
+      <img
+          slot="first"
+          src="/assets/images/before.png"
+          alt="Before"
+          width="1920"
+          height="1080"
+          loading="lazy"
+          class="w-full h-auto block"
+      />
+
+      <img
+          slot="second"
+          src="/assets/images/after.png"
+          alt="After"
+          width="1920"
+          height="1080"
+          loading="lazy"
+          class="w-full h-auto block"
+      />
+
+      <div slot="handle" class="h-[66px] w-[66px] lg:h-[144px] lg:w-[144px] -ml-[33px] lg:-ml-[72px] -mt-[33px] lg:-mt-[72px] py-[15px] px-[10px] rounded-full bg-white absolute top-1/2 flex items-center justify-between cursor-pointer">
+        <span class="text-sm hidden lg:block">BEFORE</span>
+        <span class="lg:hidden flex items-center justify-center">{{ svg('chevron-left', 'translate-y-[1px]') }}</span>
+        <span class="w-[1px] lg:w-0.5 bg-black-second absolute top-[5px] lg:top-[15px] bottom-[5px] lg:bottom-[15px] inset-x-1/2"></span>
+        <span class="text-sm hidden lg:block">AFTER</span>
+        <span class="lg:hidden flex items-center justify-center">{{ svg('chevron-left', 'rotate-180') }}</span>
+      </div>
+
+    </img-comparison-slider>
+  </div>
+</section>

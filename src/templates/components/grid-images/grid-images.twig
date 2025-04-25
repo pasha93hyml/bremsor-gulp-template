@@ -1,0 +1,66 @@
+{% from 'macro/icon.twig' import svg %}
+
+<section class="pt-[100px] lg:pt-[75px] pb-[100px] lg:pb-[200px]">
+  <div class="max-w-[1502px] w-full mx-auto px-4 lg:px-5">
+    <h2
+        data-aos="fade-up"
+        class="text-white font-light text-[40px] lg:text-[64px] leading-[136%] text-center mb-[21px] lg:mb-[100px]"
+    >
+      Instagram @Bremsor
+    </h2>
+
+    {% if gridImages and gridImages.imageData %}
+      <div
+          class="hidden lg:grid grid-cols-[1.5fr_3fr_1.5fr_1fr] grid-rows-6 gap-0"
+      >
+        {% for item in gridImages.imageData %}
+          {% set aosEffect = ['fade-up', 'fade-down', 'fade-right', 'fade-left'][loop.index0 % 4] %}
+          {% set gridImageOptions = {
+            pictureClass: item.className,
+            width: item.size,
+            height: item.size,
+            loading: 'lazy',
+            'data-aos': aosEffect
+          } %}
+          {{ picture(item.image_src, 'Instagram image ' ~ loop.index, gridImageOptions) | raw }}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+
+    {% if gridImages and gridImages.imageData %}
+      <div class="block lg:hidden">
+        <div data-aos="fade-up" class="relative">
+          <div id="grid-images-slider" class="keen-slider py-10">
+            {% for item in gridImages.imageData %}
+              <div class="keen-slider__slide">
+                {% set sliderImageOptions = {
+                  class: 'w-full aspect-[1/1] object-cover',
+                  width: '396',
+                  height: '396',
+                  loading: 'lazy'
+                } %}
+                {{ picture(item.image_src, 'Instagram image ' ~ loop.index, sliderImageOptions) | raw }}
+              </div>
+            {% endfor %}
+          </div>
+
+          {% if gridImages.imageData | length > 1 %}
+            <div id="grid-images-dots" class="flex items-center justify-center gap-2 mt-[30px]">
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+    <a
+        data-aos="fade-up"
+        href="#"
+        target="_blank" rel="noopener noreferrer"
+        class="flex items-center justify-between mt-[60px] lg:mt-[100px] text-white text-sm leading-none uppercase px-[15px] lg:px-[30px] py-3.5 border border-white rounded-[57px] max-w-[190px] lg:max-w-[180px] mx-auto hover:bg-green-main hover:border-green-main hover:text-black-second group transition-all duration-300 ease-in"
+    >
+      follow us
+      {{ svg('chevron-left', 'fill-current transition-transform rotate-180 duration-300 group-hover:translate-x-1', 10) }}
+    </a>
+
+  </div>
+</section>

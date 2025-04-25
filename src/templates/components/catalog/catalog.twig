@@ -1,0 +1,31 @@
+<section class="py-20 lg:py-[180px] relative">
+  <div class="container px-[225px] max-lg:px-4">
+    <h2
+        data-aos="fade-up"
+        class="text-[40px] leading-[119%] lg:text-[64px]/[119%] text-white text-center font-light"
+    >
+      We Produce Caliper Covers <br class="hidden lg:block" />
+      for All Makes <br class="lg:hidden" />& Models
+    </h2>
+
+    <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-x-6.5 lg:gap-y-19 mt-18 lg:mt-29.5 max-w-367.5 mx-auto">
+      {% if catalog.catalog_items %}
+        {% for item in catalog.catalog_items %}
+          {% include './_catalog-item.twig' with { item: item } only %}
+        {% endfor %}
+      {% else %}
+        <p class="text-white col-span-full text-center">No catalog items found.</p>
+      {% endif %}
+    </div>
+
+    <div class="flex items-center flex-wrap lg:flex-nowrap lg:justify-center gap-4 justify-center lg:mt-[145px] mt-[70px]">
+      <a
+          href="#"
+          data-aos="fade-down"
+          class="w-fit flex items-center justify-center bg-white rounded-[57px] text-black-second text-sm font-bold leading-none py-[14px] px-[30px] lg:mx-auto uppercase cursor-pointer hover:bg-green-main hover:text-white transition-all duration-300 ease"
+      >
+        shop all makes
+      </a>
+    </div>
+  </div>
+</section>

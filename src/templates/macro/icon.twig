@@ -1,0 +1,7 @@
+{% macro icon(name, classes = '', size = 24) %}
+  {{ svgIcon(name, 'icon ' ~ classes, size, size) }}
+{% endmacro %}
+
+{% macro svg(name, classes = '') %}
+  {{ svgInline(name, 'fill-current ' ~ classes ) }}
+{% endmacro %}

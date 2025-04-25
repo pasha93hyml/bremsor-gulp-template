@@ -1,0 +1,33 @@
+{
+  "title": "Bremsor Static",
+  "description": "A static site built with Gulp, Webpack, and Twig",
+  "author": "Your Name",
+  "navigation": [
+    {
+      "title": "Home",
+      "url": "/"
+    },
+    {
+      "title": "About",
+      "url": "/about.html"
+    },
+    {
+      "title": "Contact",
+      "url": "/contact.html"
+    }
+  ],
+  "social": [
+    {
+      "platform": "Twitter",
+      "url": "https://twitter.com/yourusername"
+    },
+    {
+      "platform": "GitHub",
+      "url": "https://github.com/yourusername"
+    },
+    {
+      "platform": "LinkedIn",
+      "url": "https://linkedin.com/in/yourusername"
+    }
+  ]
+}

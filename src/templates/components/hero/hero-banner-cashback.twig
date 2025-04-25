@@ -1,0 +1,44 @@
+{% from "./../../macro/icon.twig" import svg %}
+
+<div
+    class="absolute z-12 lg:top-[30.5%] right-[30px] lg:w-[915px] lg:aspect-[915/472] hidden lg:block transition-all duration-500 ease lg:translate-x-[calc(100%_+_30px)]"
+    data-cashback-banner
+>
+  {{ picture('/assets/images/banner-cashback.png', 'cashback', {
+    width: '915',
+    height: '472',
+    class: 'absolute inset-0'
+  }) }}
+  <div
+      class="absolute w-fit max-w-[570px] left-0 top-0 bottom-0 bg-black-second/82 flex flex-col gap-6 py-[73px] px-[44px] rounded-l-[20px]">
+    <h4 class="font-bold text-white text-balance leading-[127%] text-[40px] uppercase">
+      Get $50 Back for Your Content!
+    </h4>
+    <p class="text-white text-[22px] leading-[127%] mb-4 capitalize">
+      Submit High-Quality Photos and Videos of Your Caliper Covers. Get
+      Rewarded for Your Style – $50 Back for Approved Content Submissions
+    </p>
+    <div class="flex items-center gap-[18px]">
+      <a
+          href="#"
+          class="flex items-center justify-center rounded-[57px] border border-white py-[14px] px-[25px] text-sm font-bold text-white leading-[18px] uppercase w-[200px] cursor-pointer hover:bg-white hover:text-black-second transition-all duration-300 ease"
+      >
+        learn more
+      </a>
+      <a
+          href="#"
+          class="flex items-center justify-center rounded-[57px] border border-white py-[14px] px-[18px] text-sm text-black-second bg-white leading-[18px] uppercase w-[200px] cursor-pointer hover:bg-green-main hover:text-white hover:border-green-main transition-all duration-300 ease"
+      >
+        custom gallery
+      </a>
+    </div>
+  </div>
+  <button
+      type="button"
+      class="absolute top-1/2 -translate-y-1/2 -translate-x-full w-16 writing-vertical text-black-second bg-white rounded-l-[20px] flex flex-row-reverse text-nowrap items-center justify-center gap-[21px] py-[23px] px-3.5 font-bold text-2xl leading-[180%] uppercase cursor-pointer hover:bg-white/80 transition-all duration-300 ease"
+      data-cashback-toggle
+  >
+    <p>Earn $50 back</p>
+    {{ svg('chevron-left', 'w-4 h-4 rotate-0' ) }}
+  </button>
+</div>

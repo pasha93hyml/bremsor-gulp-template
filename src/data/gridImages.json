@@ -1,0 +1,44 @@
+{
+  "imageData": [
+    {
+      "image_src": "/assets/images/grid/grid-1.png",
+      "size": 315,
+      "className": "col-start-1 col-end-2 row-start-1 row-end-4"
+    },
+    {
+      "image_src": "/assets/images/grid/grid-2.png",
+      "size": 630,
+      "className": "col-start-2 col-end-3 row-start-1 row-end-7"
+    },
+    {
+      "image_src": "/assets/images/grid/grid-3.png",
+      "size": 315,
+      "className": "col-start-3 col-end-4 row-start-1 row-end-4"
+    },
+    {
+      "image_src": "/assets/images/grid/grid-4.png",
+      "size": 210,
+      "className": "col-start-4 col-end-5 row-start-1 row-end-3"
+    },
+    {
+      "image_src": "/assets/images/grid/grid-5.png",
+      "size": 315,
+      "className": "col-start-1 col-end-2 row-start-4 row-end-7"
+    },
+    {
+      "image_src": "/assets/images/grid/grid-6.png",
+      "size": 315,
+      "className": "col-start-3 col-end-4 row-start-4 row-end-7"
+    },
+    {
+      "image_src": "/assets/images/grid/grid-7.png",
+      "size": 210,
+      "className": "col-start-4 col-end-5 row-start-3 row-end-5"
+    },
+    {
+      "image_src": "/assets/images/grid/grid-8.png",
+      "size": 210,
+      "className": "col-start-4 col-end-5 row-start-5 row-end-7"
+    }
+  ]
+}

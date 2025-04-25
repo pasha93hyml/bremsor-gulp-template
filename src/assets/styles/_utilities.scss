@@ -1,0 +1,69 @@
+@layer utilities {
+  .container {
+    padding-inline: 1rem;
+    max-width: 100%;
+    width: 100%;
+    @media screen and (min-width: 1024px) {
+      max-width: calc(1670px + 250px);
+      width: 100%;
+      margin: 0 auto;
+      padding-inline: 125px;
+    }
+  }
+
+  .writing-vertical {
+    writing-mode: sideways-lr;
+  }
+
+  .lock-scroll {
+    overflow: hidden;
+    touch-action: none;
+  }
+
+  .icon {
+    fill: currentColor;
+  }
+
+  .animate-spin-reverse {
+    animation: spin-reverse 2s linear infinite;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes spin-reverse {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(-360deg);
+    }
+  }
+
+  .animate-spin {
+    animation: spin 2s linear infinite;
+  }
+
+  .animate-spin-reverse {
+    animation: spin-reverse 2s linear infinite;
+  }
+
+  .loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+  }
+
+  .progress-bar {
+    transition: width 10ms linear;
+  }
+}

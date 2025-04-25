@@ -1,0 +1,12 @@
+<div class="{{ className | default('') }}">
+  <h5 class="text-white text pb-3.5 md:pb-[35px] uppercase">{{ title }}</h5>
+  <ul>
+    {% if items %}
+      {% for item in items %}
+        <li class="text-white text-[1rem]/[1.8] capitalize">
+          <a href="/">{{ item }}</a>
+        </li>
+      {% endfor %}
+    {% endif %}
+  </ul>
+</div>

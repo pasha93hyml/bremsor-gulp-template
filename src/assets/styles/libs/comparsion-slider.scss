@@ -1,0 +1,62 @@
+img-comparison-slider {
+  --handle-size: 66px;
+  --divider-width: 1px;
+  --divider-color: white;
+  --default-handle-opacity: 1;
+
+  @screen lg {
+    --handle-size: 144px;
+  }
+
+  &::part(handle) {
+    background-color: white;
+    border-radius: 50%;
+    border: none;
+    box-shadow: none;
+    opacity: 1 !important;
+
+    position: relative;
+  }
+
+  &::part(handle-arrow-left),
+  &::part(handle-arrow-right) {
+      display: none;
+  }
+
+  &::part(handle)::before {
+    content: "BEFORE";
+    position: absolute;
+    top: 50%;
+
+    right: calc(50% + 15px);
+    transform: translateY(-50%);
+
+    color: black;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+
+    @media screen and (max-width: 1024px) {
+      content: "<";
+    }
+  }
+
+  &::part(handle)::after {
+    content: "AFTER";
+    position: absolute;
+    top: 50%;
+
+    left: calc(50% + 15px);
+    transform: translateY(-50%);
+
+    color: black;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+
+  }
+
+  &::part(divider) {
+    opacity: 1;
+  }
+}

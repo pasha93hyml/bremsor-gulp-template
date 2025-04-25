@@ -1,0 +1,70 @@
+{% from 'macro/icon.twig' import svg %}
+
+<section class="lg:py-25">
+  <div class="max-w-[1202px] mx-auto relative px-4">
+    <h2
+        data-aos="fade-up"
+        class="font-light text-[40px] lg:text-[64px] text-white max-w-[800px] leading-none mb-[60px] text-balance"
+    >
+      Reviews from our valued customers
+    </h2>
+
+    <div data-aos="fade-up">
+      <div id="reviews-slider" class="keen-slider pb-10">
+        {% if reviews and reviews.reviewData %}
+          {% for review in reviews.reviewData %}
+            <div class="keen-slider__slide bg-black border border-white/20 text-white p-[17px]">
+              <div class="flex justify-between mb-[30px] gap-4">
+                <p class="text-[24px] font-light text-white flex-shrink">
+                  {{ review.title }}
+                </p>
+                {% set reviewImageOptions = {
+                  class: 'w-[100px] h-[100px] lg:w-[135px] lg:h-[135px] object-cover flex-shrink-0',
+                  width: '135',
+                  height: '135',
+                  loading: 'lazy'
+                } %}
+                {{ picture(review.image_src, review.title, reviewImageOptions) | raw }}
+              </div>
+              <h3 class="font-bold text-[24px] leading-none mb-[24px]">
+                {{ review.name }}
+              </h3>
+              <p class="text-sm text-white mb-[3px] text-balance">
+                {{ review.description }}
+              </p>
+            </div>
+          {% endfor %}
+        {% else %}
+          <p class="text-white text-center py-10">No reviews found.</p>
+        {% endif %}
+      </div>
+
+
+
+      {% if reviews and reviews.reviewData and reviews.reviewData | length > 1 %}
+        <div id="reviews-slider-dots" class="md:hidden flex items-center justify-center gap-2 mt-[10px]">
+        </div>
+      {% endif %}
+
+    </div>
+    <div
+        data-aos="fade-down"
+        class="absolute top-5 right-4 md:flex gap-4 hidden"
+    >
+      <button
+          aria-label="Previous Review"
+          id="reviews-slider-prev"
+          class="h-[70px] w-[70px] rounded-full bg-white/[.08] hover:bg-white/[.25] flex items-center justify-center transition cursor-pointer group"
+      >
+        {{ svg('chevron-left', 'text-white w-4.5 h-4.5 transition-transform translate-x-[2px] group-hover:scale-110') }}
+      </button>
+      <button
+          aria-label="Next Review"
+          id="reviews-slider-next"
+          class="h-[70px] w-[70px] rounded-full bg-white/[.1] hover:bg-white/[.2] flex items-center justify-center transition cursor-pointer group"
+      >
+        {{ svg('chevron-left', 'text-white w-4.5 h-4.5 transition-transform -translate-x-[2px] group-hover:scale-110 rotate-180') }}
+      </button>
+    </div>
+  </div>
+</section>
