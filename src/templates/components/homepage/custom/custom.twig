@@ -8,18 +8,18 @@
     <div class="flex items-center justify-center flex-col">
       <h2
           data-aos="fade-up"
-          class="{{ page_id == 'index' ? 'text-white font-light text-[40px] lg:text-[64px] leading-none mb-8 lg:mb-12' : 'text-white font-light text-[40px] lg:text-[64px] leading-none mb-8 lg:mb-12 w-full lg:text-left text-center' }}"
+          class="{{ page_id == 'index' ? 'text-white font-light text-[40px] lg:text-[64px] leading-none mb-8 lg:mb-12' : 'text-white font-light text-[40px] lg:text-[64px] leading-none mb-8 lg:mb-12 w-full text-left' }}"
       >
         {{ title }}
       </h2>
 
       {% if subtitle %}
-        <p class="text-xl text-white w-full text-center lg:text-left lg:-mb-12.5">{{ subtitle }}</p>
+        <p class="text-xl text-white w-full text-left lg:-mb-12.5">{{ subtitle }}</p>
       {% endif %}
 
       <div class="relative">
         {% set imageOptions = {
-          class: 'w-[499px] h-[624px] object-cover',
+          class: 'w-[499px] h-[624px] object-cover max-sm:w-75 max-sm:h-93',
           width: '499',
           height: '624',
           loading: 'lazy'
@@ -31,22 +31,33 @@
 
         {% set buttonBaseClasses = "absolute text-white flex lg:flex-row flex-col lg:items-center gap-[18px] cursor-pointer" %}
 
+        {% if page_id == 'request-order' %}
+          {% set buttonBaseClasses = buttonBaseClasses ~ ' js-custom-goto-btn' %}
+        {% endif %}
+
         {% include './_custom-button.twig' with {
           title: 'Custom logo',
-          className: buttonBaseClasses ~ ' lg:top-[130px] lg:-left-[80px] top-[120px] left-[47px] text-wrap lg:max-w-none max-w-[80px]',
-          data_aos: 'fade-up'
+          className: buttonBaseClasses ~ ' lg:top-[130px] lg:-left-[80px] max-sm:top-9 max-sm:left-2 top-26 left-10 lg:text-wrap lg:max-w-none w-fit max-lg:items-end ' ,
+          data_aos: 'fade-up',
+          data_goto: 'custom_logo',
+          title_classes: page_id == 'index' ? '' : 'text-nowrap'
         } only %}
 
         {% include './_custom-button.twig' with {
           title: 'Unique shape to fit your brakes',
-          className: buttonBaseClasses ~ ' lg:top-[325px] lg:-right-[202px] top-[230px] right-0 lg:flex-row-reverse lg:max-w-[310px] max-w-[120px] text-wrap',
-          data_aos: 'fade-down'
+          className: buttonBaseClasses ~ ' lg:top-[325px] lg:-right-[202px] top-50 right-0 lg:flex-row-reverse lg:max-w-[310px] max-w-38 text-wrap max-sm:top-26 max-sm:-right-13',
+          data_aos: 'fade-down',
+          data_goto: 'design_request',
+          title_classes: page_id == 'index' ? '' : 'md:max-w-56.5',
+          plus_classes: 'max-sm:ml-10'
         } only %}
 
         {% include './_custom-button.twig' with {
           title: 'Color of your choice',
-          className: buttonBaseClasses ~ ' lg:bottom-[120px] lg:-left-[10px] flex-col-reverse bottom-[120px] left-[220px] lg:max-w-none max-w-[93px] text-wrap',
-          data_aos: 'fade-up'
+          className: buttonBaseClasses ~ ' lg:bottom-[120px] lg:-left-[10px] flex-col-reverse bottom-[120px] left-[220px] lg:max-w-none max-w-[93px] text-wrap max-sm:bottom-8 max-sm:left-16 max-sm:items-end',
+          data_aos: 'fade-up',
+          data_goto: 'color_pick',
+          title_classes: page_id == 'index' ? '' : 'text-nowrap'
         } only %}
       </div>
     </div>

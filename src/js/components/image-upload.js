@@ -1,4 +1,4 @@
-import {fileIcon} from "../icons/file.js";
+import { fileIcon } from "../icons/file.js";
 
 export class ImageUpload {
   constructor(wrap) {
@@ -33,7 +33,6 @@ export class ImageUpload {
       const file = files[0];
       const reader = new FileReader();
       const fileExtension = file.name.split(".").pop().toLowerCase();
-      console.log(file)
 
       if (["png", "jpg", "jpeg", "svg", "webp"].includes(fileExtension)) {
         reader.onload = (e) => {
@@ -56,9 +55,9 @@ export class ImageUpload {
         this.deleteBtn.classList.add("opacity-100");
       } else if (fileExtension === "ai") {
         this.preview.innerHTML = `
-        <div class="flex flex-col items-center justify-center w-full aspect-1/1 gap-5">
-           ${fileIcon()}
-          <div class="text-white text-sm text-balance text-center max-w-[200px]">${file.name}</div>
+        <div class="flex flex-col items-center justify-center w-full sm:aspect-1/1 gap-5">
+           ${window.innerWidth >= 640 ? fileIcon() : ""}
+          <div class="text-white text-sm text-balance text-center max-w-[200px]">Name: ${file.name}</div>
         </div>`;
         this.placeholder.style.display = "none";
         this.preview.style.display = "block";
@@ -74,7 +73,7 @@ export class ImageUpload {
     this.placeholder.removeEventListener("click", this.handleClick);
     this.input.removeEventListener("change", this.handleChange);
     this.deleteBtn.removeEventListener("click", this.handleDelete);
-  }
+  };
 
   #init() {
     this.placeholder.addEventListener("click", this.handleClick);
@@ -82,5 +81,3 @@ export class ImageUpload {
     this.deleteBtn.addEventListener("click", this.handleDelete);
   }
 }
-
-

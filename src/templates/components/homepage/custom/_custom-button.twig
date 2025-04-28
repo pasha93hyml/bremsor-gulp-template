@@ -4,9 +4,10 @@
     type="button"
     class="{{ className | default('') }}"
     {% if data_aos %}data-aos="{{ data_aos }}"{% endif %}
+    {% if data_goto %}data-goto="{{ data_goto }}"{% endif %}
 >
-  <p class='lg:text-xl text-sm font-bold text-left'>{{ title }}</p>
-  <div class='flex items-center justify-center min-w-[66px] w-[66px] h-[66px] text-black-second rounded-full bg-[#d9d9d9]/75'>
-    {{ svg('plus', 'stroke-[2px]') }}
+  <p class="lg:text-xl text-base font-bold text-left {{ title_classes | default('') }}">{{ title }}</p>
+  <div class='flex items-center justify-center min-w-11 w-11 h-11 lg:min-w-16.5 lg:w-16.5 lg:h-16.5 text-black-second rounded-full bg-[#d9d9d9]/75 {{ plus_classes|default('') }}'>
+    {{ svg('plus', 'stroke-[2px]' ) }}
   </div>
 </button>

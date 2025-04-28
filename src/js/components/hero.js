@@ -49,7 +49,6 @@ function MobileBanner() {
   };
 
   const handleBannerBackdrop = (event) => {
-    console.log("event mounted/unmounted");
     if (
       !event.target.closest("[data-mobile-banner]") &&
       !event.target.closest("[data-mobile-toggle-banner]")

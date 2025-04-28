@@ -25,7 +25,7 @@
     <div class="select-color-content min-h-0 flex flex-col gap-18 w-full">
       <div class="flex flex-col w-full gap-7 text-black-second">
         <h4 class="text-[32px] font-bold leading-none">Default Colors:</h4>
-        <div class="grid lg:grid-cols-18 auto-rows-fr gap-x-2.5 gap-y-5">
+        <div class="grid lg:grid-cols-18 md:grid-cols-12 grid-cols-6 auto-rows-fr gap-x-2.5 gap-y-5">
           {% for item in colors.list %}
             <button class="group js-default-color-pick-btn default-color-pick-btn" type="button" data-color="{{ item.color }}" data-value="{{ item.title }}">
               <span class="w-full h-[22px] min-h-[22px] rounded-[2px] border border-transparent p-0.5 group-hover:border-black-second flex items-center justify-center transition duration-300 ease select-border-wrap js-select-border-wrap">
@@ -42,7 +42,7 @@
       <div class="flex flex-col w-full gap-10 text-black-second">
         <h4 class="text-[32px] font-bold leading-none">Custom Colors (+$15 extra):</h4>
 
-        <div class="grid lg:grid-cols-4 auto-rows-fr gap-x-6.5 gap-y-5.5">
+        <div class="grid grid-cols-2 md:grid-cols-4 auto-rows-fr gap-x-6.5 gap-y-5.5">
           {% for item in calipers.list %}
             <button type="button" class="custom-pick-btn js-custom-color-pick-btn ease" data-color="{{ item.color }}" data-value="{{ item.value }}">
               {{ picture(item.src, 'custom caliper cover to choose', {width: '266', height: '266'}) }}

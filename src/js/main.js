@@ -11,6 +11,7 @@ import { Dropdown } from "./components/dropdown.js";
 import { ImageUpload } from "./components/image-upload.js";
 import { ColorPick } from "./components/color-pick.js";
 import { Form } from "./components/form.js";
+import {CustomBtn} from "./components/custom-btn.js";
 
 import "img-comparison-slider";
 import "./libs/aos.js";
@@ -50,5 +51,12 @@ document.addEventListener("DOMContentLoaded", () => {
     forms.forEach((form) => {
       new Form(form);
     });
+  }
+
+  const customBtns = document.querySelectorAll('.js-custom-goto-btn')
+  if(customBtns && customBtns.length) {
+    customBtns.forEach(btn => {
+      new CustomBtn(btn)
+    })
   }
 });

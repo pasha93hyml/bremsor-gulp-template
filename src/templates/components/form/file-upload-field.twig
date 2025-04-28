@@ -1,9 +1,9 @@
 {% from 'macro/icon.twig' import svg, icon %}
 <div class='{{ "relative form-field js-image-upload-field flex " ~ field_classes }}'>
-  <div class="w-full aspect-[1/1] bg-white/[.12] flex rounded-[10px]" data-field-name="{{ name }}">
-    <div class="dashed-border w-full h-full js-select-color-container" data-target="{{ name }}" data-required="{{ required is defined and required ? 'true' : 'false' }}">
+  <div class="w-full sm:aspect-[1/1] bg-white/[.12] flex rounded-[10px]" data-field-name="{{ name }}">
+    <div class="dashed-border file-upload-border max-sm:p-6 w-full sm:h-full js-select-color-container" data-target="{{ name }}" data-required="{{ required is defined and required ? 'true' : 'false' }}">
       <div class="flex flex-col items-center justify-center h-full gap-5 js-upload-placeholder">
-        <div class="w-13 h-13 rounded-full border border-white flex items-center justify-center text-[#d9d9d9]">
+        <div class="w-13 h-13 rounded-full border border-white flex items-center justify-center text-[#d9d9d9] max-sm:hidden">
           <span class="text-xl">{{ svg('union', 'w-2.5 h-2.5') }}</span>
         </div>
         <div class="text-sm leading-[140%] max-w-[200px] text-balanced mx-auto text-center">{{ text }}</div>

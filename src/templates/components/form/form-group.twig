@@ -1,4 +1,6 @@
-<div class="{{ classes }}">
+<div class="{{ classes }}"
+  {% if data_name %}data-name="{{ data_name }}"{% endif %}
+>
   {% if title %}
     <h3 class="{{ title_classes }}">{{ title }}</h3>
   {% endif %}
