@@ -1,0 +1,32 @@
+{% from 'macro/icon.twig' import svg %}
+
+<div class="js-dropdown-wrap relative w-full {{ field_classes }}" data-dropdown="{{ name }}">
+  <input type="text" name="{{ name }}" class="js-dropdown-input hidden">
+  <button type="button"
+          class="js-dropdown-trigger dropdown-trigger flex items-center justify-between border border-white rounded-[100px] py-3.5 pl-[15px] pr-5 w-full lg:max-h-[45px] js-select-color-container"
+          data-dropdown-target="{{ name }}"
+          data-target="{{ name }}"
+          data-required="{{ required is defined and required ? 'true' : 'false' }}"
+  >
+    <span class="js-dropdown-trigger-text text-sm">
+      {{ label }}
+    </span>
+    {{ svg('chevron-down', 'js-dropdown-icon dropdown-icon') }}
+  </button>
+  <div
+      class="js-dropdown form-dropdown" data-dropdown="{{ name }}">
+    <ul class="flex flex-col gap-2.5 p-3.5">
+      {% for option in options %}
+      <li>
+        <button type="button" class="flex items-center gap-1.5 w-full cursor-pointer js-select-option"
+                  data-option="{{ option }}">
+          <span class="flex items-center justify-center w-3 h-3 border border-black-second rounded-full bg-[#D9D9D9]">
+            <span class="flex w-1.5 h-1.5 rounded-full bg-black-second opacity-0 js-select-circle"></span>
+          </span>
+          <span class="text-black-second text-sm leading-[18px]">{{ option }}</span>
+        </button>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>

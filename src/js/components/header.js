@@ -31,11 +31,10 @@ function ShopList() {
     const elementsToSort = [
       ...shopList.querySelectorAll("[data-item-to-sort]"),
     ];
-    const sortedList = elementsToSort.reverse()
+    const sortedList = elementsToSort.reverse();
 
-    shopList.innerHTML = '';
-    shopList.append(...sortedList)
-
+    shopList.innerHTML = "";
+    shopList.append(...sortedList);
   }
 
   function init() {
@@ -132,18 +131,33 @@ function MobileMenu() {
 function HeaderScroll() {
   const header = document.querySelector("[data-header]");
   let lastScrollTop = 0;
+  const currentPage = window.location.href
+    .split("/")
+    .pop()
+    .replace(".html", "");
+  const isHomePage = currentPage === "";
 
   function handleScroll() {
     if (!header) return;
 
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-    if (scrollTop > 10) {
+    if (scrollTop > 10 && isHomePage) {
       header.classList.add("bg-black-second", "lg:top-0", "top-0");
       header.classList.remove("bg-black-second/65", "lg:top-12.5", "top-11.5");
-    } else {
+    }
+    if(scrollTop <= 10 && isHomePage) {
       header.classList.remove("bg-black-second", "lg:top-0", "top-0");
       header.classList.add("bg-black-second/65", "lg:top-12.5", "top-11.5");
+    }
+
+    if (scrollTop > 10 && !isHomePage) {
+      header.classList.add("bg-black-second");
+      header.classList.remove("bg-black-second/65");
+    }
+    if(scrollTop <= 10 && !isHomePage) {
+      header.classList.remove("bg-black-second");
+      header.classList.add("bg-black-second/65");
     }
 
     lastScrollTop = scrollTop;
@@ -233,3 +247,6 @@ export function initHeader() {
   header.init();
   return header;
 }
+
+
+

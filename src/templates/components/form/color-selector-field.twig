@@ -1,0 +1,62 @@
+{% from 'macro/icon.twig' import svg, icon %}
+
+<div class="form-field js-color-selector-field relative">
+  <label for="{{ name }}" class="field-label hidden">{{ label }}</label>
+
+
+  <div
+      class="w-full border border-white rounded-[100px] py-3.5 pl-4 pr-5 flex items-center justify-between  max-h-[45px] mb-2.5 js-select-color-container js-validation-field" data-target="{{ name }}" data-required="{{ required is defined and required ? 'true' : 'false' }}">
+    <div class="js-select-color-text-wrap text-white">
+      <span class="js-select-color-preview-text text-sm leading-[18px]">Select color</span>
+      <span class="js-select-color-selected text-[10px] gap-2.5 items-center hidden">
+        <span class="block rounded-[18px] w-[54px] h-[18px] js-selected-color-bg"></span>
+        <span class="text-[10px] text-white js-selected-color-label"></span>
+      </span>
+    </div>
+
+    <button type="button" class="js-toggle-color-grid-btn text-white cursor-pointer relative w-fit">
+      {{ svg('union', 'w-4 h-4 opacity-100') }}
+      <span class="js-close-icon absolute top-1/2 left-1/2 -translate-x-1/2 w-4 h-[1px] bg-[#d9d9d9] opacity-0"></span>
+      <span class="js-toggle-color-picked-text text-sm leading-none text-white text-nowrap hidden">Change color</span>
+    </button>
+  </div>
+
+  <div class="js-colors-dropdown select-color-dropdown">
+    <div class="select-color-content min-h-0 flex flex-col gap-18 w-full">
+      <div class="flex flex-col w-full gap-7 text-black-second">
+        <h4 class="text-[32px] font-bold leading-none">Default Colors:</h4>
+        <div class="grid lg:grid-cols-18 auto-rows-fr gap-x-2.5 gap-y-5">
+          {% for item in colors.list %}
+            <button class="group js-default-color-pick-btn default-color-pick-btn" type="button" data-color="{{ item.color }}" data-value="{{ item.title }}">
+              <span class="w-full h-[22px] min-h-[22px] rounded-[2px] border border-transparent p-0.5 group-hover:border-black-second flex items-center justify-center transition duration-300 ease select-border-wrap js-select-border-wrap">
+                <span class='w-full h-full rounded-[2px]'
+                    style="background-color: {{ item.color }}"></span>
+              </span>
+              <span class="text-[10px] leading-none text-left ml-0.5">{{ item.title }}</span>
+            </button>
+          {% endfor %}
+        </div>
+      </div>
+{#      custom colors #}
+
+      <div class="flex flex-col w-full gap-10 text-black-second">
+        <h4 class="text-[32px] font-bold leading-none">Custom Colors (+$15 extra):</h4>
+
+        <div class="grid lg:grid-cols-4 auto-rows-fr gap-x-6.5 gap-y-5.5">
+          {% for item in calipers.list %}
+            <button type="button" class="custom-pick-btn js-custom-color-pick-btn ease" data-color="{{ item.color }}" data-value="{{ item.value }}">
+              {{ picture(item.src, 'custom caliper cover to choose', {width: '266', height: '266'}) }}
+              <span class="absolute w-[25px] h-[25px] p-1 rounded-full border border-white top-5 right-5 flex items-center justify-center">
+                <span class="w-full h-full rounded-full bg-white block opacity-0 transition duration-300 ease check-circle js-custom-check-circle"></span>
+              </span>
+            </button>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <input type="hidden" id="{{ name }}" name="{{ name }}" class="js-color-value-input"
+         {% if required is defined and required %}required{% endif %}>
+
+</div>

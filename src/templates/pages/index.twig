@@ -3,13 +3,13 @@
 {% block title %}Bremsor{% endblock %}
 
 {% block content %}
-  {% include 'components/hero/hero.twig' %}
-  {% include 'components/catalog/catalog.twig' %}
-  {% include 'components/about/about.twig' %}
-  {% include 'components/custom/custom.twig' %}
-  {% include 'components/before-after/before-after.twig' %}
-  {% include 'components/set-us-apart/set-us-apart.twig' %}
-  {% include 'components/reviews/reviews.twig' %}
-  {% include 'components/grid-images/grid-images.twig' %}
+  {% include 'components/homepage/hero/hero.twig' %}
+  {% include 'components/homepage/catalog/catalog.twig' %}
+  {% include 'components/homepage/about/about.twig' %}
+  {% include 'components/homepage/custom/custom.twig' with {title: 'Customizable design'} %}
+  {% include 'components/homepage/before-after/before-after.twig' %}
+  {% include 'components/homepage/set-us-apart/set-us-apart.twig' %}
+  {% include 'components/homepage/reviews/reviews.twig' %}
+  {% include 'components/homepage/grid-images/grid-images.twig' %}
 
 {% endblock %}

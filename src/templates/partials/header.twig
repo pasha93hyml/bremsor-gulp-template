@@ -2,14 +2,15 @@
 
 <header
     data-header
-    class="w-full fixed lg:h-25 lg:top-12.5 flex items-center top-11.5 z-50 transition:background-color duration-500 bg-black-second/65"
+    class="{{ current_page == 'index' ? 'w-full fixed lg:h-25 flex items-center z-50 transition:background-color duration-500 bg-black-second/65 lg:top-12.5 top-11.5' : 'w-full fixed lg:h-25 flex items-center z-50 transition:background-color duration-500 bg-black-second/65 top-0 lg:top-0' }}"
+
 >
 
   {% include './../components/header/mobile-menu.twig' %}
   {% include './../components/header/shop-list.twig' with { brands: brands.brandsList } %}
 
   <div class="container">
-    <div class="w-full flex items-center gap-2 py-[18px] lg:py-7">
+    <div class="{{ current_page == 'index' ? 'w-full flex items-center gap-2 py-[18px] lg:py-7' : 'w-full flex items-center gap-2 py-[18px] lg:py-7 border-b border-white/[.45]' }}">
       <button
           type="button"
           class="lg:hidden text-white"
@@ -29,7 +30,7 @@
             </button>
           </li>
           <li class="hover:text-white/40 transition duration-300 ease">
-            <a href="/">custom order</a>
+            <a href="/request-order.html">custom order</a>
           </li>
           <li class="hover:text-white/40 transition duration-300 ease">
             <a href="/">installation</a>
@@ -62,3 +63,6 @@
     </div>
   </div>
 </header>
+
+
+

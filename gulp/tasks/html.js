@@ -9,6 +9,10 @@ import { server } from "./serve.js";
 import { createSvgUtils } from "../../utils/twig-svg-functions.js";
 import { createPictureUtils } from "../../utils/twig-picture-function.js";
 
+import { createPageUtils } from "../../utils/twig-page-functions.js";
+
+const pageUtils = createPageUtils();
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "../..");
@@ -65,6 +69,12 @@ export const html = () => {
             name: "picture",
             func: pictureUtils.picture.bind(pictureUtils),
           },
+          {
+            name: "getCurrentPage",
+            func: function () {
+              return pageUtils.getCurrentPage(this.context._target.relative)
+            }
+          }
         ],
         errorLogToConsole: true,
       }),

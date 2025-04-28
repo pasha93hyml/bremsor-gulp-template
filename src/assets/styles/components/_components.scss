@@ -1,0 +1,43 @@
+@layer components {
+  .form-dropdown {
+    @apply overflow-y-scroll absolute top-[calc(100%_+_9px)] left-0 right-0 rounded-[10px] bg-white z-1 grid grid-rows-[0fr] overflow-hidden max-h-0 transition-all;
+    &.active {
+      @apply grid-rows-[1fr] max-h-32.5;
+    }
+  }
+  .select-color-dropdown {
+    @apply rounded-[10px] bg-white grid grid-rows-[0fr] overflow-hidden transition-all duration-700;
+    &.active {
+      @apply grid-rows-[1fr];
+
+      .select-color-content {
+        @apply px-3.5 pt-7 pb-4 visible;
+      }
+    }
+  }
+  .select-color-content {
+    @apply min-h-0 invisible transition-all duration-300;
+  }
+
+  .dashed-border {
+    @media screen and (min-width: 1024px) {
+      width: 100px;
+      height: 100px;
+      background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='white' stroke-width='3' stroke-dasharray='10' stroke-dashoffset='23' stroke-linecap='square'/%3e%3c/svg%3e");
+      border-radius: 10px;
+    }
+  }
+
+  .custom-pick-btn {
+    @apply relative rounded-[10px] overflow-hidden bg-black-second flex hover:bg-black-second/[.95] transition duration-300 cursor-pointer;
+    &.active {
+      .check-circle {
+        opacity: 1 !important;
+      }
+    }
+  }
+
+  .default-color-pick-btn {
+    @apply flex flex-col gap-[3px] cursor-pointer;
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "list": [
+    {
+      "src": "/assets/images/custom-order/custom-1.png",
+      "value": "blue",
+      "color": "#0045E8"
+    },
+    {
+      "src": "/assets/images/custom-order/custom-2.png",
+      "value": "black",
+      "color": "#020202"
+    },
+    {
+      "src": "/assets/images/custom-order/custom-3.png",
+      "value": "turquoise",
+      "color": "#00C5CA"
+    },
+    { "src": "/assets/images/custom-order/custom-4.png", "value": "yellow", "color": "#D59700" },
+    {
+      "src": "/assets/images/custom-order/custom-5.png",
+      "value": "orange",
+      "color": "#EC6C00"
+    },
+    {
+      "src": "/assets/images/custom-order/custom-6.png",
+      "value": "green",
+      "color": "#2EB900"
+    },
+    {
+      "src": "/assets/images/custom-order/custom-7.png",
+      "value": "pink",
+      "color": "#FC007B"
+    },
+    {
+      "src": "/assets/images/custom-order/custom-8.png",
+      "value": "red",
+      "color": "#C70000"
+    }
+  ]
+}

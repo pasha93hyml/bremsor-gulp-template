@@ -1,0 +1,5 @@
+<div class="{{ 'form-field js-select-color-container ' ~ form_field_classes }}" data-target="{{ name }}" data-required="{{ required is defined and required ? 'true' : 'false' }}">
+  <label for="{{ name }}" class="field-label hidden">{{ label }}</label>
+  <textarea id="{{ name }}" name="{{ name }}" placeholder="{{ placeholder }}" class="{{ 'field-textarea resize-none ' ~ textarea_classes }}"
+            {% if required is defined and required %}required{% endif %}></textarea>
+</div>

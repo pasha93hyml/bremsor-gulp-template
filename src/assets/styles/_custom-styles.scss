@@ -1,0 +1,10 @@
+.dropdown-trigger {
+  .dropdown-icon {
+    transition: transform 0.3s ease;
+  }
+  &.active {
+    .dropdown-icon {
+      transform: rotate(180deg);
+    }
+  }
+}

@@ -1,0 +1,87 @@
+<form class="brake-form js-form" method="post" enctype="multipart/form-data">
+    {% include 'components/form/form-group.twig' with (
+    {
+      title: 'Contact Information:',
+      fields: [
+        {type: 'text', name: 'first-name', label: 'First name*', placeholder: 'Your name here', required: 'true'},
+        {type: 'email', name: 'email', label: 'Email address*', placeholder: 'Enter here', required: 'true'},
+        {type: 'text', name: 'last-name', label: 'last name*', placeholder: 'Your name here', required: 'true'},
+        {type: 'tel', name: 'phone', label: 'Phone number*', placeholder: 'Enter here', required: 'true'},
+      ],
+      classes: "form-group flex flex-col gap-14 text-white mb-25",
+      fields_classes: "form-fields grid grid-cols-1 lg:grid-cols-2 grid-rows-2 gap-7.5",
+      title_classes: "form-group-title text-[32px] leading-[107%] font-bold"
+    }
+  ) %}
+
+  {% include 'components/form/form-group.twig' with {
+    title: 'Vehicle Information:',
+    subtitle: 'All fields are required',
+    info_title: 'Ensure clear images of both front and rear brakes',
+    fields: [
+      {type: 'select', name: 'make', label: 'Make', options: dropdowns.make, field_classes: 'select-field-wrap max-lg:col-span-full', required: 'true'},
+      {type: 'select', name: 'model', label: 'Model', options: dropdowns.model, field_classes: 'select-field-wrap max-lg:col-span-full', required: 'true'},
+      {type: 'select', name: 'year', label: 'Year', options: dropdowns.year, field_classes: 'lg:col-start-1 max-lg:col-span-full select-field-wrap', required: 'true'},
+      {type: 'select', name: 'info', label: 'Additional Info', options: dropdowns.info, field_classes: 'lg:col-start-2 select-field-wrap max-lg:col-span-full', required: 'true'},
+      {type: 'image-upload', name: 'front_brake', label: 'Front Brake Image', text: 'Upload Front Brake Image', field_classes: 'lg:col-start-3 lg:row-span-full', required: 'true'},
+      {type: 'image-upload', name: 'rear_brake', label: 'Rear Brake Image', text: 'Upload Rear Brake Image', field_classes: 'lg:col-start-4 lg:row-span-full', required: 'true'}
+    ],
+    classes: "form-group text-white flex flex-col gap-6.5 relative",
+    title_classes: "form-group-title text-[32px] leading-[107%] font-bold",
+    subtitle_classes: 'text-xl leading-[26px] mb-6.5',
+    fields_classes: 'grid grid-cols-2 lg:grid-cols-4 grid-rows-4 gap-7.5 lg:max-h-[270px]'
+  } %}
+
+  {% include 'components/form/form-group.twig' with {
+    title: 'Design Preferences:',
+    fields: [
+      {type: 'color-selector', name: 'color', label: 'Select Color'}
+    ],
+    classes: 'w-full flex flex-col text-white gap-16 mt-25 mb-16',
+    title_classes: 'text-[32px] font-bold'
+  } %}
+
+  {% include 'components/form/form-group.twig' with {
+    title: 'Describe your logo*',
+    fields: [
+      {
+        type: 'textarea',
+        name: 'logo_description',
+        label: 'Logo Description',
+        textarea_classes: 'lg:min-h-[270px] w-full border border-white p-4 rounded-[10px] text-sm font-normal leading-[180%] outline-none',
+        form_field_classes: 'grow-1 flex',
+        placeholder: 'Font, style, etc.',
+        required: 'true'
+      },
+      {
+        type: 'file-upload',
+        name: 'logo_file',
+        label: 'Upload Logo',
+        accept: '.svg,.png,.jpg,.jpeg,.pdf,.ai',
+        field_classes: 'w-[270px] aspect-1/1',
+        text: 'Upload a Sketch or Vector File. PNG, JPG, PDF, AI, SVG (Optional)',
+        required: 'true'
+      }
+    ],
+    classes: 'flex flex-col gap-5 text-white mb-28.5',
+    title_classes: 'text-sm leading-[18px] uppercase text-white',
+    fields_classes: 'w-full flex gap-7.5'
+  } %}
+
+  {% include 'components/form/form-group.twig' with {
+    title: 'Additional Requests',
+    fields: [
+      {
+        type: 'textarea',
+        name: 'additional_requests',
+        label: 'Additional Design Requests',
+        textarea_classes: 'lg:min-h-[270px] w-full border border-white p-4 rounded-[10px] text-sm font-normal leading-[180%] outline-none',
+        placeholder: "Any other details you'd like to include?"
+      }
+    ],
+    classes: 'flex flex-col gap-5 text-white mb-43',
+    form_footer: true
+  } %}
+
+  <button type="submit" class="form-submit-btn">Submit</button>
+</form>

@@ -1,0 +1,5 @@
+<div class="form-field flex flex-col gap-2.5">
+  <label for="{{ name }}" class="field-label text-sm leading-[18px] ml-5 uppercase">{{ label }}</label>
+  <input type="{{ type }}" id="{{ name }}" name="{{ name }}" class="field-input border border-white rounded-[100px] py-3.5 px-4 w-full text-sm leading-none outline-none js-select-color-container" data-target="{{ name }}" data-required="{{ required is defined and required ? 'true' : 'false' }}" placeholder="{{ placeholder }}"
+         {% if required is defined and required %}required{% endif %}>
+</div>
