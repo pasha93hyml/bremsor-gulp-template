@@ -1,32 +1,61 @@
 <div
-    class="flex flex-col items-center justify-center w-dvw h-dvh bg-black-second text-white relative z-100 loader-container" id="site-loader">
+    class="flex flex-col items-center justify-center w-dvw h-dvh bg-black-second text-white relative z-100 loader-container"
+    id="site-loader">
   <div class="absolute top-6 text-sm tracking-[0.2em] font-bold text-white uppercase">
     <img src="/assets/images/logo.png" alt="bremsor logo" width="169" height="15">
   </div>
 
   <div class="relative w-[170px] h-[182px] aspect-[170/182]">
-    <svg class="absolute inset-0 animate-spin-reverse loader-icon" width="182" height="182" viewBox="0 0 182 182"
-         fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-          d="M89.989 182C77.7329 182 65.9298 179.619 54.886 174.924C44.3617 170.39 34.7167 163.836 26.1774 155.436C17.7047 146.782 11.1903 136.871 6.72753 125.93C2.26471 114.989 0 103.272 0 91.1003C0 78.9286 2.26471 67.185 6.72753 56.177C11.1903 45.1556 17.718 35.2176 26.1108 26.6306L26.2307 26.5102C30.3871 22.4842 34.8633 18.8059 39.5392 15.5557C44.2818 12.2653 49.4507 9.46983 54.8993 7.26288C65.7699 2.44771 77.5864 0 89.989 0C108.213 0 125.185 5.31006 140.426 15.7831C148.725 21.4409 156.572 30.3088 159.556 33.8533L167.975 43.8715L149.351 43.711L147.579 41.5442C142.957 35.8864 137.615 31.0311 131.74 27.0853C125.665 23.0192 119.017 19.8224 111.957 17.5887C104.936 15.3684 97.5425 14.2449 89.989 14.2449C79.5447 14.2449 69.6599 16.2512 60.6144 20.2237C51.5156 24.223 43.4425 29.7738 36.6217 36.7424C29.7876 43.7244 24.3257 51.9771 20.3691 61.273C16.4392 70.5155 14.4409 80.5604 14.4409 91.1271C14.4409 101.694 16.4392 111.739 20.3691 120.981C24.3124 130.264 29.7743 138.476 36.5951 145.378C43.4159 152.28 51.5022 157.804 60.6011 161.803C69.6466 165.776 79.5314 167.782 89.9757 167.782C98.142 167.782 106.148 166.444 113.769 163.823C121.429 161.188 128.542 157.416 134.897 152.614C140.865 148.107 146.207 142.649 150.763 136.39L152.562 133.915H169.987L163.206 143.439C157.624 151.277 150.47 158.847 144.076 163.662C136.229 169.588 127.623 174.175 118.524 177.292C109.386 180.422 99.7806 182.013 89.9757 182.013L89.989 182Z"
-          fill="white"
-      />
+    <svg width="170" height="170" viewBox="0 0 170 170" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g class="animate-spin">
+        <path
+            id="outerC"
+            d="M152 85 A67 67 0 1 1 85 18"
+            stroke="white"
+            stroke-width="10"
+            fill="none"
+            transform="rotate(180 85 85)"
+        />
+{#        <animateTransform#}
+{#            xlink:href="#outerC"#}
+{#            attributeName="transform"#}
+{#            type="rotate"#}
+{#            from="0 85 85"#}
+{#            to="360 85 85"#}
+{#            dur="2s"#}
+{#            repeatCount="indefinite"#}
+{#        />#}
+      </g>
+      <g class="animate-spin-reverse">
+        <path
+            id="innerC"
+            d="M137 85
+         A52 52 0 1 1 85 33"
+            stroke="white"
+            stroke-width="10"
+            fill="none"
+            transform="rotate(180 85 85)"
+        />
+{#        <animateTransform#}
+{#            xlink:href="#innerC"#}
+{#            attributeName="transform"#}
+{#            type="rotate"#}
+{#            from="180 85 85"#}
+{#            to="-180 85 85"#}
+{#            dur="2s"#}
+{#            repeatCount="indefinite"#}
+{#        />#}
+      </g>
     </svg>
-    <svg
-        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[119px] h-[124px] animate-spin small-loader-icon"
-        width="124" height="124" viewBox="0 0 124 124" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-          d="M57.5086 123.912C45.1193 123.912 33.5826 120.3 23.2182 113.184C17.5564 109.332 12.2543 103.34 10.2427 100.946L1.8233 90.9276L19.5014 91.0747L21.2865 93.2416C24.204 96.7994 27.5478 99.8491 31.2512 102.337C35.0746 104.892 39.271 106.911 43.7205 108.316C48.13 109.707 52.7793 110.416 57.5352 110.416C64.1029 110.416 70.3242 109.158 75.9993 106.657C81.741 104.143 86.8166 100.638 91.1063 96.251C95.4092 91.8505 98.8596 86.6475 101.351 80.7756C103.829 74.9707 105.081 68.6441 105.081 61.9831C105.081 55.3221 103.829 48.9955 101.351 43.1906C98.8596 37.3321 95.4225 32.1558 91.1196 27.8088C86.8166 23.4617 81.7277 19.9841 75.986 17.4562C70.3109 14.9683 64.0896 13.6976 57.5219 13.6976C52.393 13.6976 47.3573 14.5403 42.5615 16.1855C37.739 17.844 33.2628 20.2249 29.253 23.2477C25.4962 26.0833 22.1258 29.5208 19.2616 33.4666L17.4631 35.9411H0.970703L7.75152 26.4177C9.56329 23.863 14.479 17.416 20.7536 12.6811C26.0824 8.66848 31.9173 5.55199 38.0987 3.42529C44.3066 1.29859 50.8477 0.215179 57.5086 0.215179C65.8347 0.215179 73.8545 1.83361 81.3547 5.03035C88.5085 8.12008 95.0629 12.5607 100.845 18.2587C106.626 24.1706 111.049 30.8851 114.086 38.3219C117.124 45.7587 118.656 53.717 118.656 61.9831C118.656 70.2491 117.124 78.2209 114.086 85.6978C111.049 93.1881 106.626 99.9427 100.924 105.774L100.805 105.895C97.9937 108.61 94.9696 111.098 91.8123 113.291C88.5751 115.538 85.0582 117.438 81.3547 118.936C73.9477 122.226 65.928 123.885 57.5086 123.885V123.912Z"
-          fill="white"
-      />
-    </svg>
+
   </div>
 
   <div class="absolute bottom-[177px] flex flex-col items-center justify-center gap-[17px]">
     <div class="text-white text-2xl progress-text font-sans" id="loader-progress-text">0%</div>
 
     <div class="w-[200px] h-[6px] bg-[#292929] rounded-full overflow-hidden mt-auto">
-      <div class="h-full bg-green-main rounded-full transition-all duration-10 progress-bar" id="loader-progress-bar"></div>
+      <div class="h-full bg-green-main rounded-full transition-all duration-10 progress-bar"
+           id="loader-progress-bar"></div>
     </div>
   </div>
 

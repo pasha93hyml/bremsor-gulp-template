@@ -16,15 +16,20 @@ export class ImageUpload {
     this.input.click();
   };
 
+  updateImageInstance = () => {
+    this.previewImage = this.preview.querySelector(".js-preview-image");
+  };
+
   handleDelete = (event) => {
     this.input.value = "";
-    this.previewImage.src = "";
+    this.previewImage.src = "#";
     this.placeholder.style.display = "flex";
     this.preview.style.display = "none";
     this.deleteBtn.classList.add("opacity-0");
     this.deleteBtn.classList.remove("opacity-100");
 
     this.preview.innerHTML = this.previewInnerHTML;
+    this.updateImageInstance();
   };
 
   handleChange = (event) => {
@@ -44,11 +49,22 @@ export class ImageUpload {
         };
         reader.readAsDataURL(file);
       } else if (fileExtension === "pdf") {
+        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
         const fileURL = URL.createObjectURL(file);
-        this.preview.innerHTML = `
+
+        if (isMobile) {
+          this.preview.innerHTML = `
+          <div class="flex flex-col items-center justify-center w-full sm:aspect-1/1 gap-5">
+           ${fileIcon()}
+          <div class="text-white text-sm text-balance text-center max-w-[200px]">Name: ${file.name}</div>
+          </div>`;
+        } else {
+          this.preview.innerHTML = `
         <div class="rounded-[10px] overflow-hidden w-full h-full aspect-1/1">
           <iframe src="${fileURL}" class="w-full h-full rounded-[10px] overflow-hidden"></iframe>
         </div>`;
+        }
+
         this.placeholder.style.display = "none";
         this.preview.style.display = "block";
         this.deleteBtn.classList.remove("opacity-0");
@@ -65,7 +81,6 @@ export class ImageUpload {
         this.deleteBtn.classList.add("opacity-100");
       }
 
-      // reader.readAsDataURL(files[0]);
     }
   };
 

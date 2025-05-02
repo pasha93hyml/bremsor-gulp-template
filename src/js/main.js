@@ -1,4 +1,6 @@
 import Plyr from "plyr";
+import KeenSlider from "keen-slider";
+import "img-comparison-slider";
 
 import { initHero } from "./components/hero.js";
 import { initHeader } from "./components/header.js";
@@ -11,13 +13,15 @@ import { Dropdown } from "./components/dropdown.js";
 import { ImageUpload } from "./components/image-upload.js";
 import { ColorPick } from "./components/color-pick.js";
 import { Form } from "./components/form.js";
-import {CustomBtn} from "./components/custom-btn.js";
+import { CustomBtn } from "./components/custom-btn.js";
+import { viewer } from "./components/3d-viewer.js";
+import { lazyLoading } from "./components/lazy-loading.js";
 
-import "img-comparison-slider";
 import "./libs/aos.js";
-import KeenSlider from "keen-slider";
 
 window.siteLoader = new Loader();
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
   window.siteLoader.init();
@@ -53,10 +57,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const customBtns = document.querySelectorAll('.js-custom-goto-btn')
-  if(customBtns && customBtns.length) {
-    customBtns.forEach(btn => {
-      new CustomBtn(btn)
-    })
+  const customBtns = document.querySelectorAll(".js-custom-goto-btn");
+  if (customBtns && customBtns.length) {
+    customBtns.forEach((btn) => {
+      new CustomBtn(btn);
+    });
+  }
+
+  const modelContainers = document.querySelectorAll(".js-model-viewer");
+  if (modelContainers && modelContainers.length > 0) {
+    lazyLoading(modelContainers, viewer);
   }
 });

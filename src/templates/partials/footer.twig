@@ -16,7 +16,7 @@
       </div>
     </div>
 
-    <div class="flex items-start gap-12 md:gap-7 flex-wrap md:justify-start">
+    <div class="flex items-start gap-12 md:gap-7 flex-wrap md:justify-start md:max-2xl:grid md:max-2xl:grid-cols-4">
       {% if footer.footer_lists %}
         {% for list in footer.footer_lists %}
           {% set isLast = loop.last %}
@@ -29,14 +29,14 @@
       {% include './../components/footer/footer-schedule.twig' with { className: 'md:ml-5 max-md:order-3 max-md:w-[calc(50%_-_30px)]' } only %}
 
       {% if footer.socials %}
-        {% include './../components/footer/footer-socials.twig' with { items: footer.socials, className: 'flex gap-5 mx-auto max-md:order-6' } only %}
+        {% include './../components/footer/footer-socials.twig' with { items: footer.socials, className: 'flex gap-5 mx-auto max-md:order-6 md:max-2xl:col-span-full md:max-2xl:mt-4' } only %}
       {% endif %}
 
-      {% include './../components/shared/sign-up.twig' with { className: 'flex flex-col gap-6 md:gap-[34px] text-white max-md:order-5 max-md:mt-[50px] max-md:mb-[30px] md:w-[unset] w-full' } only %}
+      {% include './../components/shared/sign-up.twig' with { className: 'flex flex-col gap-6 md:gap-[34px] text-white max-md:order-5 max-md:mt-[50px] max-md:mb-[30px] md:w-[unset] w-full md:max-2xl:row-start-4 md:max-2xl:col-span-full md:max-2xl:items-center' } only %}
     </div>
 
     <div
-        class="text-white flex items-center flex-wrap gap-y-9 md:gap-y-5 justify-center md:justify-between pb-9 md:pb-[109px] mt-[96px] md:mt-[158px]">
+        class="text-white flex items-center flex-wrap gap-y-9 md:gap-y-5 md:gap-x-10 justify-center md:justify-between pb-9 md:pb-[109px] mt-[96px] md:mt-[158px] md:max-2xl:mt-15 md:max-2xl:justify-center">
       <div class="max-md:order-3">
         © 2025 Bremsor Caliper Covers. All Rights Reserved
       </div>
@@ -59,7 +59,7 @@
         </button>
       </div>
       <div
-          class="flex flex-wrap lg:flex-nowrap items-center gap-[18px] max-md:justify-center md:gap-[21px] max-md:mt-4 max-md:order-2">
+          class="flex flex-wrap lg:flex-nowrap items-center gap-[18px] max-md:justify-center md:gap-[21px] max-md:mt-4 max-md:order-2 md:max-2xl:mx-auto">
         {% if footer.methods %}
           {% for method_src in footer.methods %}
 

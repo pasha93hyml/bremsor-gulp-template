@@ -1,0 +1,20 @@
+  <div id="debug-controls"
+       style="position: absolute; top: 10px; right: 10px; background: rgba(255, 255, 255, 0.8); padding: 15px; border-radius: 5px; z-index: 100; font-family: sans-serif; font-size: 12px; width: 200px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+    <h4>Model Rotation (Degrees)</h4>
+    <div class="control-row">
+      <label for="rotX">X:</label>
+      <input type="range" id="rotX" min="-180" max="180" value="0" step="1">
+      <span id="valX">0</span>°
+    </div>
+    <div class="control-row">
+      <label for="rotY">Y:</label>
+      <input type="range" id="rotY" min="-180" max="180" value="0" step="1">
+      <span id="valY">0</span>°
+    </div>
+    <div class="control-row">
+      <label for="rotZ">Z:</label>
+      <input type="range" id="rotZ" min="-180" max="180" value="0" step="1">
+      <span id="valZ">0</span>°
+    </div>
+    <button id="copyRotationBtn" style="margin-top: 10px; width: 100%; padding: 5px;">Copy Rotation (Radians)</button>
+  </div>

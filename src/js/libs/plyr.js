@@ -3,7 +3,10 @@ export const plyrInit = (PlyrInstance) => {
 
   if (playerElement) {
     const player = new PlyrInstance(playerElement, {
-      clickToPlay: true
+      clickToPlay: true,
+      muted: true,
+      resetOnEnd: true,
+      // controls: ['mute'],
     });
 
     if ("IntersectionObserver" in window) {
@@ -12,6 +15,9 @@ export const plyrInit = (PlyrInstance) => {
           entries.forEach((entry) => {
             if (entry.intersectionRatio < 0.5 && !player.paused) {
               player.pause();
+            }
+            if (entry.intersectionRatio > 0.5 && player.paused) {
+              player.play();
             }
           });
         },

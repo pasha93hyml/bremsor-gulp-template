@@ -14,7 +14,7 @@ export class ColorPick {
     this.btn = wrap.querySelector(".js-toggle-color-grid-btn");
     this.btnOpenIcon = this.btn.querySelector("svg");
     this.btnCloseIcon = this.btn.querySelector(".js-close-icon");
-    this.btnText = this.btn.querySelector('.js-toggle-color-picked-text');
+    this.btnText = this.btn.querySelector(".js-toggle-color-picked-text");
     this.dropdown = wrap.querySelector(".js-colors-dropdown");
 
     this.currentActive = null;
@@ -30,8 +30,8 @@ export class ColorPick {
       this.btnOpenIcon.classList.toggle("opacity-100", !this.isOpen);
       this.btnOpenIcon.classList.toggle("opacity-0", this.isOpen);
     } else {
-      this.btnOpenIcon.classList.add('hidden')
-      this.btnText.classList.remove('hidden')
+      this.btnOpenIcon.classList.add("hidden");
+      this.btnText.classList.remove("hidden");
     }
     this.btnCloseIcon.classList.toggle("opacity-0", !this.isOpen);
     this.btnCloseIcon.classList.toggle("opacity-110", this.isOpen);
@@ -69,6 +69,7 @@ export class ColorPick {
       this.isCurrentActiveDefault = null;
     }
     this.currentActive = button;
+    this.handleTriggerClick();
   };
 
   handleSelect = (event) => {

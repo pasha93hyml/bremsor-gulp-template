@@ -24,7 +24,8 @@ const paths = {
     data: path.join(rootDir, 'src/data/**/*.json'),
     svgIcons: path.join(rootDir, 'src/assets/icons/**/*.svg'),
     svgImages: path.join(rootDir, 'src/assets/svg/**/*.svg'),
-    videos: path.join(rootDir, 'src/assets/videos/**/*')
+    videos: path.join(rootDir, 'src/assets/videos/**/*'),
+    models: path.join(rootDir, 'src/assets/3d/**/*')
   },
   dist: {
     base: path.join(rootDir, 'dist'),
@@ -34,7 +35,8 @@ const paths = {
     fonts: path.join(rootDir, 'dist/assets/fonts'),
     svgSprite: path.join(rootDir, 'dist/assets/icons'),
     svgImages: path.join(rootDir, 'dist/assets/svg'),
-    videos: path.join(rootDir, 'dist/assets/videos')
+    videos: path.join(rootDir, 'dist/assets/videos'),
+    models: path.join(rootDir, 'dist/assets/3d')
   }
 };
 

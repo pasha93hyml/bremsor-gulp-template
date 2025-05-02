@@ -13,6 +13,7 @@ import { videos } from "./gulp/tasks/videos.js";
 import { robots } from "./gulp/tasks/robots.js";
 import { generateSitemap } from "./gulp/tasks/sitemap.js";
 import { favicons } from "./gulp/tasks/favicons.js";
+import {models} from "./gulp/tasks/models.js";
 
 const assets = gulp.parallel([
   images,
@@ -22,6 +23,7 @@ const assets = gulp.parallel([
   videos,
   robots,
   favicons,
+  models
 ]);
 
 const mainTasks = gulp.series([html, styles, scripts]);

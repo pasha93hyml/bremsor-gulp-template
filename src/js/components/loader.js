@@ -3,7 +3,6 @@ export default class Loader {
     this.loader = document.getElementById("site-loader");
     this.progressBar = document.getElementById("loader-progress-bar");
     this.progressText = document.getElementById("loader-progress-text");
-    this.isLoading = true;
     this.progress = 0;
     this.maxProgress = 99;
     this.speed = 10;
@@ -62,7 +61,6 @@ export default class Loader {
     setTimeout(() => {
       this.loader.style.display = "none";
       document.body.style.overflow = "";
-      this.isLoading = false;
     }, 500);
   }
 
@@ -72,7 +70,6 @@ export default class Loader {
     this.loader.classList.remove("opacity-0");
     this.loader.style.display = "flex";
     document.body.style.overflow = "hidden";
-    this.isLoading = true;
     this.startProgress();
   }
 

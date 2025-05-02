@@ -20,13 +20,14 @@
   <title>{% block title %}Bremsor{% endblock %}</title>
   <link rel="stylesheet" href="/assets/css/main.css">
 </head>
-<body class="font-rivera bg-black-second overflow-x-hidden min-h-screen">
-
-
+<body class="font-riviera bg-black-second overflow-x-hidden min-h-screen">
 
 
 {# LOADER #}
-{#{% include './../loader/loader.twig' %}#}
+{% if current_page != '3d-viewer' %}
+  {% include './../loader/loader.twig' %}
+
+{% endif %}
 
 
 <div class="hidden">{{ getSvgSprite() | raw }}</div>
