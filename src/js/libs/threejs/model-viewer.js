@@ -27,6 +27,8 @@ export class ModelViewerCSS3D {
       throw new Error("Container element is required.");
     }
 
+    console.log('test branch')
+
     this.container = containerElement;
     this.modelPath = modelPath;
     this.ensureContainerPositioning();
@@ -92,7 +94,7 @@ export class ModelViewerCSS3D {
     this.webglRenderer = webglRenderer;
     this.cssRenderer = cssRenderer;
 
-    this.cssRenderer.domElement.classList.add('touchscreen-scroll-events')
+    this.cssRenderer.domElement.classList.add("touchscreen-scroll-events");
 
     setupLights(this.scene);
 
@@ -142,7 +144,7 @@ export class ModelViewerCSS3D {
   setupControls() {
     if (this.cssRenderer && this.cssRenderer.domElement) {
       // fix issue with scroll at touch-screen devices
-      this.cssRenderer.domElement.classList.add('touchscreen-scroll-events')
+      this.cssRenderer.domElement.classList.add("touchscreen-scroll-events");
     } else {
       console.error(
         "CSS Renderer DOM element not available for setting touch-action.",
@@ -181,6 +183,10 @@ export class ModelViewerCSS3D {
     const loader = new GLTFLoader();
     const loadingElement = this.showLoader();
 
+    // progress bar
+    const progressBar = loadingElement.querySelector("#loader-progress-bar");
+    const progressText = loadingElement.querySelector("#loader-progress-text");
+
     return new Promise((resolve, reject) => {
       loader.load(
         this.modelPath,
@@ -191,11 +197,20 @@ export class ModelViewerCSS3D {
           this.scene.add(this.model);
           this.setupCameraPosition();
 
+          if(progressBar) progressBar.style.width = '100%'
+          if(progressText) progressText.textContent = "100%"
+
+
           if (loadingElement) loadingElement.remove();
           console.log("Model loaded.");
           resolve(this.model);
         },
-        undefined,
+        (progress) => {
+          const progressPercent = Math.round((progress.loaded / progress.total) * 100)
+
+          if(progressBar) progressBar.style.width = `${progressPercent}%`
+          if(progressText) progressText.textContent = `${progressPercent}%`
+        },
         (error) => {
           if (loadingElement) loadingElement.remove();
           console.error("Error loading GLTF model:", error);
@@ -277,7 +292,6 @@ export class ModelViewerCSS3D {
     this.camera.position.set(0, cameraY, effectiveDistance);
     this.controls.target.set(0, 0, 0);
 
-
     this.camera.lookAt(this.controls.target);
 
     this.controls.update();
@@ -335,15 +349,24 @@ export class ModelViewerCSS3D {
       loader = document.createElement("div");
       loader.className = "css3d-loader";
       loader.style.position = "absolute";
-      loader.style.top = "50%";
-      loader.style.left = "50%";
-      loader.style.transform = "translate(-50%, -50%)";
-      loader.style.color = "#333";
-      loader.style.backgroundColor = "rgba(255, 255, 255, 0.8)";
-      loader.style.padding = "10px";
-      loader.style.borderRadius = "5px";
+      loader.style.left = "0";
+      loader.style.width = "100%";
+      loader.style.height = "100%";
+      loader.style.display = "flex";
+      loader.style.alignItems = "center";
+      loader.style.justifyContent = "center";
       loader.style.zIndex = "10";
-      loader.textContent = "Loading 3D Model...";
+
+      loader.innerHTML = `
+      <div class="absolute bottom-[177px] flex flex-col items-center justify-center gap-[17px]">
+        <div class="text-white text-2xl progress-text font-sans" id="loader-progress-text">0%</div>
+        <div class="w-[200px] h-[6px] bg-[#292929] rounded-full overflow-hidden mt-auto">
+          <div class="h-full bg-green-main rounded-full transition-all duration-10 progress-bar"
+               id="loader-progress-bar" style="width: 0"></div>
+        </div>
+      </div>
+    `;
+
       this.container.appendChild(loader);
     }
     return loader;
@@ -555,7 +578,6 @@ export class ModelViewerCSS3D {
       );
     }
   }
-
 
   // --- FOR DEBUGGING MODE ---
   /**
