@@ -27,8 +27,6 @@ export class ModelViewerCSS3D {
       throw new Error("Container element is required.");
     }
 
-    console.log('test branch')
-
     this.container = containerElement;
     this.modelPath = modelPath;
     this.ensureContainerPositioning();
