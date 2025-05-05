@@ -76,11 +76,11 @@ document.addEventListener("DOMContentLoaded", () => {
         autoRotateSpeed: 2.0,
         pauseRotationOnHover: true,
         enableZoom: false,
-        defaultZoom: 0.6,
+        defaultZoom: 0.9,
         highPerformanceMode: true,
         showFPS: false,
         hideAnnotationsBehindModel: true,
-        enableLOD: true,
+        enableLOD: false,
         debugMode: true,
       },
     };
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
       viewer.loadPromise.then(() => {
         // viewer.debug.enablePointFinding(true)
         viewer.addAnnotation({
-          position: new THREE.Vector3(-0.1966, 0.1254, 0.1825),
+          position: new THREE.Vector3(-0.1963, 0.1267, 0.1807),
           htmlContent: `<div class="annotation-wrap-1">
             <p>Custom logo</p>
             <div class="annotation-svg-container">
@@ -104,9 +104,10 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>`,
           cssClass: "model-annotation-3d",
           faceCamera: true,
+          id: "logo",
         });
         viewer.addAnnotation({
-          position: new THREE.Vector3(0.0917, 0.1028, 0.1195),
+          position: new THREE.Vector3(0.0744, 0.1161, 0.1213),
           htmlContent: `<div class="annotation-wrap-2">
             <p>Unique shape</p>
             <div class="annotation-svg-container">
@@ -119,9 +120,10 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>`,
           cssClass: "model-annotation-3d",
           faceCamera: true,
+          id: "shape",
         });
         viewer.addAnnotation({
-          position: new THREE.Vector3(0.0154, 0.1266, 0.2528),
+          position: new THREE.Vector3(0.0089, 0.1269, 0.2539),
           htmlContent: `<div class="annotation-wrap-3">
             <p>Color of your choice</p>
             <div class="annotation-svg-container">
@@ -134,6 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>`,
           cssClass: "model-annotation-3d",
           faceCamera: true,
+          id: "color",
         });
       });
     } catch (err) {

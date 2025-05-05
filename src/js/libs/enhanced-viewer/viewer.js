@@ -42,7 +42,7 @@ export class ModelViewer {
       enableZoom: false,
       defaultZoom: 1.0,
       // initialRotation: [0.8901, -0.8203, 0.0524],
-      initialRotation: [1.3090, -0.9250, 0.1571],
+      initialRotation: [1.5184, -0.9599, 0.4363],
       highPerformanceMode: false,
       showFPS: false,
       enableLOD: true,
@@ -90,7 +90,7 @@ export class ModelViewer {
     const width = this.container.clientWidth;
     const height = this.container.clientHeight;
 
-    this.sceneManager = new SceneManager({fov: 65});
+    this.sceneManager = new SceneManager({fov: 60});
 
     this.rendererManager = new RendererManager(width, height, this.container, {
       highPerformanceMode: this.options.highPerformanceMode,
