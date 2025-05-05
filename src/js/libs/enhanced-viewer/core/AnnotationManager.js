@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { CSS3DObject } from "three/examples/jsm/renderers/CSS3DRenderer.js";
+import { log } from "three/tsl";
 
 /**
  * manages html annotations in 3d space
@@ -41,7 +42,8 @@ export class AnnotationManager {
    * @param {number} config.scaleFactor - scale factor to apply
    * @param {string} [config.cssClass="model-annotation"] - CSS class for styling purposes
    * @param {boolean} [config.faceCamera=true] - whether annotation should face camera
-   * @param {number} [config.visibilityDistance=2.4] - distance while annotation goes invisible
+   * @param {number} [config.visibilityDistance=2.4] - max distance after annotation goes invisible
+   * @param {number} config.minVisibilityDistance - min distance after annotation goes invisible
    * @param {string} config.id - target name for annotation
    * @returns {Object} the created annotation object with control methods
    */
@@ -61,25 +63,29 @@ export class AnnotationManager {
     element.className = config.cssClass || "model-annotation";
     element.style.pointerEvents = "auto";
     element.style.cursor = "pointer";
-    element.style.transform = "translateX(150%)";
 
     element.style.opacity = "0";
     element.style.transition = "opacity 0.2s ease-in-out";
+    element.dataset.target = config.id;
 
     const cssObject = new CSS3DObject(element);
     cssObject.position.copy(config.position);
 
-    const scaleFactor = (config.scaleFactor || 1) / 4500;
+    const isMobile = window.innerWidth < 768;
+
+    const scaleFactor = isMobile ? (config.scaleFactor || 1) / 3000 : (config.scaleFactor || 1) / 4500;
     cssObject.scale.set(scaleFactor, scaleFactor, scaleFactor);
 
     config.parent.add(cssObject);
+
 
     const annotation = {
       id: `annotation-${this.annotations.length}`,
       object: cssObject,
       element: element,
       faceCamera: config.faceCamera !== false,
-      visibilityDistance: config.visibilityDistance || 2.4,
+      visibilityDistance: config.visibilityDistance || isMobile ? 1.8 : 2.4,
+      minVisibilityDistance: config.minVisibilityDistance,
       isVisible: false,
       target: config.id,
 
@@ -87,6 +93,7 @@ export class AnnotationManager {
         if (annotation.isVisible === visible) return;
         element.style.opacity = visible ? "1" : "0";
         element.style.pointerEvents = visible ? "auto" : "none";
+        annotation.isVisible = visible;
       },
 
       setContent: (htmlContent) => {
@@ -168,10 +175,6 @@ export class AnnotationManager {
   _updateAnnotationVisibility(model) {
     this.camera.getWorldPosition(this.cameraPosition);
 
-    const shapeAnnotation = this.annotations[this.annotations.findIndex(a => a.target === 'shape')]
-    const logoAnnotation = this.annotations[this.annotations.findIndex(a => a.target === 'logo')]
-    const colorAnnotation = this.annotations[this.annotations.findIndex(a => a.target === 'color')]
-
     this.annotations.forEach((annotation) => {
       const object = annotation.object;
       object.getWorldPosition(this.annotationWorldPosition);
@@ -189,38 +192,16 @@ export class AnnotationManager {
       const intersects = this.raycaster.intersectObject(model, true); // performance ???
 
       const isBehindModel = intersects.length > 0;
-      const isTooFar = distanceToAnnotation > annotation.visibilityDistance;
-
-      let condition;
-      if(annotation.target === 'logo') {
-        condition = distanceToAnnotation < 2.023 && distanceToAnnotation > 2.75
-        // console.log('isBehind logo', isBehindModel)
-      }
-      if(annotation.target === 'shape') {
-        console.log('isBehind shape', distanceToAnnotation)
-        condition = distanceToAnnotation > 2 && distanceToAnnotation < 2.5 && isBehindModel
-        console.log(condition)
-      }
-      if(annotation.target === 'color') {
-        // console.log('isBehind color', isBehindModel)
-      }
 
       const isMobile = window.innerWidth <= 768;
-      const effectiveVisibilityDistance = isMobile ? (annotation.visibilityDistance * 1.5) : annotation.visibilityDistance;
-      const isBeyondEffectiveDistance = distanceToAnnotation > effectiveVisibilityDistance;
+      const effectiveVisibilityDistance = isMobile
+        ? annotation.visibilityDistance * 1.5
+        : annotation.visibilityDistance;
+      const isBeyondEffectiveDistance =
+        distanceToAnnotation > effectiveVisibilityDistance;
 
-      const isVisible = !isBehindModel && !isBeyondEffectiveDistance;
+      const isVisible = !isBeyondEffectiveDistance && !isBehindModel;
 
-      // old version
-      // const mobileVisibilityDistance = isMobile
-      //   ? 3.7
-      //   : annotation.visibilityDistance;
-      //
-      // const isVisible = !(
-      //   isBehindModel &&
-      //   (isTooFar ||
-      //     (isMobile && distanceToAnnotation > mobileVisibilityDistance))
-      // );
       annotation.setVisible(isVisible);
     });
   }

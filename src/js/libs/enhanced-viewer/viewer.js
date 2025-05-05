@@ -25,6 +25,8 @@ export class ModelViewer {
    * @param {boolean} [config.options.showFPS=flase] - show FPS
    * @param {boolean} [config.options.enableLOD=true] - enable level of detail(LOD) optimization
    * @param {boolean} [config.options.debugMode=false] - enable or disable debug mode
+   * @param {Array<string>} [config.options.colorExclusionNames=[]] - Mesh names to exclude from color changes.
+   * @param {Array<string>} [config.options.modelColors] - Optional array of colors to cycle through.
    */
   constructor(config) {
     if (!config?.container) {
@@ -34,6 +36,17 @@ export class ModelViewer {
     this.container = config.container;
     this.modelPath = config.modelPath;
 
+    // default colors if not provided in options
+    const defaultModelColors = [
+      "#0049E9",
+      "#00C5CA",
+      "#D69800",
+      "#C60000",
+      "#FC007C",
+      "#2FB900",
+      "#EB6D00",
+    ];
+
     this.options = {
       hideAnnotationsBehindModel: true,
       enableAutoRotate: true,
@@ -41,14 +54,22 @@ export class ModelViewer {
       pauseRotationOnHover: true,
       enableZoom: false,
       defaultZoom: 1.0,
-      // initialRotation: [0.8901, -0.8203, 0.0524],
       initialRotation: [1.5184, -0.9599, 0.4363],
       highPerformanceMode: false,
       showFPS: false,
       enableLOD: true,
       debugMode: true,
+      colorExclusionNames: ["Layer002", "Layer0"],
+      modelColors: defaultModelColors,
       ...config.options,
     };
+
+    this.modelColors = Array.isArray(this.options.modelColors)
+      ? this.options.modelColors
+      : defaultModelColors;
+    this._colorExclusionNames = Array.isArray(this.options.colorExclusionNames)
+      ? this.options.colorExclusionNames
+      : [];
 
     this._ensureContainerPositioning();
 
@@ -68,6 +89,7 @@ export class ModelViewer {
     this.isDisposed = false;
     this.loadPromise = null;
     this.animationFrameId = null;
+    this._currentColorIndex = -1;
 
     this._initialize();
   }
@@ -90,7 +112,7 @@ export class ModelViewer {
     const width = this.container.clientWidth;
     const height = this.container.clientHeight;
 
-    this.sceneManager = new SceneManager({fov: 60});
+    this.sceneManager = new SceneManager({ fov: 60 });
 
     this.rendererManager = new RendererManager(width, height, this.container, {
       highPerformanceMode: this.options.highPerformanceMode,
@@ -117,6 +139,36 @@ export class ModelViewer {
         defaultZoom: this.options.defaultZoom,
       },
     );
+
+    // FUNCTIONALITY FOR HANDLE CLICKS INSIDE CSS3DRENDERER DOM ELEMENT
+
+    if (this.rendererManager && this.rendererManager.cssRenderer) {
+      this.rendererManager.cssRenderer.domElement.addEventListener(
+        "pointerdown",
+        (event) => {
+          const targetElement = event.target;
+          const isClickable = targetElement.closest(".clickable-annotation");
+
+          if (isClickable) {
+            event.stopPropagation();
+          }
+        },
+        true,
+      );
+
+      this.rendererManager.cssRenderer.domElement.addEventListener(
+        "click",
+        (event) => {
+          const clickableElement = event.target.closest(
+            ".clickable-annotation.js-model-color-change",
+          );
+
+          if (clickableElement) {
+            this.cycleModelColor();
+          }
+        },
+      );
+    }
 
     this.autoRotation = new AutoRotation(
       this.cameraController.controls,
@@ -166,7 +218,7 @@ export class ModelViewer {
         );
         if (this.options.debugMode) {
           this._initializeDebugTools();
-          this.debug.enablePointFinding()
+          this.debug.enablePointFinding();
         }
       },
       onError: (error) => {
@@ -262,6 +314,24 @@ export class ModelViewer {
     };
 
     animate();
+  }
+
+  /**
+   * changes the model's color to the next one in the modelColors array
+   */
+  cycleModelColor() {
+    if (!this.modelManager || !this.modelManager.model) return;
+
+    if (!this.modelColors || this.modelColors.length === 0) return;
+
+    this._currentColorIndex++;
+    if (this._currentColorIndex >= this.modelColors.length) {
+      this._currentColorIndex = 0;
+    }
+
+    const nextColor = this.modelColors[this._currentColorIndex];
+
+    this.modelManager.setModelColor(nextColor, this._colorExclusionNames);
   }
 
   /**
@@ -375,23 +445,32 @@ export class ModelViewer {
    * @private
    */
   _initializeDebugTools() {
-    // Ensure all required components are ready
-    if (!this.sceneManager || !this.cameraController || !this.rendererManager || !this.modelManager?.model || !this.container) {
-      console.warn("Cannot initialize debug tools - required components missing.");
+    if (
+      !this.sceneManager ||
+      !this.cameraController ||
+      !this.rendererManager ||
+      !this.modelManager?.model ||
+      !this.container
+    ) {
+      console.warn(
+        "Cannot initialize debug tools - required components missing.",
+      );
       return;
     }
 
-    this.debugTools = new DebugTools({
-      scene: this.sceneManager.scene,
-      camera: this.sceneManager.camera,
-      renderer: this.rendererManager.webglRenderer, // Pass WebGL renderer if needed
-      model: this.modelManager.model,
-      container: this.container, // Pass the main container
-      eventSourceElement: this.rendererManager.cssRenderer.domElement, // Element for capturing clicks/events
-    }, {
-      // Optional: Pass debug options from viewer config if needed
-      // markerSize: this.options.debugMarkerSize || 0.02
-    });
+    this.debugTools = new DebugTools(
+      {
+        scene: this.sceneManager.scene,
+        camera: this.sceneManager.camera,
+        renderer: this.rendererManager.webglRenderer, // Pass WebGL renderer if needed
+        model: this.modelManager.model,
+        container: this.container, // Pass the main container
+        eventSourceElement: this.rendererManager.cssRenderer.domElement, // Element for capturing clicks/events
+      },
+      {
+        // Optional: Pass debug options from viewer config if needed
+      },
+    );
 
     console.log(
       "Debug tools initialized. Use viewer.debug.* methods to access debugging features.",
@@ -426,9 +505,7 @@ export class ModelViewer {
        */
       setModelRotation: (rotation) => {
         if (this.debugTools) this.debugTools.setModelRotation(rotation);
-        // Also update the ModelManager's internal state if necessary,
-        // though DebugTools modifies the model directly here.
-        // if (this.modelManager) this.modelManager.setRotation(rotation);
+
         return this.debug;
       },
 
@@ -439,8 +516,6 @@ export class ModelViewer {
       getModelRotation: () => {
         return this.debugTools ? this.debugTools.getModelRotation() : null;
       },
-
-      // Add other debug methods as needed
     };
 
     // Example: Automatically enable controls if debugMode is true in options
@@ -491,5 +566,7 @@ export class ModelViewer {
     }
 
     this.container = null;
+    this.modelColors = [];
+    this._colorExclusionNames = [];
   }
 }

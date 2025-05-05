@@ -15,13 +15,10 @@ import { ImageUpload } from "./components/image-upload.js";
 import { ColorPick } from "./components/color-pick.js";
 import { Form } from "./components/form.js";
 import { CustomBtn } from "./components/custom-btn.js";
-import { lazyLoading } from "./components/lazy-loading.js";
 
 import { ModelViewer } from "./libs/enhanced-viewer/viewer.js";
 
 import "./libs/aos.js";
-
-// import { viewer } from "./components/3d-viewer.js";
 
 window.siteLoader = new Loader();
 
@@ -68,20 +65,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const modelContainer = document.querySelector(".js-model-viewer");
   if (modelContainer) {
+    const isMobile = window.innerWidth < 786;
+
     const viewerConfig = {
       container: modelContainer,
       modelPath: modelContainer.dataset.model,
+      shouldDisappear: true,
       options: {
-        enableAutoRotate: false,
-        autoRotateSpeed: 2.0,
+        enableAutoRotate: true,
+        autoRotateSpeed: 1.0,
         pauseRotationOnHover: true,
         enableZoom: false,
-        defaultZoom: 0.9,
+        defaultZoom: isMobile ? 1.2 : 0.9,
         highPerformanceMode: true,
         showFPS: false,
         hideAnnotationsBehindModel: true,
         enableLOD: false,
-        debugMode: true,
+        debugMode: false,
       },
     };
 
@@ -89,9 +89,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const viewer = new ModelViewer(viewerConfig);
 
       viewer.loadPromise.then(() => {
-        // viewer.debug.enablePointFinding(true)
         viewer.addAnnotation({
-          position: new THREE.Vector3(-0.1963, 0.1267, 0.1807),
+          position: new THREE.Vector3(-0.1991, 0.1259, 0.175),
           htmlContent: `<div class="annotation-wrap-1">
             <p>Custom logo</p>
             <div class="annotation-svg-container">
@@ -107,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
           id: "logo",
         });
         viewer.addAnnotation({
-          position: new THREE.Vector3(0.0744, 0.1161, 0.1213),
+          position: new THREE.Vector3(0.065, 0.1269, 0.116),
           htmlContent: `<div class="annotation-wrap-2">
             <p>Unique shape</p>
             <div class="annotation-svg-container">
@@ -123,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
           id: "shape",
         });
         viewer.addAnnotation({
-          position: new THREE.Vector3(0.0089, 0.1269, 0.2539),
+          position: new THREE.Vector3(0.0114, 0.1269, 0.2551),
           htmlContent: `<div class="annotation-wrap-3">
             <p>Color of your choice</p>
             <div class="annotation-svg-container">
@@ -134,7 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
               </svg>
             </div>
           </div>`,
-          cssClass: "model-annotation-3d",
+          cssClass: "model-annotation-3d clickable-annotation js-model-color-change",
           faceCamera: true,
           id: "color",
         });

@@ -248,6 +248,47 @@ export class ModelManager {
   }
 
   /**
+   * Sets the color of all materials in the model.
+   * @param {string | number | THREE.Color} colorValue - The color to set ('#ff0000', 0xff0000, or new THREE.Color(1, 0, 0))
+   * @param {string | string[]} [excludeNames=[]] - mesh name or array of mesh manes to exclude from color change. Case-sensitive
+   */
+  setModelColor(colorValue, excludeNames) {
+    if (!this.model) {
+      console.warn("Model not loaded yet.");
+      return;
+    }
+
+    const newColor = new THREE.Color(colorValue);
+
+    const exclusionList = Array.isArray(excludeNames)
+      ? excludeNames
+      : [excludeNames];
+
+    this.model.traverse((node) => {
+      if (node.isMesh && exclusionList.includes(node.name)) {
+        // console.log('skipping color changing for:', node.name)
+        return;
+      }
+
+      if (node.isMesh && node.material) {
+        const processMaterial = (material) => {
+          if (material.color && material.color instanceof THREE.Color) {
+            material.color.set(newColor);
+          } else {
+            // console.log(`Material type ${material.type} on mesh ${node.name || node.uuid} does not have a standard .color property.`);
+          }
+        };
+
+        if (Array.isArray(node.material)) {
+          node.material.forEach(processMaterial);
+        } else {
+          processMaterial(node.material);
+        }
+      }
+    });
+  }
+
+  /**
    * disposes model resources
    */
   dispose() {
@@ -300,10 +341,10 @@ export class ModelManager {
       "alphaMap",
     ];
 
-    textures.forEach(textureName => {
-      if(material[textureName]) {
-        material[textureName].dispose()
+    textures.forEach((textureName) => {
+      if (material[textureName]) {
+        material[textureName].dispose();
       }
-    })
+    });
   }
 }

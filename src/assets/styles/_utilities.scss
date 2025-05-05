@@ -75,6 +75,15 @@
     position: relative;
     transition: all 0.4s ease-in-out;
 
+    width: 50dvw;
+    aspect-ratio: 1 / 1;
+
+    height: unset !important;
+
+    @media screen and (max-width: 768px) {
+      width: 100%;
+    }
+
     &.is-fullscreen {
       position: fixed;
       top: 0;
@@ -88,6 +97,7 @@
 
   .model-annotation-3d {
     transition: opacity 0.5s ease-in;
+    pointer-events: auto !important;
   }
 
   .annotation-wrap {
@@ -125,12 +135,14 @@
       }
     }
 
-    &-1,
+    &-1 {
+      transform: translateX(-50%);
+    }
     &-3 {
-      transform: translateX(-80%);
+      transform: translateX(-50%);
     }
     &-2 {
-      transform: translateX(100%);
+      transform: translateX(50%);
       flex-direction: row-reverse;
     }
   }
@@ -159,6 +171,7 @@
   }
 
   .touchscreen-scroll-events {
+      touch-action: auto !important;
     @media (pointer: coarse) {
       touch-action: pan-y !important;
     }

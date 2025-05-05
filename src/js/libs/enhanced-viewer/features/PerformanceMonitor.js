@@ -8,10 +8,10 @@ export class PerformanceMonitor {
    */
   constructor(container) {
     this.container = container;
-    this.visible = true;
+    this.visible = false;
 
-    this.fpsElement = this._createFPSCounter();
-    this.container.appendChild(this.fpsElement);
+    // this.fpsElement = this._createFPSCounter();
+    // this.container.appendChild(this.fpsElement);
 
     this.frames = 0;
     this.lastTime = performance.now();
