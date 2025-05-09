@@ -86,7 +86,7 @@ export class AnnotationManager {
       faceCamera: config.faceCamera !== false,
       visibilityDistance: config.visibilityDistance || isMobile ? 1.8 : 2.4,
       minVisibilityDistance: config.minVisibilityDistance,
-      isVisible: false,
+      isVisible: true,
       target: config.id,
 
       setVisible: (visible) => {

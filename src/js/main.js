@@ -72,15 +72,15 @@ document.addEventListener("DOMContentLoaded", () => {
       modelPath: modelContainer.dataset.model,
       shouldDisappear: true,
       options: {
-        enableAutoRotate: true,
+        enableAutoRotate: false,
         autoRotateSpeed: 1.0,
-        pauseRotationOnHover: true,
+        pauseRotationOnHover: false,
         enableZoom: false,
-        defaultZoom: isMobile ? 1.2 : 0.9,
+        defaultZoom: isMobile ? 1.2 : 1.0,
         highPerformanceMode: true,
         showFPS: false,
-        hideAnnotationsBehindModel: true,
-        enableLOD: false,
+        hideAnnotationsBehindModel: false,
+        enableLOD: true,
         debugMode: false,
       },
     };
@@ -89,54 +89,54 @@ document.addEventListener("DOMContentLoaded", () => {
       const viewer = new ModelViewer(viewerConfig);
 
       viewer.loadPromise.then(() => {
-        viewer.addAnnotation({
-          position: new THREE.Vector3(-0.1991, 0.1259, 0.175),
-          htmlContent: `<div class="annotation-wrap-1">
-            <p>Custom logo</p>
-            <div class="annotation-svg-container">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <g class="annotation-svg">
-                  <path d="M12 5V19M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" />
-                </g>
-              </svg>
-            </div>
-          </div>`,
-          cssClass: "model-annotation-3d",
-          faceCamera: true,
-          id: "logo",
-        });
-        viewer.addAnnotation({
-          position: new THREE.Vector3(0.065, 0.1269, 0.116),
-          htmlContent: `<div class="annotation-wrap-2">
-            <p>Unique shape</p>
-            <div class="annotation-svg-container">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <g class="annotation-svg">
-                  <path d="M12 5V19M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" />
-                </g>
-              </svg>
-            </div>
-          </div>`,
-          cssClass: "model-annotation-3d",
-          faceCamera: true,
-          id: "shape",
-        });
-        viewer.addAnnotation({
-          position: new THREE.Vector3(0.0114, 0.1269, 0.2551),
-          htmlContent: `<div class="annotation-wrap-3">
-            <p>Color of your choice</p>
-            <div class="annotation-svg-container">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <g class="annotation-svg">
-                  <path d="M12 5V19M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" />
-                </g>
-              </svg>
-            </div>
-          </div>`,
-          cssClass: "model-annotation-3d clickable-annotation js-model-color-change",
-          faceCamera: true,
-          id: "color",
-        });
+        // viewer.addAnnotation({
+        //   position: new THREE.Vector3(0, 0, 0),
+        //   htmlContent: `<div class="annotation-wrap-1">
+        //     <p>Custom logo</p>
+        //     <div class="annotation-svg-container">
+        //       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        //         <g class="annotation-svg">
+        //           <path d="M12 5V19M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" />
+        //         </g>
+        //       </svg>
+        //     </div>
+        //   </div>`,
+        //   cssClass: "model-annotation-3d",
+        //   faceCamera: true,
+        //   id: "logo",
+        // });
+        // viewer.addAnnotation({
+        //   position: new THREE.Vector3(0.0980, 0.1058, 0.1328),
+        //   htmlContent: `<div class="annotation-wrap-2">
+        //     <p>Unique shape</p>
+        //     <div class="annotation-svg-container">
+        //       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        //         <g class="annotation-svg">
+        //           <path d="M12 5V19M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" />
+        //         </g>
+        //       </svg>
+        //     </div>
+        //   </div>`,
+        //   cssClass: "model-annotation-3d",
+        //   faceCamera: true,
+        //   id: "shape",
+        // });
+        // viewer.addAnnotation({
+        //   position: new THREE.Vector3(0.0467, 0.1042, 0.2661),
+        //   htmlContent: `<div class="annotation-wrap-3">
+        //     <p>Color of your choice</p>
+        //     <div class="annotation-svg-container">
+        //       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        //         <g class="annotation-svg">
+        //           <path d="M12 5V19M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" />
+        //         </g>
+        //       </svg>
+        //     </div>
+        //   </div>`,
+        //   cssClass: "model-annotation-3d clickable-annotation js-model-color-change",
+        //   faceCamera: true,
+        //   id: "color",
+        // });
       });
     } catch (err) {
       console.log("Failed to initialize ModelViewer:", err);

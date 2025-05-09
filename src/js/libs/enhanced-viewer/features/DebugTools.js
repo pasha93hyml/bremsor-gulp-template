@@ -30,7 +30,7 @@ export class DebugTools {
       enableCopyToClipboard: true,
       markerDuration: 2000,
       markerSize: 0.02, // Relative size
-      ...options
+      ...options,
     };
 
     // State tracking
@@ -40,14 +40,175 @@ export class DebugTools {
     this.markers = [];
     this.rotationControlsUI = null;
     this.coordinateDisplay = null; // Create lazily
+    this.cameraInfoUI = null;
 
     // Calculate marker size based on model dimensions once available
     this.actualMarkerSize = 0.05; // Default fallback
     if (this.model) {
       const box = new THREE.Box3().setFromObject(this.model);
       const size = box.getSize(new THREE.Vector3());
-      this.actualMarkerSize = Math.max(size.x, size.y, size.z) * this.options.markerSize;
+      this.actualMarkerSize =
+        Math.max(size.x, size.y, size.z) * this.options.markerSize;
     }
+  }
+
+  /**
+   * Creates the UI for displaying camera information within the container
+   * @private
+   */
+  _createCameraInfoUI() {
+    if (this.cameraInfoUI) return; // Singleton
+
+    const ui = document.createElement("div");
+    ui.className = "model-viewer-camera-info";
+    // Styles for positioning within the container
+    ui.style.position = "absolute";
+    ui.style.top = "10px"; // Adjust as needed, maybe below rotation controls
+    ui.style.right = "10px";
+    ui.style.backgroundColor = "rgba(0, 0, 0, 0.75)";
+    ui.style.color = "white";
+    ui.style.padding = "10px";
+    ui.style.borderRadius = "4px";
+    ui.style.zIndex = "101";
+    ui.style.fontFamily = "monospace";
+    ui.style.fontSize = "12px";
+    ui.style.minWidth = "250px"; // Adjust width as needed
+    ui.style.textAlign = "left";
+
+    ui.innerHTML = `
+      <div style="font-weight: bold; margin-bottom: 8px;">Camera Info:</div>
+      <div style="margin-bottom: 5px;">
+        Pos: <span id="cam-pos-x">0.00</span>, <span id="cam-pos-y">0.00</span>, <span id="cam-pos-z">0.00</span>
+      </div>
+      <div style="margin-bottom: 8px;">
+        Target: <span id="cam-target-x">0.00</span>, <span id="cam-target-y">0.00</span>, <span id="cam-target-z">0.00</span>
+      </div>
+      <button id="copy-camera-view-btn" style="padding: 5px 10px; background-color: #2196F3; border: none; border-radius: 3px; color: white; cursor: pointer; width: 100%;">
+        Copy Camera View
+      </button>
+    `;
+
+    // Add to container and store reference
+    this.container.appendChild(ui);
+    this.cameraInfoUI = ui;
+    this.cameraInfoUI.style.display = "none"; // Start hidden
+
+    // Add event listener to the copy button
+    const copyBtn = ui.querySelector("#copy-camera-view-btn");
+    if (copyBtn) {
+      copyBtn.addEventListener("click", () => {
+        if (!this.camera) return;
+
+        const camPos = this.camera.position;
+        // Get target (lookAt point). OrbitControls has a .target property.
+        // If not using OrbitControls directly, you might need to raycast from camera center.
+        // Assuming your CameraController exposes controls or a target:
+        let camTarget = new THREE.Vector3(0, 0, 0); // Default
+        if (
+          this.camera.parent &&
+          this.camera.parent.isObject3D &&
+          this.camera.parent.target instanceof THREE.Vector3
+        ) {
+          // If camera is child of OrbitControls object, target might be there
+          camTarget.copy(this.camera.parent.target);
+        } else if (this.camera.userData.orbitControlsTarget) {
+          // Or if you store it in userData
+          camTarget.copy(this.camera.userData.orbitControlsTarget);
+        } else {
+          // Fallback: Get point in front of camera if no explicit target
+          this.camera
+            .getWorldDirection(camTarget)
+            .multiplyScalar(5)
+            .add(camPos); // 5 units in front
+          console.warn(
+            "Camera target not explicitly found, using point in front of camera.",
+          );
+        }
+
+        const posStr = `new THREE.Vector3(${camPos.x.toFixed(3)}, ${camPos.y.toFixed(3)}, ${camPos.z.toFixed(3)})`;
+        const targetStr = `new THREE.Vector3(${camTarget.x.toFixed(3)}, ${camTarget.y.toFixed(3)}, ${camTarget.z.toFixed(3)})`;
+
+        const viewConfig = `
+// Camera View Configuration:
+const cameraPosition = ${posStr};
+const cameraTarget = ${targetStr};
+
+// Usage (e.g., in your ModelViewer or CameraController setup):
+// viewer.cameraController.setPositionAndTarget(cameraPosition, cameraTarget);
+// OR
+// camera.position.copy(cameraPosition);
+// camera.lookAt(cameraTarget);
+// if (controls) controls.target.copy(cameraTarget);
+        `;
+
+        navigator.clipboard.writeText(viewConfig.trim()).then(() => {
+          const originalText = copyBtn.textContent;
+          copyBtn.textContent = "Copied!";
+          copyBtn.disabled = true;
+          setTimeout(() => {
+            copyBtn.textContent = originalText;
+            copyBtn.disabled = false;
+          }, 1500);
+        });
+      });
+    }
+  }
+
+  /**
+   * Updates the camera information display with current values.
+   * @private
+   */
+  _updateCameraInfoDisplay() {
+    if (!this.cameraInfoUI || !this.camera || this.cameraInfoUI.style.display === 'none') return;
+
+    const camPos = this.camera.position;
+    this.cameraInfoUI.querySelector("#cam-pos-x").textContent = camPos.x.toFixed(2);
+    this.cameraInfoUI.querySelector("#cam-pos-y").textContent = camPos.y.toFixed(2);
+    this.cameraInfoUI.querySelector("#cam-pos-z").textContent = camPos.z.toFixed(2);
+
+    // Get target (lookAt point) - same logic as in copy button
+    let camTarget = new THREE.Vector3(0,0,0);
+    if (this.camera.parent && this.camera.parent.isObject3D && this.camera.parent.target instanceof THREE.Vector3) {
+      camTarget.copy(this.camera.parent.target);
+    } else if (this.camera.userData.orbitControlsTarget) {
+      camTarget.copy(this.camera.userData.orbitControlsTarget);
+    } else {
+      // Fallback for display, actual copy uses a more robust method if needed
+      // For display, we can just show where the camera is looking if no explicit target
+      const tempTarget = new THREE.Vector3();
+      this.camera.getWorldDirection(tempTarget);
+      tempTarget.multiplyScalar(1).add(camPos); // A point 1 unit in front
+      camTarget.copy(tempTarget);
+    }
+
+    this.cameraInfoUI.querySelector("#cam-target-x").textContent = camTarget.x.toFixed(2);
+    this.cameraInfoUI.querySelector("#cam-target-y").textContent = camTarget.y.toFixed(2);
+    this.cameraInfoUI.querySelector("#cam-target-z").textContent = camTarget.z.toFixed(2);
+  }
+
+  /**
+   * Enables or disables the camera information display UI.
+   * @param {boolean} enable - Whether to enable the UI.
+   * @returns {DebugTools} This instance for chaining.
+   */
+  enableCameraInfo(enable = true) {
+    if (enable === this.isCameraInfoEnabled) return this;
+
+    if (enable) {
+      if (!this.cameraInfoUI) {
+        this._createCameraInfoUI();
+      }
+      this.cameraInfoUI.style.display = 'block';
+      this._updateCameraInfoDisplay(); // Initial update
+      console.log("Camera info UI enabled.");
+    } else {
+      if (this.cameraInfoUI) {
+        this.cameraInfoUI.style.display = 'none';
+      }
+      console.log("Camera info UI disabled.");
+    }
+    this.isCameraInfoEnabled = enable;
+    return this;
   }
 
   /**
@@ -63,7 +224,7 @@ export class DebugTools {
     // Styles for positioning within the container
     display.style.position = "absolute";
     display.style.bottom = "10px"; // Position relative to container
-    display.style.left = "10px";  // Position relative to container
+    display.style.left = "10px"; // Position relative to container
     display.style.backgroundColor = "rgba(0, 0, 0, 0.75)";
     display.style.color = "white";
     display.style.padding = "8px 12px";
@@ -88,20 +249,29 @@ export class DebugTools {
    * @returns {DebugTools} This instance for chaining
    */
   enablePointFinding(enable = true) {
-    if (enable === this.isPointFindingEnabled || !this.eventSourceElement) return this;
+    if (enable === this.isPointFindingEnabled || !this.eventSourceElement)
+      return this;
 
     this._createCoordinateDisplay(); // Ensure display exists
 
     if (enable) {
       if (!this.boundOnDoubleClick) {
         this.boundOnDoubleClick = this._handlePointFindingClick.bind(this);
-        this.eventSourceElement.addEventListener("dblclick", this.boundOnDoubleClick);
+        this.eventSourceElement.addEventListener(
+          "dblclick",
+          this.boundOnDoubleClick,
+        );
         this.eventSourceElement.style.cursor = "crosshair";
-        console.log("Point finding enabled. Double-click on the model to find coordinates.");
+        console.log(
+          "Point finding enabled. Double-click on the model to find coordinates.",
+        );
       }
     } else {
       if (this.boundOnDoubleClick) {
-        this.eventSourceElement.removeEventListener("dblclick", this.boundOnDoubleClick);
+        this.eventSourceElement.removeEventListener(
+          "dblclick",
+          this.boundOnDoubleClick,
+        );
         this.boundOnDoubleClick = null;
         this.eventSourceElement.style.cursor = ""; // Reset cursor
         if (this.coordinateDisplay) {
@@ -157,7 +327,7 @@ export class DebugTools {
         array: coordsArray,
         object: coordsObject,
         vector: coordsVector,
-        raw: { x: parseFloat(x), y: parseFloat(y), z: parseFloat(z) }
+        raw: { x: parseFloat(x), y: parseFloat(y), z: parseFloat(z) },
       });
 
       this._addTemporaryMarker(worldPoint);
@@ -169,7 +339,8 @@ export class DebugTools {
         this.coordinateDisplay.textContent = "No intersection found.";
         this.coordinateDisplay.style.display = "block";
         setTimeout(() => {
-          if(this.coordinateDisplay) this.coordinateDisplay.style.display = "none";
+          if (this.coordinateDisplay)
+            this.coordinateDisplay.style.display = "none";
         }, 2000);
       }
     }
@@ -235,7 +406,7 @@ export class DebugTools {
       color: 0xff00ff, // Magenta color for visibility
       depthTest: false, // Render on top
       transparent: true,
-      opacity: 0.8
+      opacity: 0.8,
     });
     const marker = new THREE.Mesh(geometry, material);
     marker.position.copy(worldPosition);
@@ -246,7 +417,8 @@ export class DebugTools {
 
     // Remove after duration
     setTimeout(() => {
-      if (this.scene && marker.parent === this.scene) { // Check if still in scene
+      if (this.scene && marker.parent === this.scene) {
+        // Check if still in scene
         this.scene.remove(marker);
       }
       geometry.dispose();
@@ -273,13 +445,13 @@ export class DebugTools {
       if (!this.rotationControlsUI) {
         this._createRotationControlsUI();
       }
-      this.rotationControlsUI.style.display = 'block'; // Show it
+      this.rotationControlsUI.style.display = "block"; // Show it
       this._updateRotationDisplay(); // Sync with current model rotation
       console.log("Rotation controls UI enabled.");
     } else {
       // Hide rotation control UI
       if (this.rotationControlsUI) {
-        this.rotationControlsUI.style.display = 'none'; // Hide it
+        this.rotationControlsUI.style.display = "none"; // Hide it
       }
       console.log("Rotation controls UI disabled.");
     }
@@ -326,8 +498,8 @@ export class DebugTools {
       const input = document.createElement("input");
       input.type = "range";
       input.min = "-180"; // Degrees
-      input.max = "180";  // Degrees
-      input.step = "1";   // Degrees
+      input.max = "180"; // Degrees
+      input.step = "1"; // Degrees
       input.value = THREE.MathUtils.radToDeg(initialValueRad).toFixed(0); // Initial value in degrees
       input.style.flexGrow = "1"; // Take remaining space
       input.style.marginRight = "10px";
@@ -356,7 +528,7 @@ export class DebugTools {
       return {
         container,
         input,
-        valueDisplay
+        valueDisplay,
       };
     };
 
@@ -425,7 +597,7 @@ export class DebugTools {
     // Add to container and store reference
     this.container.appendChild(ui);
     this.rotationControlsUI = ui;
-    this.rotationControlsUI.style.display = 'none'; // Start hidden
+    this.rotationControlsUI.style.display = "none"; // Start hidden
   }
 
   /**
@@ -433,7 +605,12 @@ export class DebugTools {
    * @private
    */
   _updateRotationDisplay() {
-    if (!this.model || !this.rotationControlsUI || !this.isRotationControlEnabled) return;
+    if (
+      !this.model ||
+      !this.rotationControlsUI ||
+      !this.isRotationControlEnabled
+    )
+      return;
 
     const rotation = this.model.rotation;
 
@@ -451,14 +628,14 @@ export class DebugTools {
     this.zRotation.valueDisplay.textContent = rotZDeg.toFixed(0) + "°";
   }
 
-
   /**
    * Sets the model's rotation directly (expects radians)
    * @param {Array<number>} rotation - Rotation as [x,y,z] in radians
    * @returns {DebugTools} This instance for chaining
    */
   setModelRotation(rotation) {
-    if (!this.model || !Array.isArray(rotation) || rotation.length !== 3) return this;
+    if (!this.model || !Array.isArray(rotation) || rotation.length !== 3)
+      return this;
 
     const [x, y, z] = rotation;
     this.model.rotation.set(x, y, z);
@@ -480,7 +657,7 @@ export class DebugTools {
     return [
       this.model.rotation.x,
       this.model.rotation.y,
-      this.model.rotation.z
+      this.model.rotation.z,
     ];
   }
 
@@ -493,12 +670,12 @@ export class DebugTools {
     this.enableRotationControls(false); // This will hide the UI
 
     // Remove all markers
-    this.markers.forEach(marker => {
+    this.markers.forEach((marker) => {
       if (marker.parent) {
         marker.parent.remove(marker);
       }
-      if(marker.geometry) marker.geometry.dispose();
-      if(marker.material) marker.material.dispose();
+      if (marker.geometry) marker.geometry.dispose();
+      if (marker.material) marker.material.dispose();
     });
     this.markers = [];
 

@@ -39,8 +39,8 @@ export class CameraController {
     controls.target.set(0, 0, 0);
 
     // restrict vertical rotation
-    controls.minPolarAngle = Math.PI / 2;
-    controls.maxPolarAngle = Math.PI / 2;
+    // controls.minPolarAngle = Math.PI / 2;
+    // controls.maxPolarAngle = Math.PI / 2;
 
     // zoom setting
     controls.enableZoom = this.options.enableZoom;

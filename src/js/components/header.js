@@ -144,11 +144,11 @@ function HeaderScroll() {
 
     if (scrollTop > 10 && isHomePage) {
       header.classList.add("bg-black-second", "lg:top-0", "top-0");
-      header.classList.remove("bg-black-second/65", "lg:top-12.5", "top-11.5");
+      header.classList.remove("bg-black-second/65", "top-10");
     }
     if(scrollTop <= 10 && isHomePage) {
       header.classList.remove("bg-black-second", "lg:top-0", "top-0");
-      header.classList.add("bg-black-second/65", "lg:top-12.5", "top-11.5");
+      header.classList.add("bg-black-second/65", "top-10");
     }
 
     if (scrollTop > 10 && !isHomePage) {

@@ -54,7 +54,7 @@ export class ModelViewer {
       pauseRotationOnHover: true,
       enableZoom: false,
       defaultZoom: 1.0,
-      initialRotation: [1.5184, -0.9599, 0.4363],
+      initialRotation: [0, 0, 0],
       highPerformanceMode: false,
       showFPS: false,
       enableLOD: true,
@@ -311,6 +311,8 @@ export class ModelViewer {
       if (this.performanceMonitor) {
         this.performanceMonitor.endFrame();
       }
+
+
     };
 
     animate();
