@@ -4,7 +4,7 @@
   <div class="container">
     <h2
         data-aos="fade-up"
-        class="capitalize text-[40px] lg:text-[54px] text-white font-light text-center mb-[51px] lg:mb-[110px]"
+        class="capitalize text-2xl lg:text-[36px] text-white font-light text-center mb-[51px] lg:mb-[110px]"
     >
       What Sets Us Apart
     </h2>
@@ -14,7 +14,7 @@
 
       <div data-aos="fade-up"
            class="flex flex-col items-stretch justify-end">
-        <h5 class="text-[10px] lg:text-xl uppercase text-white border-r border-[#d9d9d9]/50 pb-[5px] lg:pb-[15px] lg:py-[5px] lg:mb-[10px] text-center mb-[3px]">
+        <h5 class="text-[10px] lg:text-base uppercase text-white border-r border-[#d9d9d9]/50 pb-[5px] lg:pb-[15px] lg:py-[5px] lg:mb-[10px] text-center mb-[3px]">
           feature
         </h5>
       </div>
@@ -33,12 +33,12 @@
         {% endif %}
       </div>
       <div data-aos="fade-up" class="flex flex-col items-stretch justify-end">
-        <h5 class="text-[10px] lg:text-xl uppercase text-white border-r border-[#d9d9d9]/50 pb-[5px] lg:pb-[15px] lg:py-[5px] lg:mb-[10px] text-center mb-[3px]">
+        <h5 class="text-[10px] lg:text-base uppercase text-white border-r border-[#d9d9d9]/50 pb-[5px] lg:pb-[15px] lg:py-[5px] lg:mb-[10px] text-center mb-[3px]">
           plastic covers
         </h5>
       </div>
       <div data-aos="fade-up" class="flex flex-col items-stretch justify-end">
-        <h5 class="text-[10px] lg:text-xl uppercase text-center text-white pb-[5px] lg:pb-[15px] lg:py-[5px] lg:mb-[10px]  mb-[3px]">
+        <h5 class="text-[10px] lg:text-base uppercase text-center text-white pb-[5px] lg:pb-[15px] lg:py-[5px] lg:mb-[10px]  mb-[3px]">
           metal covers
         </h5>
       </div>
@@ -53,7 +53,7 @@
           {% set base_classes = 'flex items-center text-white uppercase py-2 lg:py-4 border border-[#d9d9d9]/50' %}
 
           {% set conditional_classes = [
-            (col_index == 0 ? 'font-bold pl-[3px] lg:pl-[15px] text-[10px] lg:text-[16px]' : 'pl-[3px] lg:pl-[15px] text-[8px] lg:text-[16px]'),
+            (col_index == 0 ? 'font-bold pl-[3px] lg:pl-[15px] text-[10px] lg:text-sm' : 'pl-[3px] lg:pl-[15px] text-[8px] lg:text-sm'),
             (col_index == 3 ? 'border-r-0' : ''),
             (col_index == 0 ? 'border-l-0' : '')
           ] | join(' ') %}

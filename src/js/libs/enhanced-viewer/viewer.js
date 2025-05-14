@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 import { SceneManager } from "./core/SceneManager.js";
 import { RendererManager } from "./core/RendererManager.js";
 import { ModelManager } from "./core/ModelManager.js";
@@ -7,6 +9,9 @@ import { AutoRotation } from "./features/AutoRotation.js";
 import { CameraController } from "./features/CameraController.js";
 import { PerformanceMonitor } from "./features/PerformanceMonitor.js";
 import { DebugTools } from "./features/DebugTools.js";
+
+import { viewerIcon } from "./icons/viewer.js";
+import {clear} from "core-js/internals/task.js";
 
 export class ModelViewer {
   /**
@@ -27,6 +32,8 @@ export class ModelViewer {
    * @param {boolean} [config.options.debugMode=false] - enable or disable debug mode
    * @param {Array<string>} [config.options.colorExclusionNames=[]] - Mesh names to exclude from color changes.
    * @param {Array<string>} [config.options.modelColors] - Optional array of colors to cycle through.
+   * @param {Array<number>|THREE.Vector3} [config.options.initialCameraPosition] - Optional initial camera position [x,y,z] or THREE.Vector3
+   * @param {Array<number>|THREE.Vector3} [config.options.initialCameraTarget] - Optional initial camera target [x,y,z] or THREE.Vector3
    */
   constructor(config) {
     if (!config?.container) {
@@ -55,6 +62,11 @@ export class ModelViewer {
       enableZoom: false,
       defaultZoom: 1.0,
       initialRotation: [0, 0, 0],
+      initialCameraPosition: null,
+      initialCameraTarget: null,
+      enableInactivityReset: true,
+      inactivityResetDelay: 3000,
+      cameraResetAnimationDuration: 2000,
       highPerformanceMode: false,
       showFPS: false,
       enableLOD: true,
@@ -91,6 +103,34 @@ export class ModelViewer {
     this.animationFrameId = null;
     this._currentColorIndex = -1;
 
+    // For inactivity reset
+    this.savedInitialCameraPosition = new THREE.Vector3();
+    this.savedInitialCameraTarget = new THREE.Vector3();
+    this.savedInitialCameraZoom = 1.0;
+    this.inactivityTimer = null;
+    this.boundHandleInteractionStart = this._handleInteractionStart.bind(this);
+    this.boundHandleInteractionEnd = this._handleInteractionEnd.bind(this);
+    this.boundResetCameraToInitial = this._resetCameraToInitial.bind(this);
+    this.isUserInteracting = false;
+    this.showAnnotationsTimer = null;
+
+    // for camera reset animation
+    this.isCameraResetAnimationActive = false;
+    this.cameraResetAnimation = {
+      startTime: 0,
+      startPos: new THREE.Vector3(),
+      endPos: new THREE.Vector3(),
+      startTarget: new THREE.Vector3(),
+      endTarget: new THREE.Vector3(),
+      startZoom: 1.0,
+      endZoom: 1.0,
+      wasAutoRotating: false,
+      originalDampingEnabled: false,
+      originalDampingFactor: 0.05,
+    };
+    this.boundUpdateCameraResetAnimation =
+      this._updateCameraResetAnimation.bind(this);
+
     this._initialize();
   }
 
@@ -113,6 +153,7 @@ export class ModelViewer {
     const height = this.container.clientHeight;
 
     this.sceneManager = new SceneManager({ fov: 60 });
+    this.sceneManager.setupResizeListener(this.container);
 
     this.rendererManager = new RendererManager(width, height, this.container, {
       highPerformanceMode: this.options.highPerformanceMode,
@@ -126,6 +167,7 @@ export class ModelViewer {
     this.annotationManager = new AnnotationManager(
       this.sceneManager.scene,
       this.sceneManager.camera,
+      this.container,
       {
         hideAnnotationsBehindModel: this.options.hideAnnotationsBehindModel,
       },
@@ -140,35 +182,69 @@ export class ModelViewer {
       },
     );
 
-    // FUNCTIONALITY FOR HANDLE CLICKS INSIDE CSS3DRENDERER DOM ELEMENT
+    this.container.addEventListener("resize-viewer", (event) => {
+      const { width, height } = event.detail;
 
-    if (this.rendererManager && this.rendererManager.cssRenderer) {
-      this.rendererManager.cssRenderer.domElement.addEventListener(
-        "pointerdown",
-        (event) => {
-          const targetElement = event.target;
-          const isClickable = targetElement.closest(".clickable-annotation");
+      if (this.sceneManager) {
+        this.sceneManager.updateCameraAspect(width, height);
+      }
 
-          if (isClickable) {
-            event.stopPropagation();
-          }
-        },
-        true,
+      if (
+        this.modelManager &&
+        this.modelManager.model &&
+        this.cameraController
+      ) {
+        this.cameraController.setupOptimalCameraPosition(
+          this.modelManager.model,
+        );
+      }
+    });
+
+    // LISTENERS FOR INACTIVITY RESET IF ENABLED
+    if (
+      this.options.enableInactivityReset &&
+      this.cameraController &&
+      this.cameraController.controls
+    ) {
+      this.cameraController.controls.addEventListener(
+        "start",
+        this.boundHandleInteractionStart,
       );
-
-      this.rendererManager.cssRenderer.domElement.addEventListener(
-        "click",
-        (event) => {
-          const clickableElement = event.target.closest(
-            ".clickable-annotation.js-model-color-change",
-          );
-
-          if (clickableElement) {
-            this.cycleModelColor();
-          }
-        },
+      this.cameraController.controls.addEventListener(
+        "end",
+        this.boundHandleInteractionEnd,
       );
     }
+
+    // FUNCTIONALITY FOR HANDLE CLICKS INSIDE CSS3DRENDERER DOM ELEMENT
+
+    // if (this.rendererManager && this.rendererManager.cssRenderer) {
+    //   this.rendererManager.cssRenderer.domElement.addEventListener(
+    //     "pointerdown",
+    //     (event) => {
+    //       const targetElement = event.target;
+    //       const isClickable = targetElement.closest(".clickable-annotation");
+    //
+    //       if (isClickable) {
+    //         event.stopPropagation();
+    //       }
+    //     },
+    //     true,
+    //   );
+    //
+    //   this.rendererManager.cssRenderer.domElement.addEventListener(
+    //     "click",
+    //     (event) => {
+    //       const clickableElement = event.target.closest(
+    //         ".clickable-annotation.js-model-color-change",
+    //       );
+    //
+    //       if (clickableElement) {
+    //         this.cycleModelColor();
+    //       }
+    //     },
+    //   );
+    // }
 
     this.autoRotation = new AutoRotation(
       this.cameraController.controls,
@@ -213,9 +289,99 @@ export class ModelViewer {
       },
       onLoad: () => {
         if (loadingElement) loadingElement.remove();
-        this.cameraController.setupOptimalCameraPosition(
-          this.modelManager.model,
+
+        const model = this.modelManager.model;
+
+        this.cameraController.setupOptimalCameraPosition(model);
+
+        let viewChangedByOptions = false;
+        if (this.options.initialCameraPosition) {
+          const pos = this.options.initialCameraPosition;
+          if (Array.isArray(pos) && pos.length === 3) {
+            this.sceneManager.camera.position.set(pos[0], pos[1], pos[2]);
+          } else if (pos instanceof THREE.Vector3) {
+            this.sceneManager.camera.position.copy(pos);
+          }
+          viewChangedByOptions = true;
+        }
+
+        // add rotation indicator
+        this._addRotationIndicator();
+
+        if (this.options.initialCameraTarget) {
+          const target = this.options.initialCameraTarget;
+          if (Array.isArray(target) && target.length === 3) {
+            this.cameraController.controls.target.set(
+              target[0],
+              target[1],
+              target[2],
+            );
+          } else if (target instanceof THREE.Vector3) {
+            this.cameraController.controls.target.copy(target);
+          }
+          viewChangedByOptions = true;
+        }
+
+        // if (this.options.initialCameraPosition) {
+        //   const pos = this.options.initialCameraPosition;
+        //   if (Array.isArray(pos) && pos.length === 3) {
+        //     this.sceneManager.camera.position.set(pos[0], pos[1], pos[2]);
+        //   } else if (pos instanceof THREE.Vector3) {
+        //     this.sceneManager.camera.position.copy(pos);
+        //   }
+        //   customPositionApplied = true;
+        // }
+        //
+        // if (this.options.initialCameraTarget) {
+        //   const target = this.options.initialCameraTarget;
+        //   if (Array.isArray(target) && target.length === 3) {
+        //     this.cameraController.controls.target.set(
+        //       target[0],
+        //       target[1],
+        //       target[2],
+        //     );
+        //   } else if (target instanceof THREE.Vector3) {
+        //     this.cameraController.controls.target.copy(target);
+        //   }
+        //   customTargetApplied = true;
+        // }
+
+        if (viewChangedByOptions) {
+          this.sceneManager.camera.lookAt(
+            this.cameraController.controls.target,
+          );
+          if (this.cameraController.controls) {
+            this.cameraController.controls.update();
+          }
+        }
+
+        if (this.cameraController) {
+          this.cameraController.setPolarAngleLimits(Math.PI / 6, Math.PI / 2);
+        }
+
+        const isMobile = window.innerWidth < 768;
+        if (isMobile) {
+          const mobileZoom = 0.7;
+          this.cameraController.setZoom(mobileZoom);
+        }
+
+        if (
+          // (customPositionApplied || customTargetApplied) &&
+          this.cameraController.controls
+        ) {
+          this.cameraController.controls.update();
+        }
+
+        this.savedInitialCameraPosition.copy(this.sceneManager.camera.position);
+        this.savedInitialCameraTarget.copy(
+          this.cameraController.controls.target,
         );
+        this.savedInitialCameraZoom = this.sceneManager.camera.zoom;
+
+        if (this.options.enableInactivityReset) {
+          this._resetInactivityTimer();
+        }
+
         if (this.options.debugMode) {
           this._initializeDebugTools();
           this.debug.enablePointFinding();
@@ -300,7 +466,14 @@ export class ModelViewer {
         this.performanceMonitor.beginFrame();
       }
 
-      this.cameraController.update();
+      if (this.isCameraResetAnimationActive) {
+        this._updateCameraResetAnimation();
+      } else {
+        this.cameraController.update();
+      }
+
+      // this.cameraController.update();
+
       this.annotationManager.update(this.modelManager.model);
 
       this.rendererManager.render(
@@ -311,8 +484,6 @@ export class ModelViewer {
       if (this.performanceMonitor) {
         this.performanceMonitor.endFrame();
       }
-
-
     };
 
     animate();
@@ -337,13 +508,19 @@ export class ModelViewer {
   }
 
   /**
-   * add HTML element as annotation attached to 3d position
+   * add HTML annotation to the scene
    * @param {Object} config - annotation configuration
    * @param {string} config.htmlContent - HTML content for annotation
-   * @param {THREE.Vector3} config.position - position in model space
-   * @param {string} [config.cssClass="model-annotation"] - css class for styling
+   * @param {THREE.Vector3 | Object} config.position - Position in model space, for 3D: THREE.Vector3 in model space. For 2D: object with css position(top, left, right, bottom)
+   * @param {boolean} [config.isStatic=false] - if true, annotation is a static 2D
+   * @param {THREE.Object3D} config.parent - parent object to attach
+   * @param {number} config.scaleFactor - scale factor to apply
+   * @param {string} [config.cssClass="model-annotation" | "static-model-annotation"] - CSS class for styling purposes
    * @param {boolean} [config.faceCamera=true] - whether annotation should face camera
-   * @returns {Object} created annotation object
+   * @param {number} [config.visibilityDistance=2.4] - max distance after annotation goes invisible
+   * @param {number} config.minVisibilityDistance - min distance after annotation goes invisible
+   * @param {string} config.id - target name for annotation
+   * @returns {Object} the created annotation object with control methods
    */
   addAnnotation(config) {
     return this.annotationManager.addAnnotation({
@@ -450,6 +627,7 @@ export class ModelViewer {
     if (
       !this.sceneManager ||
       !this.cameraController ||
+      !this.cameraController.controls ||
       !this.rendererManager ||
       !this.modelManager?.model ||
       !this.container
@@ -468,6 +646,7 @@ export class ModelViewer {
         model: this.modelManager.model,
         container: this.container, // Pass the main container
         eventSourceElement: this.rendererManager.cssRenderer.domElement, // Element for capturing clicks/events
+        cameraControls: this.cameraController.controls,
       },
       {
         // Optional: Pass debug options from viewer config if needed
@@ -487,6 +666,16 @@ export class ModelViewer {
        */
       enablePointFinding: (enable = true) => {
         if (this.debugTools) this.debugTools.enablePointFinding(enable);
+        return this.debug;
+      },
+
+      /**
+       * Enables or disables the camera information display UI.
+       * @param {boolean} enable - Whether to enable the UI.
+       * @returns {DebugTools} This instance for chaining.
+       */
+      enableCameraInfo: (enable = true) => {
+        if (this.debugTools) this.debugTools.enableCameraInfo(enable);
         return this.debug;
       },
 
@@ -523,8 +712,345 @@ export class ModelViewer {
     // Example: Automatically enable controls if debugMode is true in options
     if (this.options.debugMode) {
       this.debug.enablePointFinding(true);
-      this.debug.enableRotationControls(true); // Enable sliders by default in debug mode
+      // this.debug.enableRotationControls(true); // Enable sliders by default in debug mode
+      this.debug.enableCameraInfo(true);
     }
+  }
+
+  /**
+   * @private handles the start of a user camera interaction
+   */
+  _handleInteractionStart() {
+    if (!this.options.enableInactivityReset) return;
+
+    clearTimeout(this.inactivityTimer);
+    this.inactivityTimer = null;
+
+    this.isUserInteracting = true;
+
+    if (
+      this.annotationManager.annotations &&
+      this.annotationManager.annotations.length > 0
+    ) {
+      this.annotationManager.annotations.forEach((annotation) => {
+        annotation.element.classList.add("opacity-0");
+      });
+    }
+
+    if (this.isCameraResetAnimationActive) {
+      this.isCameraResetAnimationActive = false;
+
+      const anim = this.cameraResetAnimation;
+      const controls = this.cameraController.controls;
+      // this.cameraController.controls.enabled = true;
+
+      if (anim.originalDampingEnabled) {
+        controls.enableDamping = true;
+        controls.dampingFactor = anim.originalDampingFactor;
+      }
+
+      controls.enabled = true;
+
+      if (this.sceneManager && this.sceneManager.camera) {
+        this.sceneManager.camera.updateProjectionMatrix();
+      }
+
+      controls.update();
+
+      if (this.cameraResetAnimation.wasAutoRotating && this.autoRotation) {
+        this.autoRotation.setEnabled(true);
+      }
+    }
+  }
+
+  /**
+   * @private Handles the end of a user camera interaction
+   */
+  _handleInteractionEnd() {
+    if (!this.options.enableInactivityReset) return;
+
+    this.isUserInteracting = false;
+
+    if (this.showAnnotationsTimer) {
+      clearTimeout(this.showAnnotationsTimer);
+    }
+
+    this.showAnnotationsTimer = setTimeout(() => {
+      if (
+        this.annotationManager.annotations &&
+        this.annotationManager.annotations.length > 0
+      ) {
+        this.annotationManager.annotations.forEach((annotation) => {
+          annotation.element.classList.remove("opacity-0");
+        });
+      }
+    }, this.options.cameraResetAnimationDuration + this.options.inactivityResetDelay);
+
+    this._resetInactivityTimer();
+  }
+
+  /**
+   * @private Clears any existing inactivity timer and starts a new one.
+   */
+  _resetInactivityTimer() {
+    if (!this.options.enableInactivityReset) return;
+    clearTimeout(this.inactivityTimer);
+    this.inactivityTimer = setTimeout(
+      this.boundResetCameraToInitial,
+      this.options.inactivityResetDelay,
+    );
+  }
+
+  /**
+   * @private resets the camera to its saved initial position and target
+   */
+  _resetCameraToInitial() {
+    if (
+      this.isCameraResetAnimationActive ||
+      !this.options.enableInactivityReset ||
+      !this.sceneManager ||
+      !this.cameraController ||
+      !this.cameraController.controls ||
+      this.isUserInteracting
+    )
+      return;
+
+    const camera = this.sceneManager.camera;
+    const controls = this.cameraController.controls;
+    const anim = this.cameraResetAnimation;
+
+    anim.startPos.copy(camera.position);
+    anim.startTarget.copy(controls.target);
+    anim.startZoom = camera.zoom;
+
+    const actualCurrentPos = camera.position.clone();
+    const actualCurrentTarget = controls.target.clone();
+    const actualCurrentZoom = camera.zoom;
+
+    camera.position.copy(this.savedInitialCameraPosition);
+    controls.target.copy(this.savedInitialCameraTarget);
+    camera.zoom = this.savedInitialCameraZoom;
+    camera.updateProjectionMatrix();
+
+    controls.saveState();
+
+    camera.position.copy(actualCurrentPos);
+    controls.target.copy(actualCurrentTarget);
+    camera.zoom = actualCurrentZoom;
+    camera.updateProjectionMatrix();
+
+    anim.startTime = performance.now();
+    // anim.startPos.copy(this.sceneManager.camera.position);
+    anim.endPos.copy(this.savedInitialCameraPosition);
+    // anim.startTarget.copy(this.cameraController.controls.target);
+    anim.endTarget.copy(this.savedInitialCameraTarget);
+    // anim.startZoom = this.sceneManager.camera.zoom;
+    anim.endZoom = this.savedInitialCameraZoom;
+
+    if (controls.enableDamping) {
+      anim.originalDampingEnabled = true;
+      anim.originalDampingFactor = controls.dampingFactor;
+      controls.enableDamping = false;
+    } else {
+      anim.originalDampingEnabled = false;
+    }
+
+    // Pause auto-rotation if active
+    if (this.autoRotation && this.autoRotation.isEnabled) {
+      anim.wasAutoRotating = true;
+      this.autoRotation.setEnabled(false);
+    } else {
+      anim.wasAutoRotating = false;
+    }
+
+    this.isCameraResetAnimationActive = true;
+    this.cameraController.controls.enabled = false; // Disable controls during animation
+
+    if (this.annotationManager.annotations &&
+      this.annotationManager.annotations.length > 0) {
+      setTimeout(() => {
+        // Only show if no interaction is happening
+        if (!this.isUserInteracting) {
+          this.annotationManager.annotations.forEach(annotation => {
+            annotation.element.classList.remove('opacity-0');
+          });
+        }
+      }, this.options.cameraResetAnimationDuration + 100);
+    }
+
+    // this.sceneManager.camera.position.copy(this.savedInitialCameraPosition);
+    // this.cameraController.controls.target.copy(this.savedInitialCameraTarget);
+    // this.cameraController.controls.update();
+  }
+
+  /**
+   * enable or disable the camera inactivity reset feature
+   * @param {boolean} enable - whether to enable the feature
+   * @param {number} [delay] - optional new delay in milliseconds
+   */
+  setInactivityReset(enable, delay) {
+    this.options.enableInactivityReset = enable;
+    if (delay !== undefined) {
+      this.options.inactivityResetDelay = Math.max(500, delay); // minimum delay check
+    }
+
+    if (this.cameraController && this.cameraController.controls) {
+      this.cameraController.controls.removeEventListener(
+        "start",
+        this.boundHandleInteractionStart,
+      );
+      this.cameraController.controls.removeEventListener(
+        "end",
+        this.boundHandleInteractionEnd,
+      );
+      clearTimeout(this.inactivityTimer);
+      this.inactivityTimer = null;
+
+      if (enable) {
+        this.cameraController.controls.addEventListener(
+          "start",
+          this.boundHandleInteractionStart,
+        );
+        this.cameraController.controls.addEventListener(
+          "end",
+          this.boundHandleInteractionEnd,
+        );
+        this._resetInactivityTimer();
+      } else {
+        // inactivity reset disabled
+      }
+    }
+  }
+
+  /**
+   * @private Updates the camera reset animation progress.
+   * Called from the main animation loop.
+   */
+  _updateCameraResetAnimation() {
+    if (
+      !this.isCameraResetAnimationActive ||
+      !this.sceneManager ||
+      !this.cameraController ||
+      !this.cameraController.controls
+    ) {
+      this.isCameraResetAnimationActive = false;
+      if (this.cameraController && this.cameraController.controls) {
+        this.cameraController.controls.enabled = true;
+
+        const anim = this.cameraResetAnimation;
+        if (anim.originalDampingEnabled) {
+          this.cameraController.controls.enableDamping = true;
+          this.cameraController.controls.dampingFactor =
+            anim.originalDampingFactor;
+        }
+      }
+      if (this.sceneManager && this.sceneManager.camera) {
+        this.sceneManager.camera.updateProjectionMatrix();
+      }
+      return;
+    }
+
+    const anim = this.cameraResetAnimation;
+    const camera = this.sceneManager.camera;
+    const controls = this.cameraController.controls;
+
+    const elapsedTime = performance.now() - anim.startTime;
+    let progress = elapsedTime / this.options.cameraResetAnimationDuration;
+    progress = Math.min(progress, 1.0);
+
+    const easedProgress = progress * (2 - progress); // Simple ease-out
+
+    const direction = new THREE.Vector3()
+      .subVectors(anim.endPos, anim.startPos)
+      .normalize();
+
+    const distance = anim.startPos.distanceTo(anim.endPos);
+
+    const currentPos = new THREE.Vector3()
+      .copy(anim.startPos)
+      .addScaledVector(direction, distance * easedProgress);
+
+    controls.target.lerpVectors(
+      anim.startTarget,
+      anim.endTarget,
+      easedProgress,
+    );
+    camera.zoom = anim.startZoom;
+
+    camera.position.lerpVectors(anim.startPos, anim.endPos, easedProgress);
+    camera.zoom = THREE.MathUtils.lerp(
+      anim.startZoom,
+      anim.endZoom,
+      easedProgress,
+    );
+    camera.updateProjectionMatrix();
+    controls.update();
+
+    if (progress >= 1.0) {
+      // Animation finished
+      this.isCameraResetAnimationActive = false;
+
+      camera.position.copy(anim.endPos);
+      controls.target.copy(anim.endTarget);
+      camera.zoom = anim.endZoom;
+      camera.updateProjectionMatrix();
+
+      if (anim.originalDampingEnabled) {
+        controls.enableDamping = true;
+        controls.dampingFactor = anim.originalDampingFactor;
+      }
+
+      controls.enabled = true;
+      controls.update();
+
+      if (anim.wasAutoRotating && this.autoRotation) {
+        this.autoRotation.setEnabled(true);
+      }
+    }
+  }
+
+  /**
+   * add rotation indicator
+   */
+  _addRotationIndicator() {
+    const indicatorContainer = document.createElement("div");
+    indicatorContainer.className = "model-rotation-indicator";
+    indicatorContainer.style.position = "absolute";
+    indicatorContainer.style.top = "10%";
+    indicatorContainer.style.right = "50%";
+    indicatorContainer.style.transform = "translateX(50%)";
+    indicatorContainer.style.width = "60px";
+    indicatorContainer.style.height = "60px";
+    indicatorContainer.style.zIndex = "10";
+    indicatorContainer.style.opacity = "0.7";
+    indicatorContainer.style.transition = "opacity 0.3s ease";
+    indicatorContainer.style.pointerEvents = "none";
+
+    indicatorContainer.innerHTML = viewerIcon();
+
+    let fadeOutTimeoutId = null;
+    let fadeInTimeoutId = null;
+
+    const fadeOutIndicator = () => {
+      indicatorContainer.style.opacity = "0";
+      clearTimeout(fadeInTimeoutId);
+    };
+    const fadeInIndicator = () => {
+      fadeInTimeoutId = setTimeout(() => {
+        indicatorContainer.style.opacity = "1";
+      }, this.options.inactivityResetDelay + this.options.cameraResetAnimationDuration);
+    };
+
+    this.container.addEventListener("mousedown", fadeOutIndicator, {
+      // once: true,
+    });
+    this.container.addEventListener("mouseup", fadeInIndicator);
+    this.container.addEventListener("touchstart", fadeOutIndicator, {
+      // once: true,
+    });
+    this.container.addEventListener("touchend", fadeInIndicator);
+
+    this.container.appendChild(indicatorContainer);
   }
 
   /**
@@ -534,6 +1060,23 @@ export class ModelViewer {
     if (this.isDisposed) return;
 
     this.isDisposed = true;
+
+    clearTimeout(this.inactivityTimer);
+    clearTimeout(this.showAnnotationsTimer);
+
+    if (this.cameraController && this.cameraController.controls) {
+      this.cameraController.controls.removeEventListener(
+        "start",
+        this.boundHandleInteractionStart,
+      );
+      this.cameraController.controls.removeEventListener(
+        "end",
+        this.boundHandleInteractionEnd,
+      );
+      this.cameraController.controls.enabled = true;
+    }
+
+    this.isCameraResetAnimationActive = false;
 
     if (this.animationFrameId) {
       cancelAnimationFrame(this.animationFrameId);
@@ -570,5 +1113,14 @@ export class ModelViewer {
     this.container = null;
     this.modelColors = [];
     this._colorExclusionNames = [];
+
+    this.savedInitialCameraPosition = null;
+    this.savedInitialCameraTarget = null;
+    this.inactivityTimer = null;
+    this.boundHandleInteractionStart = null;
+    this.boundHandleInteractionEnd = null;
+    this.boundResetCameraToInitial = null;
+    this.cameraResetAnimation = null;
+    this.boundUpdateCameraResetAnimation = null;
   }
 }

@@ -12,6 +12,8 @@ export class CameraController {
    * @param {Object} [options] - configuration options
    * @param {boolean} [options.enableZoom=false] - Enable camera zoom
    * @param {number} [options.defaultZoom=1.0] - default camera zoom
+   * @param {number} [options.minPolarAngle=0] - no lower limit for vertical rotation
+   * @param {number} [options.maxPolarAngle=Math.PI] - no upper limit for vertical rotation
    */
   constructor(camera, domElement, options = {}) {
     this.camera = camera;
@@ -19,6 +21,8 @@ export class CameraController {
     this.options = {
       enableZoom: false,
       defaultZoom: 1.0,
+      minPolarAngle: 0,
+      maxPolarAngle: Math.PI,
       ...options,
     };
 
@@ -56,6 +60,18 @@ export class CameraController {
   }
 
   /**
+   * Sets the polar angle limits for camera rotation.
+   * @param {number} minAngle - Minimum polar angle in radians.
+   * @param {number} maxAngle - Maximum polar angle in radians.
+   */
+  setPolarAngleLimits(minAngle, maxAngle) {
+    if (this.controls) {
+      this.controls.minPolarAngle = minAngle;
+      this.controls.maxPolarAngle = maxAngle;
+    }
+  }
+
+  /**
    * setup optimal camera position based on model size
    * @param {THREE.Object3D} model - model frame
    */
@@ -66,23 +82,36 @@ export class CameraController {
     const box = new THREE.Box3().setFromObject(model);
     const boundingSphere = box.getBoundingSphere(new THREE.Sphere());
     const modelRadius = boundingSphere.radius;
+    const modelCenter = boundingSphere.center;
 
     // calculate optimal distance based on FOV(field of view)
     const fovInRadians = THREE.MathUtils.degToRad(this.camera.fov);
     const baseCameraDistance = modelRadius / Math.tan(fovInRadians / 2);
 
     const isMobile = window.innerWidth < 768;
-    const paddingFactor = isMobile ? 1.3 : 0.8;
+    const paddingFactor = isMobile ? 10 : 0.8;
     const effectiveDistance = baseCameraDistance * paddingFactor;
 
-    // setup camera position
-    const cameraY = modelRadius * 0.5;
-    this.camera.position.set(0, cameraY, effectiveDistance);
-    this.controls.target.set(0, 0, 0);
+    const cameraY = modelCenter.y + modelRadius * 0.5;
+
+    // this.camera.position.set(0, cameraY, effectiveDistance);
+    this.camera.position.set(
+      modelCenter.x,
+      cameraY,
+      modelCenter.z + effectiveDistance,
+    );
+    this.controls.target.copy(modelCenter);
+    this.controls.target.y += modelRadius * 0.5;
+    // this.controls.target.set(0, 0, 0);
+
+    let defaultZoom = this.options.defaultZoom;
+    if (isMobile) {
+      defaultZoom = this.options.defaultZoom * 0.7;
+    }
 
     // zoom
-    if (this.options.defaultZoom !== 1) {
-      this.setZoom(this.options.defaultZoom);
+    if (defaultZoom !== 1) {
+      this.setZoom(defaultZoom);
     }
 
     this.camera.lookAt(this.controls.target);
@@ -177,7 +206,7 @@ export class CameraController {
    * @param {boolean} enabled - whether Zoom should be enabled
    */
   setZoomEnabled(enabled) {
-    if(!this.controls) return;
+    if (!this.controls) return;
 
     this.options.enableZoom = enabled;
     this.controls.enableZoom = enabled;
@@ -187,8 +216,8 @@ export class CameraController {
    * dispose resources
    */
   dispose() {
-    if(this.controls) {
-      this.controls.dispose()
+    if (this.controls) {
+      this.controls.dispose();
     }
 
     this.controls = null;

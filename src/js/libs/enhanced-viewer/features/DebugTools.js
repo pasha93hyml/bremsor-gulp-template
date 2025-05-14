@@ -1,3 +1,4 @@
+
 import * as THREE from "three";
 
 /**
@@ -13,6 +14,7 @@ export class DebugTools {
    * @param {THREE.Object3D} context.model - 3D model
    * @param {HTMLElement} context.container - The main viewer container element
    * @param {HTMLElement} context.eventSourceElement - DOM element for event handling (e.g., CSS renderer)
+   * @param {Object} [context.cameraControls] - Optional camera controls instance (e.g., OrbitControls)
    * @param {Object} [options] - Configuration options
    * @param {boolean} [options.enableCopyToClipboard=true] - Enable copying coordinates to clipboard
    * @param {number} [options.markerDuration=2000] - Duration to show temporary markers (ms)
@@ -25,6 +27,7 @@ export class DebugTools {
     this.model = context.model;
     this.container = context.container; // Use the main container for UI elements
     this.eventSourceElement = context.eventSourceElement; // Element for clicks/drags if needed
+    this.cameraControls = context.cameraControls;
 
     this.options = {
       enableCopyToClipboard: true,
@@ -36,11 +39,14 @@ export class DebugTools {
     // State tracking
     this.isPointFindingEnabled = false;
     this.isRotationControlEnabled = false; // Start disabled
+    this.isCameraInfoEnabled = false;
     this.boundOnDoubleClick = null;
     this.markers = [];
     this.rotationControlsUI = null;
     this.coordinateDisplay = null; // Create lazily
     this.cameraInfoUI = null;
+
+    this.boundUpdateCameraInfoDisplay = this._updateCameraInfoDisplay.bind(this);
 
     // Calculate marker size based on model dimensions once available
     this.actualMarkerSize = 0.05; // Default fallback
@@ -104,7 +110,9 @@ export class DebugTools {
         // If not using OrbitControls directly, you might need to raycast from camera center.
         // Assuming your CameraController exposes controls or a target:
         let camTarget = new THREE.Vector3(0, 0, 0); // Default
-        if (
+        if(this.cameraControls && this.cameraControls.target instanceof THREE.Vector3) {
+          camTarget.copy(this.cameraControls.target)
+        } else if (
           this.camera.parent &&
           this.camera.parent.isObject3D &&
           this.camera.parent.target instanceof THREE.Vector3
@@ -168,7 +176,9 @@ const cameraTarget = ${targetStr};
 
     // Get target (lookAt point) - same logic as in copy button
     let camTarget = new THREE.Vector3(0,0,0);
-    if (this.camera.parent && this.camera.parent.isObject3D && this.camera.parent.target instanceof THREE.Vector3) {
+    if(this.cameraControls && this.cameraControls.target instanceof  THREE.Vector3) {
+      camTarget.copy(this.cameraControls.target)
+    } else if (this.camera.parent && this.camera.parent.isObject3D && this.camera.parent.target instanceof THREE.Vector3) {
       camTarget.copy(this.camera.parent.target);
     } else if (this.camera.userData.orbitControlsTarget) {
       camTarget.copy(this.camera.userData.orbitControlsTarget);
@@ -200,12 +210,19 @@ const cameraTarget = ${targetStr};
       }
       this.cameraInfoUI.style.display = 'block';
       this._updateCameraInfoDisplay(); // Initial update
-      console.log("Camera info UI enabled.");
+
+      if(this.cameraControls) {
+        this.cameraControls.addEventListener('change', this.boundUpdateCameraInfoDisplay)
+        console.log("Camera info UI enabled and listening for camera changes.");
+      }
     } else {
       if (this.cameraInfoUI) {
         this.cameraInfoUI.style.display = 'none';
       }
-      console.log("Camera info UI disabled.");
+      if(this.cameraControls) {
+        this.cameraControls.removeEventListener('change', this.boundUpdateCameraInfoDisplay)
+      }
+      console.log("Camera info UI disabled and stopped listening for camera changes.");
     }
     this.isCameraInfoEnabled = enable;
     return this;
@@ -696,5 +713,8 @@ const cameraTarget = ${targetStr};
     this.eventSourceElement = null;
     this.coordinateDisplay = null;
     this.rotationControlsUI = null;
+    this.cameraInfoUI = null;
+    this.cameraControls = null;
+    this.boundUpdateCameraInfoDisplay = null;
   }
 }

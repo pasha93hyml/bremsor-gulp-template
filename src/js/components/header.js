@@ -1,3 +1,5 @@
+import { log } from "three/tsl";
+
 function ShopList() {
   const shopListEl = document.querySelector("[data-shop-list]");
   const shopList = document.querySelector("[data-list-to-sort]");
@@ -130,32 +132,42 @@ function MobileMenu() {
 
 function HeaderScroll() {
   const header = document.querySelector("[data-header]");
+  const promoBanner = document.querySelector(".js-header-promo-banner");
+  if (promoBanner) {
+    document.documentElement.style.setProperty(
+      "--promo-height",
+      promoBanner.getBoundingClientRect().height + "px",
+    );
+  }
   let lastScrollTop = 0;
-  const currentPage = window.location.href
-    .split("/")
-    .pop()
-    .replace(".html", "");
-  const isHomePage = currentPage === "";
+  const isMobile = window.innerWidth < 1024;
+
+  const isPromoBanner = Boolean(promoBanner);
 
   function handleScroll() {
     if (!header) return;
 
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-    if (scrollTop > 10 && isHomePage) {
+    if (scrollTop > 10 && isPromoBanner) {
       header.classList.add("bg-black-second", "lg:top-0", "top-0");
-      header.classList.remove("bg-black-second/65", "top-10");
+      header.classList.remove("bg-black-second/65", "top-9");
+      header.classList.remove("bg-black-second/65", "lg:top-10");
     }
-    if(scrollTop <= 10 && isHomePage) {
+    if (scrollTop <= 10 && isPromoBanner) {
       header.classList.remove("bg-black-second", "lg:top-0", "top-0");
-      header.classList.add("bg-black-second/65", "top-10");
+      if (isMobile) {
+        header.classList.add("bg-black-second/65", "top-9");
+      } else {
+        header.classList.add("bg-black-second/65", "lg:top-10");
+      }
     }
 
-    if (scrollTop > 10 && !isHomePage) {
+    if (scrollTop > 10 && !isPromoBanner) {
       header.classList.add("bg-black-second");
       header.classList.remove("bg-black-second/65");
     }
-    if(scrollTop <= 10 && !isHomePage) {
+    if (scrollTop <= 10 && !isPromoBanner) {
       header.classList.remove("bg-black-second");
       header.classList.add("bg-black-second/65");
     }
@@ -247,6 +259,3 @@ export function initHeader() {
   header.init();
   return header;
 }
-
-
-

@@ -1,21 +1,21 @@
 {% from 'macro/icon.twig' import svg %}
 
 <div class="{{ className | default('') }}">
-  <h5 class="uppercase">sign up for newsletter</h5>
-  <p class="font-light mb-6 md:mb-[40px]">
+  <h5 class="uppercase text-small font-bold">sign up for newsletter</h5>
+  <p class="font-light text-small mb-6 md:mb-[40px]">
     Promotions, new products and sales. <br />
     Directly to your inbox
   </p>
 
-  <div class="lg:w-[370px] max-w-[370px] relative flex items-center justify-center border border-white rounded-[57px] px-[18px] py-[14px]">
+  <div class="lg:w-[300px] max-w-[370px] relative flex items-center justify-center border border-white rounded-[57px] px-[18px] py-2.5">
     <input
         type="email"
         name="email"
-        class="w-full border-none outline-0 placeholder:text-white text-white text-[14px]/[18px] bg-transparent"
+        class="w-full border-none outline-0 placeholder:text-white placeholder:text-small text-white text-small leading-[1.6] bg-transparent"
         placeholder="YOUR EMAIL"
     />
     <button type="submit" class='absolute right-6 cursor-pointer'>
-      {{ svg('chevron-left', 'rotate-180') }}
+      {{ svg('chevron-left', 'rotate-180 w-3 h-3') }}
     </button>
   </div>
 </div>

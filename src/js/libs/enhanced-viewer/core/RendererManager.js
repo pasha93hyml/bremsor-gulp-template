@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { CSS3DRenderer } from "three/examples/jsm/renderers/CSS3DRenderer.js";
+import { CSS3DRenderer } from "three/addons";
 
 /**
  * manages WebGL and CSS3D renderers
@@ -93,6 +93,11 @@ export class RendererManager {
 
           if (width > 0 && height > 0) {
             this.resize(width, height);
+
+            const resizeEvent = new CustomEvent("viewer-resize", {
+              detail: { width, height },
+            });
+            this.container.dispatchEvent(resizeEvent);
           }
         }
       }
@@ -109,6 +114,11 @@ export class RendererManager {
   resize(width, height) {
     this.webglRenderer.setSize(width, height);
     this.cssRenderer.setSize(width, height);
+
+    const resizeEvent = new CustomEvent("viewer-resize", {
+      detail: { width, height },
+    });
+    this.container.dispatchEvent(resizeEvent);
   }
 
   /**
@@ -126,7 +136,7 @@ export class RendererManager {
    * @param {boolean} enabled - whether to enable high performance mode
    */
   setHighPerformanceMode(enabled) {
-    if(this.options.highPerformanceMode === enabled) return;
+    if (this.options.highPerformanceMode === enabled) return;
 
     this.options.highPerformanceMode = enabled;
 
@@ -143,20 +153,24 @@ export class RendererManager {
    * disposes renderer resources
    */
   dispose() {
-    if(this.resizeObserver) {
+    if (this.resizeObserver) {
       this.resizeObserver.disconnect();
       this.resizeObserver = null;
     }
 
-    if(this.webglRenderer) {
+    if (this.webglRenderer) {
       this.webglRenderer.dispose();
-      if(this.webglRenderer.domElement.parentNode) {
-        this.webglRenderer.domElement.parentNode.removeChild(this.webglRenderer.domElement)
+      if (this.webglRenderer.domElement.parentNode) {
+        this.webglRenderer.domElement.parentNode.removeChild(
+          this.webglRenderer.domElement,
+        );
       }
     }
 
-    if(this.cssRenderer && this.cssRenderer.domElement.parentNode) {
-      this.cssRenderer.domElement.parentNode.removeChild(this.cssRenderer.domElement);
+    if (this.cssRenderer && this.cssRenderer.domElement.parentNode) {
+      this.cssRenderer.domElement.parentNode.removeChild(
+        this.cssRenderer.domElement,
+      );
     }
   }
 }

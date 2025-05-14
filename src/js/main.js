@@ -15,12 +15,17 @@ import { ImageUpload } from "./components/image-upload.js";
 import { ColorPick } from "./components/color-pick.js";
 import { Form } from "./components/form.js";
 import { CustomBtn } from "./components/custom-btn.js";
+import { comparisonSliderInitAnimation } from "./libs/img-comparsion-slider.js";
 
 import { ModelViewer } from "./libs/enhanced-viewer/viewer.js";
 
 import "./libs/aos.js";
 
 window.siteLoader = new Loader();
+
+let viewportHeight = window.innerHeight;
+const vh = viewportHeight * 0.01;
+document.documentElement.style.setProperty("--vh", `${vh}px`);
 
 document.addEventListener("DOMContentLoaded", () => {
   window.siteLoader.init();
@@ -31,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
   reviewsKeenSliderInit(KeenSlider);
   gridSliderInit(KeenSlider);
   brakesFormInit();
+  comparisonSliderInitAnimation();
 
   const dropdowns = document.querySelectorAll(".js-dropdown-wrap");
   dropdowns.forEach((trigger) => {
@@ -70,72 +76,98 @@ document.addEventListener("DOMContentLoaded", () => {
     const viewerConfig = {
       container: modelContainer,
       modelPath: modelContainer.dataset.model,
-      shouldDisappear: true,
       options: {
         enableAutoRotate: false,
         autoRotateSpeed: 1.0,
         pauseRotationOnHover: false,
         enableZoom: false,
         defaultZoom: isMobile ? 1.2 : 1.0,
-        highPerformanceMode: true,
+        highPerformanceMode: false,
         showFPS: false,
         hideAnnotationsBehindModel: false,
-        enableLOD: true,
+        enableLOD: false,
         debugMode: false,
+        initialCameraPosition: new THREE.Vector3(1.128, 1.205, 1.124),
+        initialCameraTarget: new THREE.Vector3(0.0, 0.0, 0.0),
       },
     };
 
     try {
       const viewer = new ModelViewer(viewerConfig);
 
+      const logoPosition = new THREE.Vector3(-0.85, 0.2, 0.1902);
+      const shapePosition = new THREE.Vector3(0.85, 0.4, 0.1461);
+      const colorPosition = new THREE.Vector3(-0.1, -0.8, 0.5);
+
       viewer.loadPromise.then(() => {
+        viewer.annotationManager.addResponsiveAnnotation({
+          htmlContent: `
+            <span class="">Custom logo</span>
+            <span class="annotation-circle">
+            </span>
+        `,
+          modelPosition: logoPosition,
+          cssClass:
+            "static-annotation text-small lg:text-base text-white flex items-center justify-between gap-5 group transition duration-300 ease",
+          id: "info-panel-1",
+        });
+
+        viewer.annotationManager.addResponsiveAnnotation({
+          htmlContent: `
+            <span class="">Unique shape</span>
+            <span class="annotation-circle">
+            </span>
+        `,
+          modelPosition: shapePosition, // Use 3D position from the model
+          cssClass:
+            "static-annotation text-small lg:text-base text-white flex flex-row-reverse items-center justify-between gap-5 group transition duration-300 ease",
+          id: "info-panel-2",
+        });
+
+        viewer.annotationManager.addResponsiveAnnotation({
+          htmlContent: `
+            <span class="">Color of your choice</span>
+            <span class="annotation-circle">
+            </span>
+          `,
+          modelPosition: colorPosition, // Use 3D position from the model
+          cssClass:
+            "static-annotation text-small lg:text-base text-white flex items-center justify-between gap-5 group transition duration-300 ease",
+          id: "info-panel-3",
+        });
+
         // viewer.addAnnotation({
-        //   position: new THREE.Vector3(0, 0, 0),
-        //   htmlContent: `<div class="annotation-wrap-1">
-        //     <p>Custom logo</p>
-        //     <div class="annotation-svg-container">
-        //       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-        //         <g class="annotation-svg">
-        //           <path d="M12 5V19M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" />
-        //         </g>
-        //       </svg>
-        //     </div>
-        //   </div>`,
-        //   cssClass: "model-annotation-3d",
-        //   faceCamera: true,
-        //   id: "logo",
+        //   htmlContent: `
+        //     <span class="">Custom logo</span>
+        //     <span class="flex items-center justify-center p-[2px] rounded-full bg-[#d9d9d9]/75 w-6 h-6 group-hover:bg-white">
+        //     </span>
+        //   `,
+        //   position: { top: "33%", left: "8%" },
+        //   isStatic: true,
+        //   cssClass: "static-annotation text-white flex items-center justify-between gap-5 group transition duration-300 ease",
+        //   id: "info-panel-1",
         // });
         // viewer.addAnnotation({
-        //   position: new THREE.Vector3(0.0980, 0.1058, 0.1328),
-        //   htmlContent: `<div class="annotation-wrap-2">
-        //     <p>Unique shape</p>
-        //     <div class="annotation-svg-container">
-        //       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-        //         <g class="annotation-svg">
-        //           <path d="M12 5V19M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" />
-        //         </g>
-        //       </svg>
-        //     </div>
-        //   </div>`,
-        //   cssClass: "model-annotation-3d",
-        //   faceCamera: true,
-        //   id: "shape",
+        //   htmlContent: `
+        //     <span class="">Unique shape</span>
+        //     <span class="flex items-center justify-center p-[2px] rounded-full bg-[#d9d9d9]/75 w-6 h-6 group-hover:bg-white">
+        //     </span>
+        //   `,
+        //   position: { bottom: "33%", right: "-4%" },
+        //   isStatic: true,
+        //   cssClass: "static-annotation text-white flex flex-row-reverse items-center justify-between gap-5 group transition duration-300 ease",
+        //   id: "info-panel-2",
         // });
         // viewer.addAnnotation({
-        //   position: new THREE.Vector3(0.0467, 0.1042, 0.2661),
-        //   htmlContent: `<div class="annotation-wrap-3">
-        //     <p>Color of your choice</p>
-        //     <div class="annotation-svg-container">
-        //       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-        //         <g class="annotation-svg">
-        //           <path d="M12 5V19M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" />
-        //         </g>
-        //       </svg>
-        //     </div>
-        //   </div>`,
-        //   cssClass: "model-annotation-3d clickable-annotation js-model-color-change",
-        //   faceCamera: true,
-        //   id: "color",
+        //   htmlContent: `
+        //     <span class="">Color of your choice</span>
+        //     <span class="flex items-center justify-center p-[2px] rounded-full bg-[#d9d9d9]/75 w-6 h-6 group-hover:bg-white">
+        //     </span>
+        //   `,
+        //   position: { bottom: "15%", left: "18%" },
+        //   isStatic: true,
+        //   cssClass: "static-annotation text-white flex items-center justify-between gap-5 group transition duration-300 ease",
+        //   id: "info-panel-3",
         // });
       });
     } catch (err) {

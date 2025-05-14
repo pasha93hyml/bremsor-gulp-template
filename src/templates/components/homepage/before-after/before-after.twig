@@ -4,7 +4,7 @@
   <div class="container">
     <h2
         data-aos="fade-up"
-        class="text-white text-[40px] lg:text-[54px] font-light leading-[136%] text-center mb-[50px] lg:mb-[75px]"
+        class="text-white text-2xl lg:text-[36px] font-light leading-[136%] text-center mb-[50px] lg:mb-[75px]"
     >
       Before & After
     </h2>
@@ -34,13 +34,12 @@
           loading="lazy"
           class="w-full h-auto block"
       />
-
-      <div slot="handle" class="h-[66px] w-[66px] lg:h-[144px] lg:w-[144px] -ml-[33px] lg:-ml-[72px] -mt-[33px] lg:-mt-[72px] py-[15px] px-[10px] rounded-full bg-white absolute top-1/2 flex items-center justify-between cursor-pointer">
-        <span class="text-sm hidden lg:block">BEFORE</span>
-        <span class="lg:hidden flex items-center justify-center">{{ svg('chevron-left', 'translate-y-[1px]') }}</span>
-        <span class="w-[1px] lg:w-0.5 bg-black-second absolute top-[5px] lg:top-[15px] bottom-[5px] lg:bottom-[15px] inset-x-1/2"></span>
-        <span class="text-sm hidden lg:block">AFTER</span>
-        <span class="lg:hidden flex items-center justify-center">{{ svg('chevron-left', 'rotate-180') }}</span>
+      <div slot="handle" class="h-10 w-10 lg:h-[66px] lg:w-[66px] -ml-5 -mt-5 lg:-ml-[33px] lg:-mt-[33px] px-1 lg:py-[15px] lg:px-[10px] rounded-full bg-white absolute top-1/2 flex items-center justify-between cursor-pointer">
+        <span class="text-xs hidden">BEFORE</span>
+        <span class="flex items-center justify-center">{{ svg('chevron-left', 'translate-y-[1px] max-lg:w-3') }}</span>
+        <span class="w-[1px] bg-black-second absolute top-[5px] bottom-[5px] inset-x-1/2"></span>
+        <span class="text-xs hidden">AFTER</span>
+        <span class="flex items-center justify-center">{{ svg('chevron-left', 'rotate-180 max-lg:w-3') }}</span>
       </div>
 
     </img-comparison-slider>

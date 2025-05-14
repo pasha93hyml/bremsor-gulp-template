@@ -21,7 +21,7 @@
         {% for list in footer.footer_lists %}
           {% set isLast = loop.last %}
           {% set orderClass = isLast ? 'max-md:order-4' : 'max-md:order-' ~ loop.index %}
-          {% set listClasses = 'max-md:w-[calc(50%_-_30px)] max-md:flex max-md:flex-col ' ~ orderClass %}
+          {% set listClasses = 'max-md:w-[calc(50%_-_30px)] max-md:flex max-md:flex-col min-w-[145px] ' ~ orderClass %}
           {% include './../components/footer/footer-list.twig' with { title: list.title, items: list.items, className: listClasses } only %}
         {% endfor %}
       {% endif %}
@@ -36,34 +36,34 @@
     </div>
 
     <div
-        class="text-white flex items-center flex-wrap gap-y-9 md:gap-y-5 md:gap-x-10 justify-center md:justify-between pb-9 md:pb-[109px] mt-[96px] md:mt-[158px] md:max-2xl:mt-15 md:max-2xl:justify-center">
-      <div class="max-md:order-3">
+        class="text-white flex items-center flex-wrap gap-y-9 md:gap-y-5 md:gap-x-10 justify-center md:justify-between pb-9 md:pb-[109px] mt-[96px] md:mt-25 md:max-2xl:mt-15 md:max-2xl:justify-center">
+      <div class="max-md:order-3 text-small">
         © 2025 Bremsor Caliper Covers. All Rights Reserved
       </div>
       <div class="flex gap-[60px] max-md:order-1">
         <button
             type="button"
-            class="flex items-center gap-[5px] cursor-pointer"
+            class="flex items-center gap-[5px] cursor-pointer text-small leading-[1.6]"
         >
           ENG
           {{ svg('arrow-select') }}
         </button>
         <button
             type="button"
-            class="flex items-center gap-[10px] cursor-pointer"
+            class="flex items-center gap-[10px] cursor-pointer text-small leading-[1.6]"
         >
-          {% set flagOptions = { width: '30', height: '25', loading: 'lazy' } %}
+          {% set flagOptions = { width: '20', height: '15', loading: 'lazy' } %}
           {{ picture('/assets/images/flags/usa.png', 'usa flag', flagOptions) | raw }}
-          USD
+          <span>USD</span>
           {{ svg('arrow-select') }}
         </button>
       </div>
       <div
-          class="flex flex-wrap lg:flex-nowrap items-center gap-[18px] max-md:justify-center md:gap-[21px] max-md:mt-4 max-md:order-2 md:max-2xl:mx-auto">
+          class="flex flex-wrap lg:flex-nowrap items-center gap-[18px] max-md:justify-center md:gap-4 max-md:mt-4 max-md:order-2 md:max-2xl:mx-auto">
         {% if footer.methods %}
           {% for method_src in footer.methods %}
 
-            {% set paymentOptions = { width: '51', height: '31', loading: 'lazy' } %}
+            {% set paymentOptions = { width: '38', height: '24', loading: 'lazy' } %}
             {{ picture(method_src, 'payment method', paymentOptions) | raw }}
           {% endfor %}
         {% endif %}

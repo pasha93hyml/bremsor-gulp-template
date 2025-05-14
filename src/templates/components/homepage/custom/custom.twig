@@ -3,12 +3,12 @@
 {% set page_id = getCurrentPage() %}
 
 <section
-    class="{{ page_id == 'index' ? 'bg-black-second py-[80px] lg:pt-[125px] lg:pb-20' : 'bg-black-second lg:pt-57 pt-40 lg:pb-10.5 pb-15 ' }}">
+    class="{{ page_id == 'index' ? 'bg-black-second py-[80px] lg:pt-9 lg:pb-10' : 'bg-black-second lg:pt-57 pt-40 lg:pb-10.5 pb-15 ' }}">
   <div class="{{ page_id == 'index' ? 'container' : 'lg:max-w-258.5 lg:p-0 px-4 mx-auto' }}">
     <div class="flex items-center justify-center flex-col">
       <h2
           data-aos="fade-up"
-          class="{{ page_id == 'index' ? 'text-white font-light text-[40px] lg:text-[54px] leading-none mb-8' : 'text-white font-light text-[40px] lg:text-[64px] leading-none mb-8 lg:mb-12 w-full text-left' }}"
+          class="{{ page_id == 'index' ? 'text-white font-light text-2xl lg:text-[36px] leading-none mb-2' : 'text-white font-light text-2xl lg:text-[36px] leading-none w-full text-left mb-2' }}"
       >
         {{ title }}
       </h2>
@@ -22,6 +22,27 @@
         js_class: 'js-model-viewer model-viewer'
       } %}
 
+    </div>
+
+    {% if page_id == 'index' %}
+      <div
+          data-aos="fade-up"
+          class="max-w-[1170px] bg-[#d9d9d9] rounded-[30px] lg:rounded-[100px] py-5 px-7 lg:gap-0 gap-7 text-black-second flex flex-wrap items-center justify-between mx-auto mt-0 lg:mt-12"
+      >
+        <p class="text-sm max-lg:text-balance lg:text-base lg:text-left text-center w-full lg:w-auto lg:flex-1 lg:pr-8">
+          Order a unique style with color and logo of your choice
+        </p>
+        <button
+            type="button"
+            class="flex items-center justify-between rounded-[57px] max-h-[45px] border border-black-second py-2.5 px-[18px] text-small lg:text-sm leading-none uppercase w-full lg:w-auto lg:min-w-[200px] cursor-pointer hover:bg-black-second hover:text-white transition-all duration-300 ease group"
+        >
+          <span class="flex-grow text-center lg:text-left">INQUIRE</span>
+          {{ svg('chevron-left', 'w-3 h-3 fill-[#0A0A0A] group-hover:fill-white transition-colors duration-300 ease rotate-180') }}
+        </button>
+      </div>
+    {% endif %}
+  </div>
+</section>
 {#      <div class="relative">#}
 {#        {% set imageOptions = {#}
 {#          class: 'w-[499px] h-[624px] object-cover max-sm:w-75 max-sm:h-93',#}
@@ -65,24 +86,3 @@
 {#          title_classes: page_id == 'index' ? '' : 'text-nowrap'#}
 {#        } only %}#}
 {#      </div>#}
-    </div>
-
-    {% if page_id == 'index' %}
-      <div
-          data-aos="fade-up"
-          class="max-w-[1170px] bg-[#d9d9d9] rounded-[30px] lg:rounded-[100px] p-5 lg:gap-0 gap-7 text-black-second flex flex-wrap items-center justify-between mx-auto mt-16 lg:mt-12"
-      >
-        <p class="text-xl lg:text-[18px] lg:text-left text-center w-full lg:w-auto lg:flex-1 lg:pr-8">
-          Order a unique style with color and logo of your choice
-        </p>
-        <button
-            type="button"
-            class="flex items-center justify-between rounded-[57px] max-h-[45px] border border-black-second py-[14px] px-[18px] text-[14px] leading-[18px] uppercase w-full lg:w-auto lg:min-w-[200px] cursor-pointer hover:bg-black-second hover:text-white transition-all duration-300 ease group"
-        >
-          <span class="flex-grow text-center lg:text-left">INQUIRE</span>
-          {{ svg('chevron-left', 'w-3 h-3 fill-[#0A0A0A] group-hover:fill-white transition-colors duration-300 ease rotate-180') }}
-        </button>
-      </div>
-    {% endif %}
-  </div>
-</section>

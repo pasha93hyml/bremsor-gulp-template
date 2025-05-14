@@ -51,6 +51,10 @@
     transform-origin: center;
   }
 
+  .animate-fade {
+    animation: fade-infinite 2s linear infinite;
+  }
+
   @keyframes spin {
     from {
       transform: rotate(0deg);
@@ -69,29 +73,39 @@
     }
   }
 
+  @keyframes fade-infinite {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.2;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
   // 3d
+
+  .annotation-circle {
+    @apply flex items-center justify-center p-[2px] rounded-full bg-[#d9d9d9]/75 min-w-6 w-6 h-6 group-hover:bg-white;
+  }
 
   .model-viewer {
     position: relative;
     transition: all 0.4s ease-in-out;
 
-    width: 30dvw;
-    aspect-ratio: 1 / 1;
+    width: 100%;
+    //aspect-ratio: 1 / 1;
+    height: 70dvh;
 
-    height: unset !important;
-
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 1024px) {
       width: 100%;
-    }
+      height: 70dvh;
 
-    &.is-fullscreen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 1000;
-      background-color: var(--color-black-second);
+      @supports (-webkit-touch-callout: none) {
+        height: -webkit-fill-available;
+      }
     }
   }
 
@@ -170,8 +184,14 @@
     }
   }
 
+  .static-annotation {
+    &-border {
+      //border-width: 2px;
+    }
+  }
+
   .touchscreen-scroll-events {
-      touch-action: auto !important;
+    touch-action: auto !important;
     @media (pointer: coarse) {
       touch-action: pan-y !important;
     }

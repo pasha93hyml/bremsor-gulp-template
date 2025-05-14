@@ -21,6 +21,9 @@ export class SceneManager {
     this.scene = this._createScene();
     this.camera = this._createCamera();
     this._setupLights();
+
+    // listen for container resize event
+    this.onContainerResize = this.updateCameraAspect.bind(this);
   }
 
   /**
@@ -46,10 +49,17 @@ export class SceneManager {
       0.1,
       1000,
     );
-    camera.position.set(0, 0, 0);
-    camera.lookAt(new THREE.Vector3(0, 0, 0));
+    camera.position.set(1.106, 1.063, 1.279);
+    camera.lookAt(new THREE.Vector3(0.2, -0.68, -0.14));
     return camera;
   }
+
+  // Usage (e.g., in your ModelViewer or CameraController setup):
+  // viewer.cameraController.setPositionAndTarget(cameraPosition, cameraTarget);
+  // OR
+  // camera.position.copy(cameraPosition);
+  // camera.lookAt(cameraTarget);
+  // if (controls) controls.target.copy(cameraTarget);
 
   /**
    * Sets up lighting for the scene
@@ -88,6 +98,18 @@ export class SceneManager {
   }
 
   /**
+   * initialize custom listener for resize
+   * @param {HTMLElement} container - 3d viewer main container
+   */
+  setupResizeListener(container) {
+    if(container) {
+      container.addEventListener('viewer-resize', (event) => {
+        this.updateCameraAspect(event.detail.width, event.detail.height)
+      })
+    }
+  }
+
+  /**
    * disposes scene resources
    */
   dispose() {
@@ -105,8 +127,8 @@ export class SceneManager {
       }
     });
 
-    while(this.scene.children.length > 0) {
-      this.scene.remove(this.scene.children[0])
+    while (this.scene.children.length > 0) {
+      this.scene.remove(this.scene.children[0]);
     }
   }
 }

@@ -96,6 +96,12 @@ function createHero() {
   const cashbackBanner = CashbackBanner();
   const mobileBanner = MobileBanner();
 
+  const isMobile = window.innerWidth < 768;
+
+  if(isMobile) {
+
+  }
+
   function init() {
     cashbackBanner.init();
     mobileBanner.init();

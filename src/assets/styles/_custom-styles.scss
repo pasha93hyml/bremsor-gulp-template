@@ -8,3 +8,9 @@
     }
   }
 }
+
+.hero-section {
+  @media screen and (max-width: 576px) {
+    height: calc(var(--vh, 1vh) * 100 - var(--promo-height));
+  }
+}
