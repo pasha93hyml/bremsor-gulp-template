@@ -17,12 +17,15 @@
           {% set aosEffect = ['fade-up', 'fade-down', 'fade-right', 'fade-left'][loop.index0 % 4] %}
           {% set gridImageOptions = {
             pictureClass: item.className,
+            class: "group-hover:scale-[1.2] transition duration-400 ease",
             width: item.size,
             height: item.size,
             loading: 'lazy',
             'data-aos': aosEffect
           } %}
-          {{ picture(item.image_src, 'Instagram image ' ~ loop.index, gridImageOptions) | raw }}
+          <div class="{{ item.className }} group overflow-hidden relative">
+            {{ picture(item.image_src, 'Instagram image ' ~ loop.index, gridImageOptions) | raw }}
+          </div>
         {% endfor %}
       </div>
     {% endif %}

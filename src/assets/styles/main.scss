@@ -14,34 +14,34 @@
 @use "libs/plyr-video-player";
 
 @use "./custom-styles";
-@use './components/components';
-
+@use "./components/components";
 
 @font-face {
-  font-family: "Riviera";
+  font-family: "Riviera Nights";
   src:
-    url("/assets/fonts/rivera/RivieraNightsTrial-Light.woff2") format("woff2"),
-    url("/assets/fonts/rivera/RivieraNightsTrial-Light.woff") format("woff");
+    url("/assets/fonts/rivera/RivieraNights-Light-WebTrial.woff2")
+      format("woff2"),
+    url("/assets/fonts/rivera/RivieraNights-Light-WebTrial.woff") format("woff");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Riviera";
-  src:
-    url("/assets/fonts/rivera/RivieraNightsTrial-Regular.woff2") format("woff2"),
-    url("/assets/fonts/rivera/RivieraNightsTrial-Regular.woff") format("woff");
+  font-family: "Riviera Nights";
+  src: url("/assets/fonts/rivera/RivieraNights-Regular-WebTrial.woff2")
+    format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Riviera";
+  font-family: "Riviera Nights";
   src:
-    url("/assets/fonts/rivera/RivieraNightsTrial-Bold.woff2") format("woff2"),
-    url("/assets/fonts/rivera/RivieraNightsTrial-Bold.woff") format("woff");
+    url("/assets/fonts/rivera/RivieraNights-Bold-WebTrial.woff2")
+      format("woff2"),
+    url("/assets/fonts/rivera/RivieraNights-Bold-WebTrial.woff") format("woff");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -55,5 +55,6 @@
   opacity: 0;
 }
 
-
-
+.family-zero {
+  font-family: sans-serif;
+}

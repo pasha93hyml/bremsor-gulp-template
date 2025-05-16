@@ -9,10 +9,10 @@ export const comparisonSliderInitAnimation = () => {
           observer.unobserve(entry.target);
 
           const steps = [];
-          for (let i = 50; i > 20; i--) {
+          for (let i = 50; i > 40; i--) {
             steps.push(i);
           }
-          for (let i = 20; i <= 60; i++) {
+          for (let i = 40; i <= 60; i++) {
             steps.push(i);
           }
           for (let i = 60; i >= 50; i--) {

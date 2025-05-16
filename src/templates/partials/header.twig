@@ -2,7 +2,7 @@
 
 <header
     data-header
-    class="{{ current_page == 'index' ? 'w-full fixed h-14 lg:h-18 flex items-center z-51 transition:background-color duration-500 bg-black-second/65 top-9 lg:top-10 hover:bg-black-second' : 'w-full fixed h-14 lg:h-18 flex items-center z-51 transition:background-color duration-500 bg-black-second/65 top-0 lg:top-0 hover:bg-black-second' }}"
+    class="{{ current_page == 'index' ? 'w-full fixed h-14 lg:h-18 flex items-center z-51 transition:background-color duration-500 bg-black-second/65 top-9 lg:top-10 hover:bg-black-second -translate-y-[1px]' : 'w-full fixed h-14 lg:h-18 flex items-center z-51 transition:background-color duration-500 bg-black-second/65 top-0 lg:top-0 hover:bg-black-second' }}"
 
 >
 
@@ -28,19 +28,20 @@
             <button
                 type="button"
                 data-shop-toggle
-                class="uppercase cursor-pointer"
+                class="uppercase cursor-pointer replace-animate"
+                data-replace="shop"
             >
-              shop
+              <span>shop</span>
             </button>
           </li>
           <li class="hover:text-white/40 transition duration-300 ease">
-            <a href="/request-order.html">custom order</a>
+            <a href="/request-order.html" data-replace="custom order" class="replace-animate"><span>custom order</span></a>
           </li>
           <li class="hover:text-white/40 transition duration-300 ease">
-            <a href="/">installation</a>
+            <a href="/" data-replace="installation" class="replace-animate"><span>installation</span></a>
           </li>
           <li class="hover:text-white/40 transition duration-300 ease">
-            <a href="/">about</a>
+            <a href="/" data-replace="about" class="replace-animate"><span>about</span></a>
           </li>
         </ul>
       </nav>
