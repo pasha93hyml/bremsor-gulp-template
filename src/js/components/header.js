@@ -8,8 +8,9 @@ function ShopList() {
   const sortButton = document.querySelector("[data-shop-sort]");
   let sortOrder = "asc";
 
-  function handleToggle() {
+  function handleToggle(event) {
     if (!shopListEl) return;
+    event.preventDefault()
     shopListEl.classList.remove("hidden");
     document.body.classList.add("lock-scroll");
   }
@@ -150,26 +151,26 @@ function HeaderScroll() {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
     if (scrollTop > 10 && isPromoBanner) {
-      header.classList.add("bg-black-second", "lg:top-0", "top-0");
-      header.classList.remove("bg-black-second/65", "top-9");
-      header.classList.remove("bg-black-second/65", "lg:top-10");
+      header.classList.add("bg-black-main", "lg:top-0", "top-0");
+      header.classList.remove("bg-black-main/65", "top-9");
+      header.classList.remove("bg-black-main/65", "lg:top-10");
     }
     if (scrollTop <= 10 && isPromoBanner) {
-      header.classList.remove("bg-black-second", "lg:top-0", "top-0");
+      header.classList.remove("bg-black-main", "lg:top-0", "top-0");
       if (isMobile) {
-        header.classList.add("bg-black-second/65", "top-9");
+        header.classList.add("bg-black-main/65", "top-9");
       } else {
-        header.classList.add("bg-black-second/65", "lg:top-10");
+        header.classList.add("bg-black-main/65", "lg:top-10");
       }
     }
 
     if (scrollTop > 10 && !isPromoBanner) {
-      header.classList.add("bg-black-second");
-      header.classList.remove("bg-black-second/65");
+      header.classList.add("bg-black-main");
+      header.classList.remove("bg-black-main/65");
     }
     if (scrollTop <= 10 && !isPromoBanner) {
-      header.classList.remove("bg-black-second");
-      header.classList.add("bg-black-second/65");
+      header.classList.remove("bg-black-main");
+      header.classList.add("bg-black-main/65");
     }
 
     lastScrollTop = scrollTop;

@@ -2,7 +2,7 @@
 
 <div
     data-shop-list
-    class="fixed left-0 right-0 top-0 w-dvw h-dvh z-50 p-1 bg-black-second/90 overflow-y-scroll hidden"
+    class="fixed left-0 right-0 top-0 w-dvw h-dvh z-50 p-1 bg-black-main/90 overflow-y-scroll hidden"
 >
   <button
       class="absolute 2xl:top-32.5 2xl:left-32 top-1/50 lg:top-1/20 left-1/30 text-white text-3xl hover:scale-110 transition z-10"
@@ -24,8 +24,10 @@
     </span>
   </button>
 
-  <div class="relative lg:block flex flex-col items-center gap-12 max-w-full mx-auto my-20 lg:my-30 2xl:my-60 px-1 sm:px-20 2xl:pl-32.5 2xl:pr-56">
-    <div data-list-to-sort class="w-full sm:w-[unset] grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 2xl:grid-cols-8 gap-6 lg:gap-y-19 lg:gap-x-7.5 px-2 lg:px-0">
+  <div
+      class="relative lg:block flex flex-col items-center gap-12 max-w-full mx-auto my-20 lg:my-30 2xl:my-60 px-1 sm:px-20 2xl:pl-32.5 2xl:pr-56">
+    <div data-list-to-sort
+         class="w-full sm:w-[unset] grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 2xl:grid-cols-8 gap-6 lg:gap-y-19 lg:gap-x-7.5 px-2 lg:px-0">
       {% for group in brands %}
         <div data-item-to-sort>
           <div data-item-to-sort-title class="text-green-main text-4xl font-light mb-10">
@@ -33,15 +35,18 @@
           </div>
           <ul class="text-white">
             {% for brand in group.list %}
-              <li class="hover:text-green-300 transition cursor-pointer leading-[180%]">
-                {{ brand }}
+              <li>
+                <a href="/shop-dropdown.html" class="hover:text-green-300 transition cursor-pointer leading-[180%]">
+                  {{ brand }}
+                </a>
               </li>
             {% endfor %}
           </ul>
         </div>
       {% endfor %}
     </div>
-    <button class="lg:absolute 2xl:right-56 lg:right-0 lg:bottom-0 lg:-translate-x-full lg:translate-y-full 2xl:translate-x-full text-white border border-white rounded-full py-3.5 px-9 uppercase text-sm leading-4.5 flex items-center justify-center hover:bg-white hover:text-black-second transition duration-500 ease cursor-pointer">
+    <button
+        class="lg:absolute 2xl:right-56 lg:right-0 lg:bottom-0 lg:-translate-x-full lg:translate-y-full 2xl:translate-x-full text-white border border-white rounded-full py-3.5 px-9 uppercase text-sm leading-4.5 flex items-center justify-center hover:bg-white hover:text-black-main transition duration-500 ease cursor-pointer">
       shop now
     </button>
   </div>

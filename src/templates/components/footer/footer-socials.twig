@@ -3,7 +3,7 @@
 <div class="{{ className | default('') }}">
   {% if items %}
     {% for social_name in items %}
-      <a href="/" class="w-7.5 h-7.5 flex items-center justify-center text-black-second bg-white rounded-full hover:scale-[1.1] transition duration-300 ease">
+      <a href="/" class="w-7.5 h-7.5 flex items-center justify-center text-black-main bg-white rounded-full hover:scale-[1.1] transition duration-300 ease">
         {{ svg(social_name, 'w-7.5 h-7.5') }}
       </a>
     {% endfor %}

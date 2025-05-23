@@ -2,16 +2,16 @@
 
 <header
     data-header
-    class="{{ current_page == 'index' ? 'w-full fixed h-14 lg:h-18 flex items-center z-51 transition:background-color duration-500 bg-black-second/65 top-9 lg:top-10 hover:bg-black-second -translate-y-[1px]' : 'w-full fixed h-14 lg:h-18 flex items-center z-51 transition:background-color duration-500 bg-black-second/65 top-0 lg:top-0 hover:bg-black-second' }}"
+    class="{{ current_page == 'index' ? 'w-full fixed h-14 lg:h-18 flex items-center z-51 transition:background-color duration-500 bg-black-main/65 top-9 lg:top-10 hover:bg-black-main -translate-y-[1px]' : 'w-full fixed h-14 lg:h-18 flex items-center z-51 transition:background-color duration-500 bg-black-main/65 top-0 lg:top-0 hover:bg-black-main' }}"
 
 >
 
   {% include './../components/header/mobile-menu.twig' %}
   {% include './../components/header/shop-list.twig' with { brands: brands.brandsList } %}
 
-  <div class="container">
+  <div class="container h-full">
     <div
-        class="{{ current_page == 'index' ? 'w-full h-full flex items-center gap-2' : 'w-full flex items-center gap-2 py-[18px] lg:py-7 border-b border-white/[.45]' }}">
+        class="{{ current_page == 'index' ? 'w-full h-full flex items-center gap-2' : 'w-full h-full flex items-center gap-2 border-b border-white/[.45]' }}">
       <button
           type="button"
           class="lg:hidden text-white"
@@ -25,14 +25,14 @@
       <nav class="nav hidden lg:block" data-desktop-only>
         <ul class="flex items-center gap-5 uppercase text-xs font-bold text-white">
           <li class="hover:text-white/40 transition duration-300 ease">
-            <button
-                type="button"
+            <a
+                href="#"
                 data-shop-toggle
                 class="uppercase cursor-pointer replace-animate"
                 data-replace="shop"
             >
               <span>shop</span>
-            </button>
+            </a>
           </li>
           <li class="hover:text-white/40 transition duration-300 ease">
             <a href="/request-order.html" data-replace="custom order" class="replace-animate"><span>custom order</span></a>

@@ -11,7 +11,6 @@ import { PerformanceMonitor } from "./features/PerformanceMonitor.js";
 import { DebugTools } from "./features/DebugTools.js";
 
 import { viewerIcon } from "./icons/viewer.js";
-import {clear} from "core-js/internals/task.js";
 
 export class ModelViewer {
   /**
@@ -866,13 +865,15 @@ export class ModelViewer {
     this.isCameraResetAnimationActive = true;
     this.cameraController.controls.enabled = false; // Disable controls during animation
 
-    if (this.annotationManager.annotations &&
-      this.annotationManager.annotations.length > 0) {
+    if (
+      this.annotationManager.annotations &&
+      this.annotationManager.annotations.length > 0
+    ) {
       setTimeout(() => {
         // Only show if no interaction is happening
         if (!this.isUserInteracting) {
-          this.annotationManager.annotations.forEach(annotation => {
-            annotation.element.classList.remove('opacity-0');
+          this.annotationManager.annotations.forEach((annotation) => {
+            annotation.element.classList.remove("opacity-0");
           });
         }
       }, this.options.cameraResetAnimationDuration + 100);
@@ -1013,16 +1014,14 @@ export class ModelViewer {
    * add rotation indicator
    */
   _addRotationIndicator() {
-    const indicatorContainer = document.createElement("div");
+    const indicatorContainer = document.querySelector(
+      ".js-3d-rotation-indicator",
+    );
     indicatorContainer.className = "model-rotation-indicator";
-    indicatorContainer.style.position = "absolute";
-    indicatorContainer.style.top = "10%";
-    indicatorContainer.style.right = "50%";
-    indicatorContainer.style.transform = "translateX(50%)";
     indicatorContainer.style.width = "60px";
     indicatorContainer.style.height = "60px";
     indicatorContainer.style.zIndex = "10";
-    indicatorContainer.style.opacity = "0.7";
+    indicatorContainer.style.opacity = "1.0";
     indicatorContainer.style.transition = "opacity 0.3s ease";
     indicatorContainer.style.pointerEvents = "none";
 
@@ -1041,16 +1040,10 @@ export class ModelViewer {
       }, this.options.inactivityResetDelay + this.options.cameraResetAnimationDuration);
     };
 
-    this.container.addEventListener("mousedown", fadeOutIndicator, {
-      // once: true,
-    });
+    this.container.addEventListener("mousedown", fadeOutIndicator);
     this.container.addEventListener("mouseup", fadeInIndicator);
-    this.container.addEventListener("touchstart", fadeOutIndicator, {
-      // once: true,
-    });
+    this.container.addEventListener("touchstart", fadeOutIndicator);
     this.container.addEventListener("touchend", fadeInIndicator);
-
-    this.container.appendChild(indicatorContainer);
   }
 
   /**

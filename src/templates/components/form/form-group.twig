@@ -23,12 +23,11 @@
         {% include 'components/form/file-upload-field.twig' with field %}
       {% elseif field.type == 'color-selector' %}
         {% include 'components/form/color-selector-field.twig' with field %}
+      {% elseif field.type == 'upload-info' %}
+        {% include 'components/form/upload-info.twig' with field %}
       {% endif %}
     {% endfor %}
   </div>
-  {% if info_title %}
-    {% include 'components/form/info-field.twig' with {info_title: info_title} %}
-  {% endif %}
 
   {% if form_footer %}
     {% include 'components/form/form-footer.twig' %}

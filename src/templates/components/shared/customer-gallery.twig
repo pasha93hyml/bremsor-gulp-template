@@ -1,0 +1,57 @@
+{% from './../../macro/icon.twig' import svg %}
+
+<section class="bg-black-main w-ful py-15">
+  <div class="max-w-303 w-full mx-auto px-5">
+    <div class="flex justify-between items-center w-full lg:mb-10">
+      <h2 class="text-2xl text-white font-light max-lg:w-full max-lg:text-center">Customer Gallery</h2>
+      <a href="#" class="text-white text-xs uppercase lg:max-w-50 w-full hidden lg:flex items-center justify-between border border-white rounded-[25rem] py-2 px-3 group hover:bg-white hover:text-black-main transition duration-400 ease">View more {{ svg('chevron-left', 'w-3 h-3 group-hover:translate-x-1/2 transition duration-400 ease rotate-180') }}</a>
+    </div>
+
+    {% if gridImages and customer_gallery.imageData %}
+      <div
+          class="hidden lg:grid grid-cols-[3fr_1.5fr_1fr] grid-rows-6 gap-0"
+      >
+        {% for item in customer_gallery.imageData %}
+          {% set aosEffect = ['fade-up', 'fade-down', 'fade-right', 'fade-left'][loop.index0 % 4] %}
+          {% set gridImageOptions = {
+            pictureClass: item.className,
+            class: "object-cover w-full group-hover:scale-[1.2] scale-[1.01] transition duration-400 ease",
+            width: item.size,
+            height: item.size,
+            loading: 'lazy',
+            'data-aos': aosEffect
+          } %}
+          <div class="{{ item.className }} group overflow-hidden relative">
+            {{ picture(item.image_src, 'Instagram image ' ~ loop.index, gridImageOptions) | raw }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+
+    {% if gridImages and customer_gallery.imageData %}
+      <div class="block lg:hidden">
+        <div data-aos="fade-up" class="relative">
+          <div id="grid-images-slider" class="keen-slider py-10">
+            {% for item in customer_gallery.imageData %}
+              <div class="keen-slider__slide">
+                {% set sliderImageOptions = {
+                  class: 'max-lg:mx-auto lg:w-full object-contain lg:object-cover',
+                  width: '300',
+                  loading: 'lazy'
+                } %}
+                {{ picture(item.image_src, 'Instagram image ' ~ loop.index, sliderImageOptions) | raw }}
+              </div>
+            {% endfor %}
+          </div>
+
+          {% if gridImages.imageData | length > 1 %}
+            <div id="grid-images-dots" class="flex items-center justify-center gap-2 mt-[30px]">
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+    <a href="#" class="text-white text-xs uppercase max-w-40 w-full flex lg:hidden items-center justify-between border border-white rounded-[25rem] py-2 px-3 mx-auto mt-8 group hover:bg-white hover:text-black-main transition duration-400 ease">View more {{ svg('chevron-left', 'w-3 h-3 rotate-180') }}</a>
+  </div>
+</section>

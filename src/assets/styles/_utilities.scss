@@ -101,11 +101,8 @@
 
     @media screen and (max-width: 1024px) {
       width: 100%;
-      height: 70dvh;
+      height: calc(var(--vh, 1vh) * 70);
 
-      @supports (-webkit-touch-callout: none) {
-        height: -webkit-fill-available;
-      }
     }
   }
 
@@ -191,9 +188,9 @@
   }
 
   .touchscreen-scroll-events {
-    touch-action: auto !important;
+    //touch-action: auto !important;
     @media (pointer: coarse) {
-      touch-action: pan-y !important;
+      //touch-action: pan-y !important;
     }
   }
 

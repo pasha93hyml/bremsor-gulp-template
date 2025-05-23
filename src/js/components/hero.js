@@ -2,31 +2,88 @@ function CashbackBanner() {
   const banner = document.querySelector("[data-cashback-banner]");
   const toggle = document.querySelector("[data-cashback-toggle]");
   const arrow = toggle ? toggle.querySelector("svg") : null;
+  let isOpen = false;
+
+  let hasVerticalScrollbar =
+    document.documentElement.scrollHeight >
+    document.documentElement.clientHeight;
+  let scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+  function adjustTogglePosition() {
+    if (!toggle) return;
+
+    hasVerticalScrollbar =
+      document.documentElement.scrollHeight >
+      document.documentElement.clientHeight;
+    scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+    if (hasVerticalScrollbar && scrollbarWidth > 0 && !isOpen) {
+      toggle.style.left = `-${scrollbarWidth}px`;
+    } else {
+      toggle.style.left = "0";
+    }
+  }
 
   function handleToggle() {
+    isOpen = !isOpen;
     banner.classList.toggle("lg:translate-x-0");
     banner.classList.toggle("lg:translate-x-[calc(100%_+_30px)]");
     arrow.classList.toggle("rotate-180");
     arrow.classList.toggle("rotate-0");
+    toggle.style.left = isOpen ? `0` : `-${scrollbarWidth}px`;
   }
 
   function init() {
     if (!banner || !toggle) return;
+
+    toggle.style.opacity = '0';
+
+    const checkPositionSequence = () => {
+      adjustTogglePosition();
+
+      setTimeout(() => {
+        adjustTogglePosition();
+        toggle.style.opacity = '1';
+      }, 2000);
+
+      window.addEventListener('load', () => {
+        adjustTogglePosition();
+        toggle.style.opacity = '1';
+      }, { once: true });
+    };
+
+    const setPositionWithDelay = new Promise((res, rej) => {
+      res(checkPositionSequence)
+    })
+
+    setPositionWithDelay.then(func => func())
+
+
+    // checkPositionSequence();
+
     toggle.addEventListener("click", handleToggle);
+
+    window.addEventListener("resize", adjustTogglePosition);
+    window.addEventListener("scroll", adjustTogglePosition, { passive: true });
+    setTimeout(adjustTogglePosition, 1000);
+
     window.addEventListener("click", (event) => {
-      if(!event.target.closest("[data-cashback-banner]")) {
+      if (!event.target.closest("[data-cashback-banner]") && isOpen) {
+        isOpen = false;
         banner.classList.remove("lg:translate-x-0");
         banner.classList.add("lg:translate-x-[calc(100%_+_30px)]");
         arrow.classList.remove("rotate-180");
         arrow.classList.add("rotate-0");
       }
-    })
+    });
   }
 
   function destroy() {
     if (toggle) {
       toggle.removeEventListener("click", handleToggle);
     }
+    window.removeEventListener("resize", adjustTogglePosition);
+    window.removeEventListener("scroll", adjustTogglePosition);
   }
 
   return { init, destroy };
@@ -98,8 +155,7 @@ function createHero() {
 
   const isMobile = window.innerWidth < 768;
 
-  if(isMobile) {
-
+  if (isMobile) {
   }
 
   function init() {

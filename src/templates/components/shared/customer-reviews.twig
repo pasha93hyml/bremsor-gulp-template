@@ -1,0 +1,124 @@
+{% from './../../macro/icon.twig' import svg %}
+
+<section class="w-full py-15">
+  <div class="max-w-303 w-full mx-auto px-5">
+    <h2 class="text-white text-2xl font-light mb-10 max-lg:w-full max-lg:text-center">Customer Reviews</h2>
+
+    {# heading #}
+    <div class="max-md:flex-wrap flex max-md:justify-center items-start gap-12 mb-3">
+
+      <div class="flex flex-col gap-3 self-stretch reviews-heading-item">
+        <div class="flex items-center gap-2">
+          <span class="text-white text-xl font-bold">4.9</span>
+          <div class="flex items-center gap-[1px] text-green-main">
+            {% for i in 1..5 %}
+              {{ svg('star', 'w-3 h-3 min-w-3 icon-star ' ~ (i < 5 ? 'active' : '')) }}
+            {% endfor %}
+          </div>
+        </div>
+        <p class="text-xs text-white">Based on <span>222</span> Reviews</p>
+      </div>
+
+      <div class="flex flex-col gap-1 self-stretch reviews-heading-item without-line">
+        {% for item in rating_heading.ratings %}
+          {% include './ui/rating-bar.twig' with {
+            title: item.title,
+            percent: item.percent,
+            amount: item.amount
+          } %}
+        {% endfor %}
+      </div>
+
+      <div class="grid grid-cols-4 grid-rows-2 gap-[2px]">
+        {% for i in 1..8 %}
+          {{ picture('/assets/images/customer-reviews/review-heading.jpg', 'review image', {width: '72', height: '72'}) }}
+        {% endfor %}
+      </div>
+
+    </div>
+    {# heading end #}
+
+    {# sub-heading #}
+    <div class="flex max-sm:flex-wrap max-sm:gap-y-4 items-center justify-between w-full pb-6 border-b border-white">
+      <div class="flex items-end gap-3">
+        <span class="text-white text-sm font-bold">Reviews</span>
+        <div class="flex items-center px-2 py-[2px] w-14 rounded-[10px] text-xs font-bold bg-white text-black-main">
+          222
+        </div>
+      </div>
+      <div class="flex items-center gap-3 sm:ml-auto max-sm:justify-between max-sm:w-full">
+        <div class="relative js-simple-dropdown">
+          <button type="button"
+                  class="flex items-center justify-between w-60 text-xs text-white capitalize py-2 px-3 border border-white rounded-[100px] js-dropdown-trigger"
+                  aria-label="reviews filter button"
+                  data-default-value="most recent">
+            <span class="js-dropdown-value">most recent</span>
+            {{ svg('chevron-down', 'w-3 h-3 transition duration-400 ease dropdown-icon') }}
+          </button>
+          <div
+              class="absolute w-full left-0 top-[calc(100%_+_10px)] rounded-[10px] bg-white grid-row-animation-container js-dropdown-content"
+          >
+            <ul class="w-full min-h-0 flex flex-col gap-2.5">
+              <li>
+                <button type="button"
+                        aria-label="filter by most recent"
+                        class="text-sm text-black-main w-full hover:bg-black-main/30 cursor-pointer text-left p-2 rounded js-dropdown-option"
+                        data-value="most recent">
+                  Most Recent
+                </button>
+              </li>
+              <li>
+                <button type="button"
+                        aria-label="filter by Highest Rating"
+                        class="text-sm text-black-main w-full hover:bg-black-main/30 cursor-pointer text-left p-2 rounded js-dropdown-option"
+                        data-value="highest rating">
+                  Highest Rating
+                </button>
+              </li>
+              <li>
+                <button type="button"
+                        aria-label="filter by Lowest Rating"
+                        class="text-sm text-black-main w-full hover:bg-black-main/30 cursor-pointer text-left p-2 rounded js-dropdown-option"
+                        data-value="lowest rating">
+                  Lowest Rating
+                </button>
+              </li>
+              <li>
+                <button type="button"
+                        aria-label="filter by With Photos"
+                        class="text-sm text-black-main w-full hover:bg-black-main/30 cursor-pointer text-left p-2 rounded js-dropdown-option"
+                        data-value="with photos">
+                  With Photos
+                </button>
+              </li>
+              <li>
+                <button type="button"
+                        aria-label="filter by Most Helpful"
+                        class="text-sm text-black-main w-full hover:bg-black-main/30 cursor-pointer text-left p-2 rounded js-dropdown-option"
+                        data-value="most helpful">
+                  Most Helpful
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <button type="button" aria-label="clear reviews filter" class="text-xs text-white underline js-dropdown-clear">
+          Clean filter
+        </button>
+      </div>
+    </div>
+    {# sub-heading end #}
+
+    {# content #}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-4 animate-fade-out-in js-pagination-content-to-change">
+      {% for i in 1..4 %}
+        {% include './ui/reviews-card.twig' %}
+      {% endfor %}
+    </div>
+    {# content end #}
+
+    {# pagination #}
+    {% include './ui/pagination.twig' %}
+
+  </div>
+</section>

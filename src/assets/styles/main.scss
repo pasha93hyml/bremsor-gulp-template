@@ -47,6 +47,26 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Gill Alt One MT';
+  src: local('Gill Alt One MT Light'), local('GillAltOneMT-Light'),
+  url('/assets/fonts/gill-alt-one-mt/GillAltOneMT-Light.woff2') format('woff2'),
+  url('/assets/fonts/gill-alt-one-mt/GillAltOneMT-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gill Alt One MT';
+  src: local('Gill Alt One MT'), local('GillAltOneMT'),
+  url('/assets/fonts/gill-alt-one-mt/GillAltOneMT.woff2') format('woff2'),
+  url('/assets/fonts/gill-alt-one-mt/GillAltOneMT.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 #site-loader {
   transition: opacity 0.5s ease;
 }

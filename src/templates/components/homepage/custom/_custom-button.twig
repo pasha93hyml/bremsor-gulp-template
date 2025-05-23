@@ -7,7 +7,7 @@
     {% if data_goto %}data-goto="{{ data_goto }}"{% endif %}
 >
   <p class="lg:text-[16px] text-base font-bold text-left {{ title_classes | default('') }}">{{ title }}</p>
-  <div class='flex items-center justify-center min-w-11 w-11 h-11 lg:min-w-12 lg:w-12 lg:h-12 text-black-second rounded-full bg-[#d9d9d9]/75 group-hover:bg-[#d9d9d9]/95 transition duration-300 {{ plus_classes|default('') }}'>
+  <div class='flex items-center justify-center min-w-11 w-11 h-11 lg:min-w-12 lg:w-12 lg:h-12 text-black-main rounded-full bg-[#d9d9d9]/75 group-hover:bg-[#d9d9d9]/95 transition duration-300 {{ plus_classes|default('') }}'>
     {{ svg('plus', 'stroke-[2px] w-4 h-4' ) }}
   </div>
 </button>

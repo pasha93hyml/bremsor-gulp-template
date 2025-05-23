@@ -21,6 +21,7 @@ class PictureUtils {
    * @param {string} options.sizes - sizes attribute
    * @param {Array} options.breakpoints - array of breakpoint objects for srcset attribute
    * @param {boolean} options.skipWebp - skip WebP format
+   * @param {string} options.slot - param for comparison slider
    * @returns {string} HTML for <picture>
    */
   picture(src, alt = "", options = {}) {
@@ -33,6 +34,7 @@ class PictureUtils {
       sizes: "",
       breakpoints: [],
       skipWebp: false,
+      slot: ""
     };
 
     const opts = { ...defaults, ...options };
@@ -46,7 +48,7 @@ class PictureUtils {
 
     const hasWebp = !opts.skipWebp && this.fs.existsSync(webpPath);
 
-    let markup = `<picture${opts.pictureClass ? ` class="${opts.pictureClass}"` : ""}>`;
+    let markup = `<picture${opts.pictureClass ? ` class="${opts.pictureClass}"` : ""} ${opts.slot ? ` slot=${opts.slot}` : ''}>`;
 
     if (opts.breakpoints && opts.breakpoints.length > 0) {
       const sortedBreakpoints = [...opts.breakpoints].sort(
@@ -89,6 +91,7 @@ class PictureUtils {
       opts.height ? `height="${opts.height}"` : "",
       opts.loading ? `loading="${opts.loading}"` : "",
       opts.sizes ? `sizes="${opts.sizes}"` : "",
+      opts.slot ? `slot=${opts.slot}` : "",
     ]
       .filter(Boolean)
       .join(" ");

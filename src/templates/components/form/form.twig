@@ -8,27 +8,27 @@
       {type: 'text', name: 'last-name', label: 'last name*', placeholder: 'Your name here', required: 'true', input_field_classes: 'max-lg:order-2'},
       {type: 'tel', name: 'phone', label: 'Phone number*', placeholder: 'Enter here', required: 'true', input_field_classes: 'max-lg:order-4'},
     ],
-      classes: "form-group flex flex-col gap-14 text-white mb-19 lg:mb-25",
+      classes: "form-group flex flex-col ld:gap-14 gap-5 text-white mb-19 lg:mb-25",
       fields_classes: "form-fields flex flex-col w-full lg:grid lg:grid-cols-2 grid-rows-2 gap-7.5",
-      title_classes: "form-group-title text-[32px] leading-[107%] font-bold"
+      title_classes: "form-group-title text-xl lg:text-2xl leading-[136%] font-bold"
     }
     ) %}
 
   {% include 'components/form/form-group.twig' with {
     title: 'Vehicle Information:',
     subtitle: 'All fields are required',
-    info_title: 'Ensure clear images of both front and rear brakes',
     fields: [
       {type: 'select', name: 'make', label: 'Make', options: dropdowns.make, field_classes: 'select-field-wrap max-lg:col-span-full', required: 'true'},
       {type: 'select', name: 'model', label: 'Model', options: dropdowns.model, field_classes: 'select-field-wrap max-lg:col-span-full', required: 'true'},
       {type: 'select', name: 'year', label: 'Year', options: dropdowns.year, field_classes: 'lg:col-start-1 max-lg:col-span-full select-field-wrap', required: 'true'},
       {type: 'select', name: 'info', label: 'Additional Info', options: dropdowns.info, field_classes: 'lg:col-start-2 select-field-wrap max-lg:col-span-full', required: 'true'},
       {type: 'image-upload', name: 'front_brake', label: 'Front Brake Image', text: 'Upload Front Brake Image', field_classes: 'lg:col-start-3 lg:row-span-full', required: 'true'},
-      {type: 'image-upload', name: 'rear_brake', label: 'Rear Brake Image', text: 'Upload Rear Brake Image', field_classes: 'lg:col-start-4 lg:row-span-full', required: 'true'}
+      {type: 'image-upload', name: 'rear_brake', label: 'Rear Brake Image', text: 'Upload Rear Brake Image', field_classes: 'lg:col-start-4 lg:row-span-full', required: 'true'},
+      {type: 'upload-info', text: 'Ensure clear images of both front and rear brakes, like on example:', field_classes: 'lg:col-start-1 lg:col-end-3 lg:row-start-3 lg:row-end-5'}
     ],
-    classes: "form-group text-white flex flex-col lg:gap-6.5 gap-13 relative",
-    title_classes: "form-group-title text-[32px] leading-[107%] font-bold",
-    subtitle_classes: 'text-xl leading-[26px] mb-6.5',
+    classes: "form-group text-white flex flex-col gap-5 relative",
+    title_classes: "form-group-title text-xl lg:text-2xl leading-[136%] font-bold",
+    subtitle_classes: 'text-base leading-[26px] mb-6.5',
     fields_classes: 'grid grid-cols-2 lg:grid-cols-4 grid-rows-4 gap-7.5 lg:max-h-[270px]'
   } %}
 
@@ -37,8 +37,8 @@
     fields: [
       {type: 'color-selector', name: 'color', label: 'Select Color'}
     ],
-    classes: 'w-full flex flex-col text-white gap-16 mt-20 lg:mt-25 mb-16',
-    title_classes: 'text-[32px] font-bold',
+    classes: 'w-full flex flex-col text-white gap-10 lg:gap-16 mt-20 lg:mt-25 mb-16',
+    title_classes: 'text-xl lg:text-2xl leading-[136%] font-bold',
     data_name: 'color_pick'
   } %}
 

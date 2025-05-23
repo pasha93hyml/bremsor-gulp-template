@@ -1,0 +1,14 @@
+{% from './../../../macro/icon.twig' import svg %}
+
+<div class="flex items-center gap-2">
+  <div class="flex items-center gap-1">
+    <span class="text-white text-xs">{{ title }}</span>
+    {{ svg('star', 'w-2 h-2 min-w-2 text-white opacity-100') }}
+  </div>
+
+  <div class="relative flex items-center w-33 rounded-[10px] h-[15px] bg-white/30 px-2 overflow-hidden">
+    <span class="text-[8px] font-bold text-white relative z-2">{{ percent }}%</span>
+    <div class="absolute left-0 top-0 bottom-0 bg-green-main" style="width: {{ percent }}%"></div>
+  </div>
+  <div class="text-white text-xs">{{ amount }}</div>
+</div>

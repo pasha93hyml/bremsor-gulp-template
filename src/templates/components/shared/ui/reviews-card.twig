@@ -1,0 +1,63 @@
+{% from './../../../macro/icon.twig' import svg %}
+
+<div class="flex flex-col gap-8 py-8 border-b border-white w-full">
+  {# heading #}
+  <div class="flex w-full justify-between">
+    <div class="flex items-center gap-3">
+      <div
+          class="w-15 h-15 min-w-15 flex items-center justify-center rounded-full bg-green-main text-white text-2xl font-bold">
+        K
+      </div>
+      <div class="flex flex-col self-stretch">
+        <div class="text-white text-sm font-bold capitalize">Kylene K.</div>
+        <div class="text-[10px] text-green-main font-light capitalize">Verified Buyer</div>
+        <div class="flex items-center gap-[1px] mt-auto">
+          {% for i in 1..5 %}
+            {{ svg('star', 'w-2 h-2 min-w-2 icon-star ' ~ (i < 5 ? 'active' : '')) }}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col justify-between items-end ml-auto">
+      <time datetime="2025-04-09" class="text-white text-sm">09/04/2025</time>
+      <div class="flex items-center justify-end gap-2">
+        {{ picture('/assets/images/flags/usa.jpg', 'USA flag', {class: 'w-3.5 h-2.5 min-w-3.5', width: 14, height: 11}) }}
+        <div class="text-white font-bold text-sm capitalize">United States</div>
+      </div>
+    </div>
+  </div>
+  {# heading end #}
+
+  {# review text #}
+  <p class="text-white text-sm font-light leading-[1.2]">
+    Obsessed!<br/>
+    Superb quality brake caliper covers as described….the securing clips on the front fixings were a little out by about
+    2mm but I managed to overcome this problem They definitely look the part and have transformed the definition of the
+    wheels……highly recommended if it’s quality you’re looking for….there are cheaper options out there…..but remember
+    you get what you pay for !!
+  </p>
+
+  {# review images #}
+  <div class="grid grid-cols-2 gap-2 w-full aspect-[570/184]">
+    <div>
+      {{ picture('/assets/images/customer-reviews/review-1.png', 'Customer review image', 'w-full object-cover') }}
+    </div>
+    <div>
+      {{ picture('/assets/images/customer-reviews/review-2.png', 'Customer review image', 'w-full object-cover') }}
+    </div>
+  </div>
+
+  {# review footer #}
+  <div class="flex items-center w-full">
+    <a href="#" class="text-white text-sm font-bold hover:underline">Brake Caliper Cover for Toyota Highlander AOOA (set
+      of 4)</a>
+    <button type="button" aria-label="share review" class="flex items-center gap-1 ml-auto group cursor-pointer">
+      {{ svg('share', 'w-3 h-3 text-white group-hover:text-green-main transition duration-400 ease') }}
+      <span class="text-white text-sm font-bold capitalize">Share</span>
+    </button>
+    <button type="button" aria-label="like review" class="flex items-center gap-1 ml-3 group cursor-pointer">
+      {{ svg('heart', 'w-3 h-3 text-white group-hover:text-green-main transition duration-400 ease') }}
+      <span class="text-white text-sm font-bold">245</span>
+    </button>
+  </div>
+</div>

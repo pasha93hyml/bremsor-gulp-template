@@ -17,6 +17,10 @@ import { Form } from "./components/form.js";
 import { CustomBtn } from "./components/custom-btn.js";
 import { comparisonSliderInitAnimation } from "./libs/img-comparsion-slider.js";
 
+import { ImageAnnotationSystem } from "./components/custom-caliper.js";
+import { Pagination } from "./components/pagination.js";
+import { SimpleDropdown } from "./components/simple-dropdown.js";
+
 import { ModelViewer } from "./libs/enhanced-viewer/viewer.js";
 
 import "./libs/aos.js";
@@ -68,6 +72,8 @@ document.addEventListener("DOMContentLoaded", () => {
       new CustomBtn(btn);
     });
   }
+
+  const cashbackBtnElement = document.querySelector(".js-cashback-btn");
 
   const modelContainer = document.querySelector(".js-model-viewer");
   if (modelContainer) {
@@ -135,45 +141,80 @@ document.addEventListener("DOMContentLoaded", () => {
             "static-annotation text-small lg:text-base text-white flex items-center justify-between gap-5 group transition duration-300 ease",
           id: "info-panel-3",
         });
-
-        // viewer.addAnnotation({
-        //   htmlContent: `
-        //     <span class="">Custom logo</span>
-        //     <span class="flex items-center justify-center p-[2px] rounded-full bg-[#d9d9d9]/75 w-6 h-6 group-hover:bg-white">
-        //     </span>
-        //   `,
-        //   position: { top: "33%", left: "8%" },
-        //   isStatic: true,
-        //   cssClass: "static-annotation text-white flex items-center justify-between gap-5 group transition duration-300 ease",
-        //   id: "info-panel-1",
-        // });
-        // viewer.addAnnotation({
-        //   htmlContent: `
-        //     <span class="">Unique shape</span>
-        //     <span class="flex items-center justify-center p-[2px] rounded-full bg-[#d9d9d9]/75 w-6 h-6 group-hover:bg-white">
-        //     </span>
-        //   `,
-        //   position: { bottom: "33%", right: "-4%" },
-        //   isStatic: true,
-        //   cssClass: "static-annotation text-white flex flex-row-reverse items-center justify-between gap-5 group transition duration-300 ease",
-        //   id: "info-panel-2",
-        // });
-        // viewer.addAnnotation({
-        //   htmlContent: `
-        //     <span class="">Color of your choice</span>
-        //     <span class="flex items-center justify-center p-[2px] rounded-full bg-[#d9d9d9]/75 w-6 h-6 group-hover:bg-white">
-        //     </span>
-        //   `,
-        //   position: { bottom: "15%", left: "18%" },
-        //   isStatic: true,
-        //   cssClass: "static-annotation text-white flex items-center justify-between gap-5 group transition duration-300 ease",
-        //   id: "info-panel-3",
-        // });
       });
     } catch (err) {
       console.log("Failed to initialize ModelViewer:", err);
     }
 
     // lazyLoading(modelContainers, viewer);
+  }
+
+  const customCaliperContainer = document.querySelector(
+    ".js-custom-caliper-container",
+  );
+  if (customCaliperContainer) {
+    const isMobile = window.innerWidth < 768;
+    new ImageAnnotationSystem({
+      imageContainerClass: "js-custom-caliper-container",
+      svgId: "annotation-svg",
+      annotations: [
+        {
+          dotId: "dot1",
+          lineColor: "white",
+          lineWidth: 1,
+          targetOffset: { x: isMobile ? 20 : 70, y: isMobile ? 40 : 40 },
+        },
+        {
+          dotId: "dot2",
+          lineColor: "white",
+          lineWidth: 1,
+          targetOffset: { x: isMobile ? -40 : -60, y: isMobile ? -70 : -40 },
+        },
+        {
+          dotId: "dot3",
+          lineColor: "white",
+          lineWidth: 1,
+          targetOffset: { x: isMobile ? 60 : 40, y: isMobile ? -40 : -30 },
+        },
+      ],
+    }).initialize();
+  }
+
+  const paginationContainer = document.querySelector(
+    ".js-pagination-container",
+  );
+  if (paginationContainer) {
+    const isMobile = window.innerWidth < 576;
+    const pagination = new Pagination({
+      totalPages: 25,
+      currentPage: 1,
+      visiblePages: isMobile ? 6 : 10,
+      containerSelector: ".js-pagination-container",
+      isMobile: isMobile,
+    });
+
+    // Example of listening to page change events
+    document
+      .querySelector(".js-pagination-container")
+      .addEventListener("pageChange", (e) => {
+        console.log(`Page changed to: ${e.detail.page}`);
+      });
+  }
+
+  const dropdownContainers = document.querySelectorAll(".js-simple-dropdown");
+  if (dropdownContainers && dropdownContainers.length > 0) {
+    Array.from(dropdownContainers).map((container, index) => {
+      new SimpleDropdown({
+        containerSelector: `.js-simple-dropdown:nth-of-type(${index + 1})`,
+      });
+
+      container.addEventListener("valueChange", (e) => {
+        console.log(`Dropdown value changed to: ${e.detail.value}`);
+      });
+
+      container.addEventListener("valueReset", () => {
+        console.log("Dropdown value reset to default");
+      });
+    });
   }
 });

@@ -33,7 +33,7 @@
   }
 
   .custom-pick-btn {
-    @apply relative rounded-[10px] overflow-hidden bg-black-second flex hover:bg-black-second/[.95] transition duration-300 cursor-pointer;
+    @apply relative rounded-[10px] overflow-hidden bg-black-main flex hover:bg-black-main/[.95] transition duration-300 cursor-pointer;
     &.active {
       .check-circle {
         opacity: 1 !important;

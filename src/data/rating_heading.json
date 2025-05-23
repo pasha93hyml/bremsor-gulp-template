@@ -1,0 +1,25 @@
+{
+  "ratings": [
+    {
+      "title": 5,
+      "percent": 94,
+      "amount": 208
+    },{
+      "title": 4,
+      "percent": 12,
+      "amount": 12
+    },{
+      "title": 3,
+      "percent": 1,
+      "amount": 2
+    },{
+      "title": 2,
+      "percent": 0,
+      "amount": 0
+    },{
+      "title": 1,
+      "percent": 0,
+      "amount": 0
+    }
+  ]
+}

@@ -21,6 +21,7 @@ export class ColorPick {
     this.isCurrentActiveDefault = null;
 
     this.isOpen = null;
+    this.isSelected = false;
 
     this.#init();
   }
@@ -41,7 +42,12 @@ export class ColorPick {
     this.isOpen = !this.isOpen;
     this.dropdown.classList.toggle("active", this.isOpen);
 
-    this.toggleIcon();
+    if (!this.isSelected) {
+      this.toggleIcon();
+    } else {
+      this.btnOpenIcon.classList.add("hidden");
+      this.btnCloseIcon.classList.add("hidden");
+    }
   };
 
   handleBtnPickClick = (button, isDefault = true) => {
@@ -70,6 +76,7 @@ export class ColorPick {
     }
     this.currentActive = button;
     this.handleTriggerClick();
+    this.isSelected = true;
   };
 
   handleSelect = (event) => {

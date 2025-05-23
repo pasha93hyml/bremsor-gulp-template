@@ -54,13 +54,6 @@ export class SceneManager {
     return camera;
   }
 
-  // Usage (e.g., in your ModelViewer or CameraController setup):
-  // viewer.cameraController.setPositionAndTarget(cameraPosition, cameraTarget);
-  // OR
-  // camera.position.copy(cameraPosition);
-  // camera.lookAt(cameraTarget);
-  // if (controls) controls.target.copy(cameraTarget);
-
   /**
    * Sets up lighting for the scene
    * @private

@@ -3,10 +3,17 @@
   <ul>
     {% if items %}
       {% for item in items %}
+        {% if item == 'faq' %}
+          <li class="text-white text-small uppercase mb-2.5 group flex items-center transition duration-400 ease">
+            <span class="flex h-[1px] w-0 overflow-hidden bg-white transition-[width] duration-400 ease group-hover:w-3"></span>
+            <a href="/" class="group-hover:ml-2 transition-[margin] ease duration-400">{{ item }}</a>
+          </li>
+        {% else %}
         <li class="text-white text-small capitalize mb-2.5 group flex items-center transition duration-400 ease">
           <span class="flex h-[1px] w-0 overflow-hidden bg-white transition-[width] duration-400 ease group-hover:w-3"></span>
           <a href="/" class="group-hover:ml-2 transition-[margin] ease duration-400">{{ item }}</a>
         </li>
+        {% endif %}
       {% endfor %}
     {% endif %}
   </ul>

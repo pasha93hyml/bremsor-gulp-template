@@ -3,9 +3,10 @@
 {% block title %}Request Custom Order{% endblock %}
 
 {% block content %}
-  {% include 'components/homepage/custom/custom.twig' with {title: 'Request a Custom Order', subtitle: '* - Fill in all required fields'} %}
-  <section>
-    <div class="max-w-[1170px] lg:p-0 px-4 w-full mx-auto">
+
+  {% include 'components/request-order/request-hero.twig' %}
+  <section class="lg:mt-22 mt-18">
+    <div class="max-w-[1170px] lg:py-0 px-4 w-full mx-auto">
       {% include 'components/form/form.twig' %}
     </div>
   </section>

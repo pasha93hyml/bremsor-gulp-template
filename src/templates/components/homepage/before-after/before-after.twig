@@ -1,6 +1,6 @@
 {% from 'macro/icon.twig' import svg %}
 
-<section class="bg-black-second lg:pt-[100px]">
+<section class="bg-black-main lg:pt-[100px]">
   <div class="container">
     <h2
         data-aos="fade-up"
@@ -15,29 +15,13 @@
         class="relative w-full aspect-[1920/1080] cursor-ew-resize outline-none"
         value="50"
     >
-      <img
-          slot="first"
-          src="/assets/images/before_retouch.png"
-          alt="Before"
-          width="1920"
-          height="1080"
-          loading="lazy"
-          class="w-full h-auto block"
-      />
-
-      <img
-          slot="second"
-          src="/assets/images/after_retouch.png"
-          alt="After"
-          width="1920"
-          height="1080"
-          loading="lazy"
-          class="w-full h-auto block"
-      />
-      <div slot="handle" class="h-10 w-10 lg:h-[66px] lg:w-[66px] -ml-5 -mt-5 lg:-ml-[33px] lg:-mt-[33px] px-1 lg:py-[15px] lg:px-[10px] rounded-full bg-white absolute top-1/2 flex items-center justify-between cursor-pointer">
+      {{ picture('/assets/images/before_retouch.png', "Before", {width: "1920", height: "1080", class: "w-full h-auto block", slot: "first"}) }}
+      {{ picture('/assets/images/after_retouch.png', "After", {width: "1920", height: "1080", class: "w-full h-auto block", slot: "second"}) }}
+      <div slot="handle"
+           class="h-10 w-10 lg:h-[66px] lg:w-[66px] -ml-5 -mt-5 lg:-ml-[33px] lg:-mt-[33px] px-1 lg:py-[15px] lg:px-[10px] rounded-full bg-white absolute top-1/2 flex items-center justify-between cursor-pointer">
         <span class="text-xs hidden">BEFORE</span>
         <span class="flex items-center justify-center">{{ svg('chevron-left', 'translate-y-[1px] max-lg:w-3') }}</span>
-        <span class="w-[1px] bg-black-second absolute top-[5px] bottom-[5px] inset-x-1/2"></span>
+        <span class="w-[1px] bg-black-main absolute top-[5px] bottom-[5px] inset-x-1/2 -translate-x-[100%]"></span>
         <span class="text-xs hidden">AFTER</span>
         <span class="flex items-center justify-center">{{ svg('chevron-left', 'rotate-180 max-lg:w-3') }}</span>
       </div>
