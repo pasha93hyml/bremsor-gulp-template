@@ -1,43 +1,45 @@
 <section class="flex relative w-screen overflow-x-hidden md:aspect-[2684/1643] @container hero-section">
-  {#  <div #}
-  {#      class="absolute inset-0 bg-[url(/assets/images/hero-mobile.webp)] lg:bg-[url(/assets/images/hero.webp)] max-md:bg-size-[100%_100%] lg:bg-contain bg-no-repeat pointer-events-none transition-opacity duration-1000" #}
-  {#      data-aos="fade-down" #}
-  {#  ></div> #}
-
-  <div class="absolute inset-[0px_-100dvw_0px] md:inset-0 pointer-events-none touch-none z-1">
-    {{ picture('/assets/images/hero-bg.png', 'cashback', {
+  <div class=" absolute inset-[0px_-100dvw_0px] md:inset-0 pointer-events-none touch-none z-1">
+    {{ picture('/assets/images/hero-bg.png', 'background for first screen', {
       width: '1920',
       height: '1128',
       class: 'absolute z-2 top-0 left-44 md:left-0 object-cover md:w-full h-[calc(var(--vh,_1vh)_*_100_-_var(--promo-height))] touch-none'
     }) }}
 
-    <div class="absolute z-3 inset-0 bg-black-main/20"></div>
+    <div class="hidden absolute z-3 inset-0 bg-black-main/10"></div>
   </div>
-  {# max-md:top-[calc(var(--vh,_1vh)_*_15)] #}
   <div
-      class="absolute z-3 right-[8dvw] md:right-[4dvw] lg:bottom-[23vh] max-md:-translate-y-[80%] md:bottom-[20dvh] w-[60dvw] md:w-[50dvw] max-md:top-75 lg:w-[40dvw] aspect-[1122/732] pointer-events-none">
-    {{ picture('/assets/images/hero-calipers.png', 'cashback', {
+      class=" absolute z-3 right-[8dvw] md:right-[4dvw] lg:bottom-[23vh] max-md:-translate-y-[80%] md:bottom-[20dvh] w-[60dvw] md:w-[50dvw] max-md:top-75 lg:w-[40dvw] aspect-[1122/732] pointer-events-none">
+    {{ picture('/assets/images/hero-calipers.png', 'calipers', {
       width: '1122',
       height: '732',
       class: 'absolute  md:inset-0 object-cover w-full aspect-[1122/732]'
     }) }}
   </div>
 
-  <div data-aos="fade-up" class="relative z-4 container flex flex-col transition-opacity duration-1000 pt-25 lg:pt-30">
-    <p class="text-white uppercase text-small lg:text-base font-light tracking-[4px] w-full flex items-center justify-center gap-2 lg:gap-4 mx-auto">
-      <span>
+{#  <div class="absolute inset-0 max-lg:hidden w-full">#}
+{#    {{ picture('/assets/images/porsche-main-banner.jpg', 'background for first creen', {#}
+{#      width: 2684,#}
+{#      height: 1643,#}
+{#      class: 'absolute inset-0 object-cover h-[calc(var(--vh,_1vh)_*_100_-_var(--promo-height))]'#}
+{#    }) }}#}
+{#  </div>#}
+
+  <div data-aos="fade-up" class="relative z-4 container flex flex-col transition-opacity duration-1000 pt-25 lg:pt-[calc(var(--vh,_1vh)_*_23)]">
+    <p class=" text-white uppercase text-small lg:text-base font-light tracking-[4px] w-full flex items-center justify-center gap-2 lg:gap-4 mx-auto">
+      <span class="max-sm:text-shadow-glow">
       performance
       </span>
       <span class="block w-1 h-1 min-w-1 lg:w-1.5 lg:h-1.5 lg:min-w-1.5 bg-white rounded-full"></span>
-      <span>
+      <span class="max-sm:text-shadow-glow">
         durability
       </span>
       <span class="block w-1 h-1 min-w-1 lg:w-1.5 lg:h-1.5 lg:min-w-1.5 bg-white rounded-full"></span>
-      <span>
+      <span class="max-sm:text-shadow-glow">
         style
       </span>
     </p>
-    <h1 class="text-white uppercase text-3xl md:text-5xl lg:text-[80px] font-light tracking-[4px] lg:tracking-[7px] text-center mt-5">caliper covers</h1>
+    <h1 class=" text-white uppercase text-3xl md:text-5xl lg:text-[7vw] font-light lg:tracking-[1.5vw] tracking-[4px] text-center text-nowrap mt-5 max-sm:text-shadow-glow">caliper covers</h1>
     {% include "components/homepage/hero/hero-socials.twig" %}
     {% include "components/homepage/hero/hero-banner.twig" %}
     {% include "components/homepage/hero/hero-banner-cashback.twig" %}

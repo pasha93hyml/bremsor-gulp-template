@@ -22,7 +22,6 @@ export class SceneManager {
     this.camera = this._createCamera();
     this._setupLights();
 
-    // listen for container resize event
     this.onContainerResize = this.updateCameraAspect.bind(this);
   }
 
@@ -59,17 +58,14 @@ export class SceneManager {
    * @private
    */
   _setupLights() {
-    // Ambient light
     const ambientLight = new THREE.AmbientLight(0xffffff, 1);
     this.scene.add(ambientLight);
 
-    // Main direction light
     const mainLight = new THREE.DirectionalLight(0xffffff, 2.0);
     mainLight.position.set(5, 10, 7.5);
     mainLight.castShadow = true;
     this.scene.add(mainLight);
 
-    // Fill light from opposite direction
     const fillLight = new THREE.DirectionalLight(0xffffff, 0.5);
     fillLight.position.set(-5, 0, -7.5);
     this.scene.add(fillLight);

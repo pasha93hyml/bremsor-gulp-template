@@ -127,6 +127,28 @@
     grid-template-rows: 1fr;
     padding: 12px;
   }
+
+  &.no-padding {
+    .inner-dropdown-wrap {
+      transition: padding .4s ease;
+    }
+
+    &.active {
+      padding: 0;
+
+      .inner-dropdown-wrap {
+        padding: 10px;
+      }
+    }
+  }
+}
+
+.dropdown-option-with-circle {
+  &.active {
+    .dropdown-option-circle {
+      opacity: 1;
+    }
+  }
 }
 
 .pagination-page-button {
@@ -143,6 +165,12 @@
     left: 50%;
     transform: translateX(-50%);
     transition: width 0.3s ease, opacity 0.3s ease;
+  }
+
+  &.with-black {
+    &::after {
+      background-color: var(--color-black-main);
+    }
   }
 
   &.active {
@@ -176,4 +204,11 @@
   100% {
     opacity: 1;
   }
+}
+
+.text-shadow-glow {
+  text-shadow:
+          0 0 10px rgba(0, 0, 0, 0.3),
+          0 0 20px rgba(0, 0, 0, 0.2),
+          0 0 30px rgba(0, 0, 0, 0.1);
 }

@@ -14,6 +14,7 @@ import { robots } from "./gulp/tasks/robots.js";
 import { generateSitemap } from "./gulp/tasks/sitemap.js";
 import { favicons } from "./gulp/tasks/favicons.js";
 import {models} from "./gulp/tasks/models.js";
+import {scriptsShopify} from "./gulp/tasks/scripts-shopify.js";
 
 const assets = gulp.parallel([
   images,
@@ -27,11 +28,14 @@ const assets = gulp.parallel([
 ]);
 
 const mainTasks = gulp.series([html, styles, scripts]);
+const mainTasksShopify = gulp.series([html, styles, scriptsShopify])
 
 const dev = gulp.series(clean, assets, mainTasks, gulp.parallel(serve, watch));
 
 const build = gulp.series(clean, assets, mainTasks, generateSitemap);
 
+const buildShopify = gulp.series(clean, assets, mainTasksShopify, generateSitemap);
+
 export default dev;
 
-export { dev, build, clean };
+export { dev, build, buildShopify, clean };

@@ -10,20 +10,19 @@ export const brakesFormInit = () => {
       const previewImg = preview.querySelector(".preview-image");
       const placeholder = container.querySelector(".image-upload-placeholder");
 
-      // if (this.files && this.files[0]) {
-      //   const reader = new FileReader();
-      //
-      //   reader.onload = function (e) {
-      //     previewImg.src = e.target.result;
-      //     placeholder.style.display = "none";
-      //     preview.style.display = "block";
-      //   };
-      //
-      //   reader.readAsDataURL(this.files[0]);
-      // }
+      if (this.files && this.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          previewImg.src = e.target.result;
+          placeholder.style.display = "none";
+          preview.style.display = "block";
+        };
+
+        reader.readAsDataURL(this.files[0]);
+      }
     });
 
-    // Remove image button
     const removeBtn = input
       .closest(".image-upload-container")
       .querySelector(".remove-image-btn");
@@ -43,7 +42,6 @@ export const brakesFormInit = () => {
     }
   });
 
-  // File upload handling
   document.querySelectorAll(".file-upload-input").forEach((input) => {
     input.addEventListener("change", function () {
       const container = this.closest(".file-upload-container");
@@ -58,7 +56,6 @@ export const brakesFormInit = () => {
       }
     });
 
-    // Remove file button
     const removeBtn = input
       .closest(".file-upload-container")
       .querySelector(".remove-file-btn");
@@ -76,7 +73,6 @@ export const brakesFormInit = () => {
     }
   });
 
-  // Color selector toggle
   document.querySelectorAll(".toggle-color-grid-btn").forEach((btn) => {
     btn.addEventListener("click", function () {
       const container = this.closest(".color-selector-container");
@@ -85,7 +81,6 @@ export const brakesFormInit = () => {
       if (grid.style.display === "none") {
         grid.style.display = "block";
         this.textContent = "Hide Colors";
-        // You can add animation with CSS transitions on grid-template-rows
       } else {
         grid.style.display = "none";
         this.textContent = "Show Colors";

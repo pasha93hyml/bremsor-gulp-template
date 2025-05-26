@@ -1,42 +1,46 @@
 {% from './../../../macro/icon.twig' import svg %}
 
-<div class="w-full flex item-center justify-center js-pagination-container gap-4 mt-8">
-  <button type="button" aria-label="previous page" class="text-white disabled:text-white/50 cursor-pointer js-pagination-prev">
+{% set totalPages = totalPages|default(25) %}
+{% set currentPage = 1 %}
+{% set maxVisiblePages = 10 %}
+
+<div class="w-full flex item-center justify-center js-pagination-container gap-4 mt-{{ margin_top}}  {{ color ? 'text-black-main' : 'text-white' }}"
+    {% if color is defined %}
+      data-color="{{ color }}"
+    {% endif %}
+    data-pages="{{ totalPages }}"
+   data-visible="{{ visiblePages|default(8) }}"
+>
+  <button type="button" aria-label="previous page" class="{{ color ? 'text-black-main disabled:text-black-main/50' : 'text-white disabled:text-white/50' }} cursor-pointer js-pagination-prev">
     {{ svg('small-chevron-left', 'w-2 h-3.5') }}
   </button>
   <div class="flex items-center gap-2 md:gap-5 js-pagination-pages">
-    {% set totalPages = 25 %}
-    {% set currentPage = 1 %}
-    {% set maxVisiblePages = 10 %}
 
     {% if totalPages <= maxVisiblePages %}
       {% for i in 1..totalPages %}
-        <button class="w-4 min-w-4 md:w-6 h-6 md:min-w-6 flex items-center justify-center text-white text-sm md:text-lg cursor-pointer relative pagination-page-button js-pagination-page-button {{ i == currentPage ? 'active' : '' }}" data-page="{{ i }}">
+        <button class="w-4 min-w-4 md:w-6 h-6 md:min-w-6 flex items-center justify-center text-sm md:text-lg cursor-pointer relative pagination-page-button js-pagination-page-button {{ color ? 'with-black' : ''}} {{ i == currentPage ? 'active' : '' }}" data-page="{{ i }}">
           {{ i }}
         </button>
       {% endfor %}
     {% else %}
-      {# First page always visible #}
-      <button class="w-4 min-w-4 md:w-6 h-6 md:min-w-6 flex items-center justify-center text-white text-sm md:text-lg cursor-pointer relative pagination-page-button js-pagination-page-button {{ 1 == currentPage ? 'active' : '' }}" data-page="1">
+      <button class="w-4 min-w-4 md:w-6 h-6 md:min-w-6 flex items-center justify-center text-sm md:text-lg cursor-pointer relative pagination-page-button js-pagination-page-button {{ color ? 'with-black' : ''}} {{ 1 == currentPage ? 'active' : '' }}" data-page="1">
         1
       </button>
 
-      {# Ellipsis at start (initially hidden) #}
-      <span class="text-white text-lg js-pagination-start-ellipsis" style="display: none;">...</span>
+      <span class="text-lg js-pagination-start-ellipsis" style="display: none;">...</span>
 
-      {# Middle pages (will be populated by JS) #}
       <span class="js-pagination-middle-pages flex items-center gap-5"></span>
 
       {# Ellipsis at end #}
-      <span class="text-white text-lg js-pagination-end-ellipsis">...</span>
+      <span class="text-lg js-pagination-end-ellipsis">...</span>
 
       {# Last page always visible #}
-      <button class="w-4 min-w-4 md:w-6 h-6 md:min-w-6 flex items-center justify-center text-white text-sm md:text-lg cursor-pointer relative pagination-page-button js-pagination-page-button {{ totalPages == currentPage ? 'active' : '' }}" data-page="{{ totalPages }}">
+      <button class="w-4 min-w-4 md:w-6 h-6 md:min-w-6 flex items-center justify-center text-sm md:text-lg cursor-pointer relative pagination-page-button js-pagination-page-button {{ color ? 'with-black' : ''}} {{ totalPages == currentPage ? 'active' : '' }}" data-page="{{ totalPages }}">
         {{ totalPages }}
       </button>
     {% endif %}
   </div>
-  <button type="button" aria-label="next page" class="text-white disabled:text-white/50 cursor-pointer js-pagination-next">
+  <button type="button" aria-label="next page" class="{{ color ? 'text-black-main disabled:text-black-main/50' : 'text-white disabled:text-white/50'}} cursor-pointer js-pagination-next">
     {{ svg('small-chevron-left', 'w-2 h-3.5 rotate-180') }}
   </button>
 </div>

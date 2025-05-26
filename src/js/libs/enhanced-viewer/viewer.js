@@ -259,7 +259,6 @@ export class ModelViewer {
       this.performanceMonitor = new PerformanceMonitor(this.container);
     }
 
-    // load model
     this._loadModel();
 
     this._startAnimationLoop();
@@ -304,7 +303,6 @@ export class ModelViewer {
           viewChangedByOptions = true;
         }
 
-        // add rotation indicator
         this._addRotationIndicator();
 
         if (this.options.initialCameraTarget) {

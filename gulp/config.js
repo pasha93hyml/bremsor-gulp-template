@@ -9,6 +9,7 @@ const rootDir = path.resolve(__dirname, '..');
 
 const argv = yargs(hideBin(process.argv)).argv;
 const production = !!argv.production;
+const shopify = !!argv.shopify;
 
 const paths = {
   src: {
@@ -48,6 +49,7 @@ const server = {
 
 export default {
   production,
+  shopify,
   paths,
   server
 };

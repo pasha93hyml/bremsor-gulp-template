@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "gulp",
     "build": "gulp build --production",
+    "build-shopify": "gulp buildShopify --shopify",
     "clean": "gulp clean"
   },
   "dependencies": {

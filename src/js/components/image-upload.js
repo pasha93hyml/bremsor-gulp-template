@@ -43,7 +43,7 @@ export class ImageUpload {
         reader.onload = (e) => {
           this.previewImage.src = e.target.result;
           this.placeholder.style.display = "none";
-          this.preview.style.display = "block";
+          this.preview.style.display = "flex";
           this.deleteBtn.classList.remove("opacity-0");
           this.deleteBtn.classList.add("opacity-100");
         };
@@ -66,7 +66,7 @@ export class ImageUpload {
         }
 
         this.placeholder.style.display = "none";
-        this.preview.style.display = "block";
+        this.preview.style.display = "flex";
         this.deleteBtn.classList.remove("opacity-0");
         this.deleteBtn.classList.add("opacity-100");
       } else if (fileExtension === "ai") {
@@ -76,7 +76,7 @@ export class ImageUpload {
           <div class="text-white text-sm text-balance text-center max-w-[200px]">Name: ${file.name}</div>
         </div>`;
         this.placeholder.style.display = "none";
-        this.preview.style.display = "block";
+        this.preview.style.display = "flex";
         this.deleteBtn.classList.remove("opacity-0");
         this.deleteBtn.classList.add("opacity-100");
       }

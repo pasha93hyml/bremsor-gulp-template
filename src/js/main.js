@@ -8,7 +8,6 @@ import { initHeader } from "./components/header.js";
 import { plyrInit } from "./libs/plyr.js";
 import { reviewsKeenSliderInit } from "./libs/reviews-keen-slider.js";
 import { gridSliderInit } from "./libs/grid-keen-slider.js";
-import { brakesFormInit } from "./components/brakes-form.js";
 import Loader from "./components/loader.js";
 import { Dropdown } from "./components/dropdown.js";
 import { ImageUpload } from "./components/image-upload.js";
@@ -20,6 +19,7 @@ import { comparisonSliderInitAnimation } from "./libs/img-comparsion-slider.js";
 import { ImageAnnotationSystem } from "./components/custom-caliper.js";
 import { Pagination } from "./components/pagination.js";
 import { SimpleDropdown } from "./components/simple-dropdown.js";
+import { SearchList } from "./components/search-list.js";
 
 import { ModelViewer } from "./libs/enhanced-viewer/viewer.js";
 
@@ -39,7 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
   plyrInit(Plyr);
   reviewsKeenSliderInit(KeenSlider);
   gridSliderInit(KeenSlider);
-  brakesFormInit();
   comparisonSliderInitAnimation();
 
   const dropdowns = document.querySelectorAll(".js-dropdown-wrap");
@@ -180,31 +179,38 @@ document.addEventListener("DOMContentLoaded", () => {
     }).initialize();
   }
 
-  const paginationContainer = document.querySelector(
+  const paginationContainers = document.querySelectorAll(
     ".js-pagination-container",
   );
-  if (paginationContainer) {
+  if (paginationContainers) {
     const isMobile = window.innerWidth < 576;
-    const pagination = new Pagination({
-      totalPages: 25,
-      currentPage: 1,
-      visiblePages: isMobile ? 6 : 10,
-      containerSelector: ".js-pagination-container",
-      isMobile: isMobile,
-    });
-
-    // Example of listening to page change events
-    document
-      .querySelector(".js-pagination-container")
-      .addEventListener("pageChange", (e) => {
-        console.log(`Page changed to: ${e.detail.page}`);
+    paginationContainers.forEach((container) => {
+      let textColor = "white";
+      const totalPages = parseInt(container.dataset.pages, 10);
+      const visiblePages = parseInt(container.dataset.visible, 10);
+      if (container.dataset.color) {
+        textColor = container.dataset.color;
+      }
+      new Pagination(container, {
+        totalPages,
+        currentPage: 1,
+        visiblePages: isMobile ? 4 : visiblePages,
+        containerSelector: ".js-pagination-container",
+        isMobile: isMobile,
+        textColor,
       });
+
+      // add some logic at page change
+      container.addEventListener("pageChange", (e) => {
+          console.log(`Page changed to: ${e.detail.page}`);
+        });
+    });
   }
 
   const dropdownContainers = document.querySelectorAll(".js-simple-dropdown");
   if (dropdownContainers && dropdownContainers.length > 0) {
     Array.from(dropdownContainers).map((container, index) => {
-      new SimpleDropdown({
+      new SimpleDropdown(container, {
         containerSelector: `.js-simple-dropdown:nth-of-type(${index + 1})`,
       });
 
@@ -215,6 +221,13 @@ document.addEventListener("DOMContentLoaded", () => {
       container.addEventListener("valueReset", () => {
         console.log("Dropdown value reset to default");
       });
+    });
+  }
+
+  const searchInputs = document.querySelectorAll(".js-searchlist-input");
+  if (searchInputs && searchInputs.length > 0) {
+    searchInputs.forEach((input) => {
+      new SearchList(input);
     });
   }
 });

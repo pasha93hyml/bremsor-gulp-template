@@ -143,7 +143,6 @@ export class RendererManager {
     this.webglRenderer.setPixelRatio(enabled ? 1 : window.devicePixelRatio);
     this.webglRenderer.shadowMap.enabled = !enabled;
 
-    // force redraw
     const width = this.container.clientWidth;
     const height = this.container.clientHeight;
     this.resize(width, height);

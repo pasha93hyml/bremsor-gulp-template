@@ -5,6 +5,7 @@
 export class Pagination {
   /**
    * Creates an instance of Pagination
+   * @param {HTMLElement} container - pagination container
    * @param {Object} config - Configuration options
    * @param {number} config.totalPages - Total number of pages
    * @param {number} config.currentPage - Current active page
@@ -13,34 +14,43 @@ export class Pagination {
    * @param {string} config.contentSelector - CSS selector for the content to animate
    * @param {number} config.animationDuration - Duration of content animation in ms
    * @param {number} config.isMobile - is current device width less than 576px or not
+   * @param {string} config.textColor - color of text
    */
-  constructor(config) {
+  constructor(container, config) {
     this.config = {
       totalPages: 1,
       currentPage: 1,
       visiblePages: 5,
-      containerSelector: '.js-pagination-container',
-      contentSelector: '.js-pagination-content-to-change',
+      containerSelector: ".js-pagination-container",
+      contentSelector: ".js-pagination-content-to-change",
       animationDuration: 1000,
       isMobile: false,
-      ...config
+      textColor: "white",
+      ...config,
     };
 
     this.totalPages = this.config.totalPages;
     this.currentPage = this.config.currentPage;
     this.visiblePages = this.config.visiblePages;
-    this.container = document.querySelector(this.config.containerSelector);
+    this.container = container;
     this.contentElement = document.querySelector(this.config.contentSelector);
-    this.isMobile = this.config.isMobile
+    this.isMobile = this.config.isMobile;
+    this.textColor = this.config.textColor;
 
     if (!this.container) return;
 
-    this.prevButton = this.container.querySelector('.js-pagination-prev');
-    this.nextButton = this.container.querySelector('.js-pagination-next');
-    this.pagesContainer = this.container.querySelector('.js-pagination-pages');
-    this.middlePagesContainer = this.container.querySelector('.js-pagination-middle-pages');
-    this.startEllipsis = this.container.querySelector('.js-pagination-start-ellipsis');
-    this.endEllipsis = this.container.querySelector('.js-pagination-end-ellipsis');
+    this.prevButton = this.container.querySelector(".js-pagination-prev");
+    this.nextButton = this.container.querySelector(".js-pagination-next");
+    this.pagesContainer = this.container.querySelector(".js-pagination-pages");
+    this.middlePagesContainer = this.container.querySelector(
+      ".js-pagination-middle-pages",
+    );
+    this.startEllipsis = this.container.querySelector(
+      ".js-pagination-start-ellipsis",
+    );
+    this.endEllipsis = this.container.querySelector(
+      ".js-pagination-end-ellipsis",
+    );
 
     this.isAnimating = false;
 
@@ -48,7 +58,7 @@ export class Pagination {
       prevClick: this.#handlePrevClick.bind(this),
       nextClick: this.#handleNextClick.bind(this),
       pageClick: this.#handlePageClick.bind(this),
-      animationEnd: this.#handleAnimationEnd.bind(this)
+      animationEnd: this.#handleAnimationEnd.bind(this),
     };
 
     this.#init();
@@ -69,17 +79,20 @@ export class Pagination {
    */
   #bindEvents() {
     if (this.prevButton) {
-      this.prevButton.addEventListener('click', this._boundHandlers.prevClick);
+      this.prevButton.addEventListener("click", this._boundHandlers.prevClick);
     }
 
     if (this.nextButton) {
-      this.nextButton.addEventListener('click', this._boundHandlers.nextClick);
+      this.nextButton.addEventListener("click", this._boundHandlers.nextClick);
     }
 
-    this.container.addEventListener('click', this._boundHandlers.pageClick);
+    this.container.addEventListener("click", this._boundHandlers.pageClick);
 
     if (this.contentElement) {
-      this.contentElement.addEventListener('animationend', this._boundHandlers.animationEnd);
+      this.contentElement.addEventListener(
+        "animationend",
+        this._boundHandlers.animationEnd,
+      );
     }
   }
 
@@ -109,7 +122,7 @@ export class Pagination {
    * @private
    */
   #handlePageClick(event) {
-    const pageButton = event.target.closest('.js-pagination-page-button');
+    const pageButton = event.target.closest(".js-pagination-page-button");
     if (pageButton && !this.isAnimating) {
       const page = parseInt(pageButton.dataset.page, 10);
       this.goToPage(page);
@@ -122,7 +135,7 @@ export class Pagination {
    */
   #handleAnimationEnd() {
     this.isAnimating = false;
-    this.contentElement.classList.remove('animate-fade-out-in');
+    this.contentElement.classList.remove("animate-fade-out-in");
   }
 
   /**
@@ -132,7 +145,12 @@ export class Pagination {
    * @public
    */
   goToPage(page) {
-    if (page < 1 || page > this.totalPages || page === this.currentPage || this.isAnimating) {
+    if (
+      page < 1 ||
+      page > this.totalPages ||
+      page === this.currentPage ||
+      this.isAnimating
+    ) {
       return this;
     }
 
@@ -140,13 +158,12 @@ export class Pagination {
     this.currentPage = page;
 
     if (this.contentElement) {
-      this.contentElement.classList.add('animate-fade-out-in');
+      this.contentElement.classList.add("animate-fade-out-in");
 
-      // Safety timeout in case animationend doesn't fire
       setTimeout(() => {
         if (this.isAnimating) {
           this.isAnimating = false;
-          this.contentElement.classList.remove('animate-fade-out-in');
+          this.contentElement.classList.remove("animate-fade-out-in");
         }
       }, this.config.animationDuration + 100);
     } else {
@@ -155,9 +172,11 @@ export class Pagination {
 
     this.#render();
 
-    this.container.dispatchEvent(new CustomEvent('pageChange', {
-      detail: { page: this.currentPage }
-    }));
+    this.container.dispatchEvent(
+      new CustomEvent("pageChange", {
+        detail: { page: this.currentPage },
+      }),
+    );
 
     return this;
   }
@@ -168,23 +187,36 @@ export class Pagination {
    * @private
    */
   #calculateVisiblePages() {
-    const halfVisible = Math.floor(this.visiblePages / 2);
-    let start = Math.max(2, this.currentPage - halfVisible);
-    let end = this.isMobile ?  Math.min(this.totalPages - 1, start + this.visiblePages - 2) : Math.min(this.totalPages - 1, start + this.visiblePages - 5);
+    const middlePages = this.visiblePages - 2;
+    const halfMiddle = Math.floor(middlePages / 2);
 
-    if (end >= this.totalPages - 1) {
-      start = Math.max(2, this.totalPages - this.visiblePages + 1);
+    let start = Math.max(2, this.currentPage - halfMiddle);
+    let end = Math.min(this.totalPages - 1, this.currentPage + halfMiddle);
+
+    if (start === 2) {
+      end = Math.min(this.totalPages - 1, start + middlePages - 1);
+    }
+
+    if (end === this.totalPages - 1) {
+      start = Math.max(2, end - middlePages + 1);
+    }
+
+    if (this.totalPages <= this.visiblePages) {
+      start = 2;
+      end = this.totalPages - 1;
     }
 
     const pages = [];
     for (let i = start; i <= end; i++) {
-      pages.push(i);
+      if (i >= 2 && i <= this.totalPages - 1) {
+        pages.push(i);
+      }
     }
 
     return {
       pages,
       showStartEllipsis: start > 2,
-      showEndEllipsis: end < this.totalPages - 1
+      showEndEllipsis: end < this.totalPages - 1,
     };
   }
 
@@ -195,8 +227,8 @@ export class Pagination {
    * @private
    */
   #createPageButton(page) {
-    const button = document.createElement('button');
-    button.className = `w-4 min-w-4 md:w-6 h-6 md:min-w-6 flex items-center justify-center text-white text-sm md:text-lg cursor-pointer relative pagination-page-button js-pagination-page-button ${page === this.currentPage ? 'active' : ''}`;
+    const button = document.createElement("button");
+    button.className = `w-4 min-w-4 md:w-6 h-6 md:min-w-6 flex items-center justify-center text-${this.textColor} text-sm md:text-lg cursor-pointer relative pagination-page-button js-pagination-page-button ${this.textColor === "black-main" ? "with-black" : ""} ${page === this.currentPage ? "active" : ""}`;
     button.dataset.page = page;
     button.textContent = page;
 
@@ -213,7 +245,16 @@ export class Pagination {
    * @private
    */
   #animateActiveButton(button) {
-    button.classList.add('active');
+    const allButtons = this.container.querySelectorAll(
+      ".js-pagination-page-button",
+    );
+    allButtons.forEach((btn) => {
+      if (btn !== button) {
+        btn.classList.remove("active");
+      }
+    });
+
+    button.classList.add("active");
   }
 
   /**
@@ -223,57 +264,61 @@ export class Pagination {
   #render() {
     if (!this.container) return;
 
+    const allButtons = this.container.querySelectorAll(".js-pagination-page-button");
+    allButtons.forEach((button) => button.classList.remove("active"));
+
     if (this.totalPages <= this.visiblePages) {
-      const buttons = this.container.querySelectorAll('.js-pagination-page-button');
-      buttons.forEach(button => {
+      allButtons.forEach((button) => {
         const page = parseInt(button.dataset.page, 10);
-        button.classList.toggle('active', page === this.currentPage);
         if (page === this.currentPage) {
           this.#animateActiveButton(button);
         }
       });
+
+      if (this.startEllipsis) this.startEllipsis.style.display = "none";
+      if (this.endEllipsis) this.endEllipsis.style.display = "none";
+
+      this.#updateNavigationButtons();
       return;
     }
 
     const { pages, showStartEllipsis, showEndEllipsis } = this.#calculateVisiblePages();
 
     if (this.middlePagesContainer) {
-      this.middlePagesContainer.innerHTML = '';
-
-      pages.forEach(page => {
+      this.middlePagesContainer.innerHTML = "";
+      pages.forEach((page) => {
         this.middlePagesContainer.appendChild(this.#createPageButton(page));
       });
     }
 
     if (this.startEllipsis) {
-      this.startEllipsis.style.display = showStartEllipsis ? 'inline' : 'none';
+      this.startEllipsis.style.display = showStartEllipsis ? "inline" : "none";
     }
-
     if (this.endEllipsis) {
-      this.endEllipsis.style.display = showEndEllipsis ? 'inline' : 'none';
+      this.endEllipsis.style.display = showEndEllipsis ? "inline" : "none";
     }
 
     const firstPageButton = this.container.querySelector('.js-pagination-page-button[data-page="1"]');
     const lastPageButton = this.container.querySelector(`.js-pagination-page-button[data-page="${this.totalPages}"]`);
 
-    if (firstPageButton) {
-      firstPageButton.classList.toggle('active', this.currentPage === 1);
-      if (this.currentPage === 1) {
-        this.#animateActiveButton(firstPageButton);
-      }
+    if (firstPageButton && this.currentPage === 1) {
+      this.#animateActiveButton(firstPageButton);
+    }
+    if (lastPageButton && this.currentPage === this.totalPages) {
+      this.#animateActiveButton(lastPageButton);
     }
 
-    if (lastPageButton) {
-      lastPageButton.classList.toggle('active', this.currentPage === this.totalPages);
-      if (this.currentPage === this.totalPages) {
-        this.#animateActiveButton(lastPageButton);
-      }
-    }
+    this.#updateNavigationButtons();
+  }
 
+  /**
+   * Update navigation buttons state
+   * @private
+   */
+  #updateNavigationButtons() {
     if (this.prevButton) {
       this.prevButton.disabled = this.currentPage === 1;
     }
-
     if (this.nextButton) {
       this.nextButton.disabled = this.currentPage === this.totalPages;
     }
@@ -313,21 +358,29 @@ export class Pagination {
     if (!this.container) return;
 
     if (this.prevButton) {
-      this.prevButton.removeEventListener('click', this._boundHandlers.prevClick);
+      this.prevButton.removeEventListener(
+        "click",
+        this._boundHandlers.prevClick,
+      );
     }
 
     if (this.nextButton) {
-      this.nextButton.removeEventListener('click', this._boundHandlers.nextClick);
+      this.nextButton.removeEventListener(
+        "click",
+        this._boundHandlers.nextClick,
+      );
     }
 
-    this.container.removeEventListener('click', this._boundHandlers.pageClick);
+    this.container.removeEventListener("click", this._boundHandlers.pageClick);
 
     if (this.contentElement) {
-      this.contentElement.removeEventListener('animationend', this._boundHandlers.animationEnd);
-      this.contentElement.classList.remove('animate-fade-out-in');
+      this.contentElement.removeEventListener(
+        "animationend",
+        this._boundHandlers.animationEnd,
+      );
+      this.contentElement.classList.remove("animate-fade-out-in");
     }
 
-    // Clear references
     this.container = null;
     this.contentElement = null;
     this.prevButton = null;

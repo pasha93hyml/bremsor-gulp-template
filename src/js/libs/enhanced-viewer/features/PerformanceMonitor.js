@@ -17,10 +17,9 @@ export class PerformanceMonitor {
     this.lastTime = performance.now();
     this.fps = 0;
 
-    // For frame timing
     this.frameStartTime = 0;
     this.frameTimes = [];
-    this.maxFrameTimes = 60; // Store last 60 frames
+    this.maxFrameTimes = 60;
   }
 
   /**

@@ -118,7 +118,9 @@
     {# content end #}
 
     {# pagination #}
-    {% include './ui/pagination.twig' %}
+    {% include './ui/pagination.twig' with {
+      margin_top: 8
+    } %}
 
   </div>
 </section>

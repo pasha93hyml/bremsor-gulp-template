@@ -5,6 +5,7 @@
 export class SimpleDropdown {
   /**
    * Create a dropdown component
+   * @param {HTMLElement} container - container html element
    * @param {Object} config - Configuration options
    * @param {string} config.containerSelector - CSS selector for the dropdown container
    * @param {string} config.triggerSelector - CSS selector for the dropdown trigger button
@@ -15,7 +16,7 @@ export class SimpleDropdown {
    * @param {string} config.activeClass - Class to add when dropdown is open
    * @param {number} config.animationDuration - Duration of open/close animation in ms
    */
-  constructor(config) {
+  constructor(container, config) {
     this.config = {
       containerSelector: '.js-simple-dropdown',
       triggerSelector: '.js-dropdown-trigger',
@@ -28,7 +29,7 @@ export class SimpleDropdown {
       ...config
     };
 
-    this.container = document.querySelector(this.config.containerSelector);
+    this.container = container;
     if (!this.container) return;
 
     this.trigger = this.container.querySelector(this.config.triggerSelector);
@@ -114,7 +115,6 @@ export class SimpleDropdown {
 
   /**
    * Handle clear button click
-   * @param {Event} event - Click event
    * @private
    */
   #handleClearClick() {
@@ -279,12 +279,10 @@ export class SimpleDropdown {
     document.removeEventListener('keydown', this._boundHandlers.keyDown);
     this.content.removeEventListener('transitionend', this._boundHandlers.transitionEnd);
 
-    // Reset state
     this.container.classList.remove(this.config.activeClass);
     this.content.classList.remove(this.config.activeClass);
     this.#rotateIcon(false);
 
-    // Clear references
     this.container = null;
     this.trigger = null;
     this.content = null;

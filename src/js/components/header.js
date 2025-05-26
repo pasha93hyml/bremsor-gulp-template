@@ -1,5 +1,3 @@
-import { log } from "three/tsl";
-
 function ShopList() {
   const shopListEl = document.querySelector("[data-shop-list]");
   const shopList = document.querySelector("[data-list-to-sort]");
