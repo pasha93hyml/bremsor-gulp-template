@@ -53,7 +53,7 @@ export class ImageAnnotationSystem {
         "circle",
       );
       endDot.setAttribute("id", `end-dot-${index}`);
-      endDot.setAttribute("r", "5");
+      endDot.setAttribute("r", "3");
       endDot.setAttribute("fill", annotation.lineColor || "white");
       this.svg.appendChild(endDot);
       this.endDots.push(endDot);

@@ -152,31 +152,40 @@ document.addEventListener("DOMContentLoaded", () => {
     ".js-custom-caliper-container",
   );
   if (customCaliperContainer) {
-    const isMobile = window.innerWidth < 768;
-    new ImageAnnotationSystem({
-      imageContainerClass: "js-custom-caliper-container",
-      svgId: "annotation-svg",
-      annotations: [
-        {
-          dotId: "dot1",
-          lineColor: "white",
-          lineWidth: 1,
-          targetOffset: { x: isMobile ? 20 : 70, y: isMobile ? 40 : 40 },
-        },
-        {
-          dotId: "dot2",
-          lineColor: "white",
-          lineWidth: 1,
-          targetOffset: { x: isMobile ? -40 : -60, y: isMobile ? -70 : -40 },
-        },
-        {
-          dotId: "dot3",
-          lineColor: "white",
-          lineWidth: 1,
-          targetOffset: { x: isMobile ? 60 : 40, y: isMobile ? -40 : -30 },
-        },
-      ],
-    }).initialize();
+    const initCaliperDots = () => {
+      const isMobile = window.innerWidth < 768;
+      new ImageAnnotationSystem({
+        imageContainerClass: "js-custom-caliper-container",
+        svgId: "annotation-svg",
+        annotations: [
+          {
+            dotId: "dot1",
+            lineColor: "white",
+            lineWidth: 1,
+            targetOffset: { x: isMobile ? 30 : 60, y: isMobile ? 40 : 60 },
+          },
+          {
+            dotId: "dot2",
+            lineColor: "white",
+            lineWidth: 1,
+            targetOffset: {
+              x: isMobile ? -30 : -60,
+              y: isMobile ? -40 : -50,
+            },
+          },
+          {
+            dotId: "dot3",
+            lineColor: "white",
+            lineWidth: 1,
+            targetOffset: { x: isMobile ? 30 : 60, y: isMobile ? -40 : -50 },
+          },
+        ],
+      }).initialize();
+    }
+    const dotsPromise = new Promise((res, rej) => {
+      res(initCaliperDots);
+    })
+    setTimeout(() => dotsPromise.then(func => func()), 1000)
   }
 
   const paginationContainers = document.querySelectorAll(
@@ -202,8 +211,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // add some logic at page change
       container.addEventListener("pageChange", (e) => {
-          console.log(`Page changed to: ${e.detail.page}`);
-        });
+        console.log(`Page changed to: ${e.detail.page}`);
+      });
     });
   }
 
