@@ -1,3 +1,5 @@
+import {log} from "three/tsl";
+
 export class ColorPick {
   constructor(wrap) {
     this.wrap = wrap;
@@ -24,6 +26,25 @@ export class ColorPick {
     this.isSelected = false;
 
     this.#init();
+  }
+
+  checkAndScroll = () => {
+    const rect = this.wrap.getBoundingClientRect();
+    const isVisible = rect.top >= 0 && rect.top <= window.innerHeight;
+
+    if(!isVisible || rect.top < 100) {
+      const wrapOffsetY = this.wrap.offsetTop;
+
+      window.scrollTo({
+        top: wrapOffsetY - 200,
+        behavior: 'smooth',
+      })
+      // window.scrollIntoView({
+      //   top: wrapOffsetY - 200,
+      //   behavior: 'smooth',
+      //   // block: 'center'
+      // })
+    }
   }
 
   toggleIcon = () => {
@@ -77,6 +98,8 @@ export class ColorPick {
     this.currentActive = button;
     this.handleTriggerClick();
     this.isSelected = true;
+
+    setTimeout(() => this.checkAndScroll(), 500);
   };
 
   handleSelect = (event) => {
@@ -106,7 +129,7 @@ export class ColorPick {
   };
 
   #init() {
-    this.btn.addEventListener("click", this.handleTriggerClick);
+    this.container.addEventListener("click", this.handleTriggerClick);
     this.dropdown.addEventListener("click", this.handleSelect);
     window.addEventListener("click", this.handleOutsideClick);
   }

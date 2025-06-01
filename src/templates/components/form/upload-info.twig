@@ -23,12 +23,12 @@
     {{ text }}
 
   </p>
-  <div class="flex items-start gap-5">
-    <div class="w-25 aspect-1/1 min-w-25 rounded-lg overflow-hidden">
-      {{ picture('/assets/images/custom-order/example-1.jpg', 'example of your brakes photo', 'w-25 min-w-25 aspect-1/1') }}
+  <div class="grid grid-cols-2 max-lg:w-full lg:flex lg:items-start gap-5">
+    <div class="lg:w-25 aspect-1/1 lg:min-w-25 rounded-lg overflow-hidden">
+      {{ picture('/assets/images/custom-order/example-1.jpg', 'example of your brakes photo', {class: 'w-full lg:w-25 lg:min-w-25 aspect-1/1'}) }}
     </div>
-    <div class="w-25 aspect-1/1 min-w-25 rounded-lg overflow-hidden">
-      {{ picture('/assets/images/custom-order/example-2.jpg', 'example of your brakes photo', 'w-25 min-w-25 aspect-1/1') }}
+    <div class="lg:w-25 aspect-1/1 lg:min-w-25 rounded-lg overflow-hidden">
+      {{ picture('/assets/images/custom-order/example-2.jpg', 'example of your brakes photo', {class: 'w-full lg:w-25 lg:min-w-25 aspect-1/1'}) }}
     </div>
   </div>
 </div>

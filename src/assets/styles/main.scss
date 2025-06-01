@@ -19,9 +19,9 @@
 @font-face {
   font-family: "Riviera Nights";
   src:
-    url("/assets/fonts/rivera/RivieraNights-Light-WebTrial.woff2")
-      format("woff2"),
-    url("/assets/fonts/rivera/RivieraNights-Light-WebTrial.woff") format("woff");
+    url("/assets/fonts/rivera/RivieraNights-Light-WebXL.woff2") format("woff2"),
+    url("/assets/fonts/rivera/RivieraNights-Light-WebXL.woff") format("woff"),
+    url("/assets/fonts/rivera/RivieraNights-Light-WebXL.svg") format("svg");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -29,8 +29,9 @@
 
 @font-face {
   font-family: "Riviera Nights";
-  src: url("/assets/fonts/rivera/RivieraNights-Regular-WebTrial.woff2")
-    format("woff2");
+  src: url("/assets/fonts/rivera/RivieraNights-Regular-WebXL.woff2") format("woff2"),
+          url("/assets/fonts/rivera/RivieraNights-Regular-WebXL.woff") format("woff"),
+          url("/assets/fonts/rivera/RivieraNights-Regular-WebXL.svg") format("svg");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -39,30 +40,10 @@
 @font-face {
   font-family: "Riviera Nights";
   src:
-    url("/assets/fonts/rivera/RivieraNights-Bold-WebTrial.woff2")
-      format("woff2"),
-    url("/assets/fonts/rivera/RivieraNights-Bold-WebTrial.woff") format("woff");
+    url("/assets/fonts/rivera/RivieraNights-Bold-WebXL.woff2") format("woff2"),
+    url("/assets/fonts/rivera/RivieraNights-Bold-WebXL.woff") format("woff"),
+    url("/assets/fonts/rivera/RivieraNights-Bold-WebXL.svg") format("svg");
   font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Gill Alt One MT';
-  src: local('Gill Alt One MT Light'), local('GillAltOneMT-Light'),
-  url('/assets/fonts/gill-alt-one-mt/GillAltOneMT-Light.woff2') format('woff2'),
-  url('/assets/fonts/gill-alt-one-mt/GillAltOneMT-Light.woff') format('woff');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Gill Alt One MT';
-  src: local('Gill Alt One MT'), local('GillAltOneMT'),
-  url('/assets/fonts/gill-alt-one-mt/GillAltOneMT.woff2') format('woff2'),
-  url('/assets/fonts/gill-alt-one-mt/GillAltOneMT.woff') format('woff');
-  font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
