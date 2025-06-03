@@ -1,0 +1,53 @@
+<section class="w-full py-25 lg:py-40">
+  <div class="w-full max-w-301 mx-auto px-4">
+    <div class="w-fit mx-auto flex flex-col gap-8">
+      <h1 class="text-4xl font-light capitalize text-white">Contact Us</h1>
+      <p class="text-sm max-w-120 w-full text-white">Have questions, need an update, or want to discuss your custom order? Contact us via WhatsApp, submit a form, or click “Chat” in the bottom right corner to choose the communication method that works best for you.</p>
+
+      <div class="flex flex-col lg:grid lg:grid-cols-[minmax(200px,_250px)_minmax(400px,_600px)] w-fit mx-auto mt-5 gap-15">
+
+        <div class="flex flex-col gap-15 text-white text-sm">
+          <div class="flex flex-col gap-2">
+            <p class="text-small">Phone number:</p>
+            <a href="tel:+16575340000">+ 1 (657) 534-0000</a>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <p class="text-small">Email address:</p>
+            <a href="mailto:support@bremsor.com">support@bremsor.com</a>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <p class="text-small">Business Hours:</p>
+            <ul class="flex flex-col gap-2">
+              <li class="uppercase">Monday – Friday: 9 AM – 6 PM PST</li>
+              <li class="uppercase">Saturday: 10 AM – 3 PM PST</li>
+              <li class="capitalize">Sunday: Closed</li>
+            </ul>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <p class="text-small">Location:</p>
+            <p class="text-balance">
+              12100 Wilshire Boulevard, 8th Floor, Los Angeles, CA, 90025,
+              <br/>United States
+            </p>
+          </div>
+
+          <div class="w-full h-[1px] bg-white/45 mt-auto"></div>
+
+          <div class="flex flex-col gap-5 mt-auto">
+            <p class="text-small">Follow us</p>
+              {% include 'components/footer/footer-socials.twig' with { items: footer.socials, className: 'flex gap-5' } only %}
+          </div>
+
+        </div>
+
+        {# form #}
+
+        {% include 'components/contact/form/form.twig' %}
+
+      </div>
+    </div>
+  </div>
+</section>

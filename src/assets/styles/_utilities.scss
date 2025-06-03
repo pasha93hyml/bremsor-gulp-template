@@ -3,7 +3,11 @@
     padding-inline: 1rem;
     max-width: 100%;
     width: 100%;
-    @media screen and (min-width: 1024px) {
+    @media screen and (min-width: 1024px)
+    {
+      padding-inline: 50px;
+    }
+    @media screen and (min-width: 1560px) {
       max-width: calc(1670px + 250px);
       width: 100%;
       margin: 0 auto;

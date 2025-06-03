@@ -1,0 +1,15 @@
+{#{type: 'upload', name: 'image-upload', label: 'Upload photos of your front and rear calipers (optional)', placeholder: 'Choose file', additional_text: 'Optional – For warranty claims, please include proof of purchase, vehicle details, and a short description of the issue.'}#}
+
+<div class="flex flex-col w-full col-span-full gap-1.5">
+  <label for="{{ name }}" class="text-xs text-black-main uppercase">{{ label }}</label>
+  <input type="file" name="{{ name }}" id="{{ name }}" class="hidden" data-name="{{ name }}" multiple accept="image/*">
+
+  <div class="relative flex items-center w-full rounded-[29px] border border-black-main pl-5 pr-42.5 py-2 text-sm overflow-hidden">
+   <span data-target="{{ name }}" class="js-input-image-text"> {{ placeholder }}</span>
+  <button type="button" aria-label="select images" class="bg-black-main absolute z-1 top-0 bottom-0 right-0 w-42.5 text-white text-xs font-bold uppercase hover:text-white/80 transition duration-400 ease cursor-pointer js-simple-image-upload" data-target="{{ name }}">
+    browse
+  </button>
+  </div>
+
+  <p class="text-small font-light text-black-main">{{ additional_text }}</p>
+</div>

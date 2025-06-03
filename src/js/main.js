@@ -20,6 +20,7 @@ import { ImageAnnotationSystem } from "./components/custom-caliper.js";
 import { Pagination } from "./components/pagination.js";
 import { SimpleDropdown } from "./components/simple-dropdown.js";
 import { SearchList } from "./components/search-list.js";
+import { SimpleImageUpload } from "./components/simple-images-upload.js";
 
 import { ModelViewer } from "./libs/enhanced-viewer/viewer.js";
 
@@ -181,11 +182,11 @@ document.addEventListener("DOMContentLoaded", () => {
           },
         ],
       }).initialize();
-    }
+    };
     const dotsPromise = new Promise((res, rej) => {
       res(initCaliperDots);
-    })
-    setTimeout(() => dotsPromise.then(func => func()), 1000)
+    });
+    setTimeout(() => dotsPromise.then((func) => func()), 1000);
   }
 
   const paginationContainers = document.querySelectorAll(
@@ -237,6 +238,15 @@ document.addEventListener("DOMContentLoaded", () => {
   if (searchInputs && searchInputs.length > 0) {
     searchInputs.forEach((input) => {
       new SearchList(input);
+    });
+  }
+
+  const imageUploadButtons = document.querySelectorAll(
+    ".js-simple-image-upload",
+  );
+  if (imageUploadButtons && imageUploadButtons.length > 0) {
+    imageUploadButtons.forEach((btn) => {
+      new SimpleImageUpload(btn);
     });
   }
 });

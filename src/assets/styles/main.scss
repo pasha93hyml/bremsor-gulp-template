@@ -19,6 +19,17 @@
 @font-face {
   font-family: "Riviera Nights";
   src:
+    url("/assets/fonts/rivera/RivieraNights-Ultralight-WebXL.woff2") format("woff2"),
+    url("/assets/fonts/rivera/RivieraNights-Ultralight-WebXL.woff") format("woff"),
+    url("/assets/fonts/rivera/RivieraNights-Ultralight-WebXL.svg") format("svg");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Riviera Nights";
+  src:
     url("/assets/fonts/rivera/RivieraNights-Light-WebXL.woff2") format("woff2"),
     url("/assets/fonts/rivera/RivieraNights-Light-WebXL.woff") format("woff"),
     url("/assets/fonts/rivera/RivieraNights-Light-WebXL.svg") format("svg");

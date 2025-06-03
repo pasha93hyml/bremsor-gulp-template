@@ -1,0 +1,8 @@
+<div class="form-field flex flex-col gap-1.5 {{ input_field_classes }}">
+  <label for="{{ name }}" class="field-label text-xs leading-[18px] ml-5 uppercase">{{ label }}</label>
+  <input type="{{ type }}" id="{{ name }}" name="{{ name }}" class="field-input border border-black-main rounded-[100px] py-2.5 px-4 w-full text-xs leading-none outline-none placeholder:text-black-main" data-target="{{ name }}" data-required="{{ required is defined and required ? 'true' : 'false' }}" placeholder="{{ placeholder }}"
+         {% if required is defined and required %}required{% endif %}>
+  {% if additional_text is defined %}
+    <p class="text-small text-black-main font-light">{{ additional_text }}</p>
+  {% endif %}
+</div>
