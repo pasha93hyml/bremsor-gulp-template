@@ -1,0 +1,41 @@
+{% from 'macro/icon.twig' import svg %}
+
+{% set imagesSrc = ['assets/images/about/slider-1.png', 'assets/images/about/slider-2.png', 'assets/images/about/slider-3.png', 'assets/images/about/slider-1.png', 'assets/images/about/slider-2.png', 'assets/images/about/slider-3.png'] %}
+
+<section class="w-full" data-step="step_2">
+  <h2 class="hidden">Image Slider</h2>
+  <div data-aos="fade-up" class="w-full relative">
+    <div id="about-slider" class="keen-slider">
+      {% for item in imagesSrc %}
+        <div class="keen-slider__slide">
+          {% set sliderImageOptions = {
+            class: 'w-full aspect-[640/400] object-cover',
+            width: '640',
+            height: '400',
+            loading: 'lazy'
+          } %}
+          {{ picture(item, 'Slider image ' ~ loop.index, sliderImageOptions) | raw }}
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="max-md:hidden absolute left-0 right-0 w-full top-1/2 -translate-y-1/2 px-15 flex items-center justify-between">
+    <button
+        aria-label="Previous image"
+        id="about-slider-prev"
+        class="h-12 w-12 rounded-full bg-white/[.15] hover:bg-white/50 flex items-center justify-center transition cursor-pointer group"
+    >
+      {{ svg('chevron-left', 'text-white w-3 h-3 transition-transform translate-x-[2px] group-hover:scale-110') }}
+    </button>
+    <button
+        aria-label="Next image"
+        id="about-slider-next"
+        class="h-12 w-12 rounded-full bg-white/[.15] hover:bg-white/50 flex items-center justify-center transition cursor-pointer group"
+    >
+      {{ svg('chevron-left', 'text-white w-3 h-3 transition-transform -translate-x-[2px] group-hover:scale-110 rotate-180') }}
+    </button>
+
+    </div>
+
+  </div>
+</section>

@@ -4,7 +4,7 @@
   <div class="max-w-[1202px] mx-auto relative px-4">
     <h2
         data-aos="fade-up"
-        class="font-light text-2xl lg:text-[36px] text-white max-w-[550px] leading-[1.1] mb-25 text-balance"
+        class="font-light text-2xl lg:text-[36px] text-white max-w-50 max-md:mx-auto md:max-w-[550px] leading-[1.1] mb-10 md:mb-25 text-balance"
     >
       Reviews from our valued customers
     </h2>
@@ -48,23 +48,23 @@
 
     </div>
     <div
-        data-aos="fade-down"
-        class="absolute top-5 right-4 md:flex gap-7.5 hidden"
+        class="max-md:mt-8 max-md:mx-auto relative md:absolute md:top-10 md:right-4 md:flex gap-7.5 max-w-40 w-full"
     >
-      <button
-          aria-label="Previous Review"
-          id="reviews-slider-prev"
-          class="h-12 w-12 rounded-full bg-white/[.08] hover:bg-white/[.25] flex items-center justify-center transition cursor-pointer group"
-      >
-        {{ svg('chevron-left', 'text-white w-3.5 h-3.5 transition-transform translate-x-[2px] group-hover:scale-110') }}
-      </button>
-      <button
-          aria-label="Next Review"
-          id="reviews-slider-next"
-          class="h-12 w-12 rounded-full bg-white/[.1] hover:bg-white/[.2] flex items-center justify-center transition cursor-pointer group"
-      >
-        {{ svg('chevron-left', 'text-white w-3.5 h-3.5 transition-transform -translate-x-[2px] group-hover:scale-110 rotate-180') }}
-      </button>
+      <a href="#" class="flex items-center justify-center text-white text-xs uppercase text-white font-bold w-full max-md:mx-auto py-2 px-4 rounded-[57px] border border-white hover:bg-white hover:text-black-main transition duration-400 ease">read more</a>
+{#      <button#}
+{#          aria-label="Previous Review"#}
+{#          id="reviews-slider-prev"#}
+{#          class="h-12 w-12 rounded-full bg-white/[.08] hover:bg-white/[.25] flex items-center justify-center transition cursor-pointer group"#}
+{#      >#}
+{#        {{ svg('chevron-left', 'text-white w-3.5 h-3.5 transition-transform translate-x-[2px] group-hover:scale-110') }}#}
+{#      </button>#}
+{#      <button#}
+{#          aria-label="Next Review"#}
+{#          id="reviews-slider-next"#}
+{#          class="h-12 w-12 rounded-full bg-white/[.1] hover:bg-white/[.2] flex items-center justify-center transition cursor-pointer group"#}
+{#      >#}
+{#        {{ svg('chevron-left', 'text-white w-3.5 h-3.5 transition-transform -translate-x-[2px] group-hover:scale-110 rotate-180') }}#}
+{#      </button>#}
     </div>
   </div>
 </section>

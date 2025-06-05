@@ -1,0 +1,18 @@
+{% from 'macro/icon.twig' import svg %}
+
+<section class="relative w-full">
+  <div class="w-full aspect-4/3 md:aspect-16/9">
+    {{ picture('assets/images/about/about-wheel-2.png', 'section bacground image', {class: 'w-full aspect-4/3 md:aspect-16/9 object-cover'}) }}
+  </div>
+  <div class="absolute z-1 inset-0 bg-gradient-to-b from-[rgba(10,10,10,0.5)] to-[rgba(10,10,10,1)]"></div>
+  <div class="absolute inset-0 z-3 flex flex-col max-md:justify-center gap-10 py-15 lg:pb-80 lg:pt-40">
+    <h2 data-aos="fade-down" class="text-4xl md:text-[45px] max-md:leading-[110%] font-light text-white text-center capitalize">Join the <br/>BREMSOR Community</h2>
+    <p data-aos="fade-in" class="text-white text-sm font-light md:max-w-100 md:leading-[150%] w-full mx-auto text-balance text-center lg:mb-20">
+      Thousands of car <span class="font-bold">owners trust BREMSOR</span> to upgrade their vehicles with a sleek, high-performance touch. Want to show off your ride? We even offer a <span class="font-bold">$50 rebate</span> for customers who share high-quality installation photos and videos!
+    </p>
+    <a data-aos="slide-up" href="#" class="text-white text-xs uppercase font-bold border border-white rounded-[57px] py-2 px-5 md:mt-auto flex items-center justify-between max-w-50 w-full mx-auto hover:text-black-main hover:bg-white transition duration-400 ease group">
+      get a rebate
+      {{ svg('chevron-left', 'w-3 h-3 min-w-3 rotate-180 transition duration-400 ease group-hover:translate-x-1/2') }}
+    </a>
+  </div>
+</section>

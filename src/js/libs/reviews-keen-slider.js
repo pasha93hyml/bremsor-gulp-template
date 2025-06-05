@@ -1,7 +1,7 @@
 export const reviewsKeenSliderInit = (SliderInstance) => {
   const sliderElement = document.querySelector("#reviews-slider");
-  const prevButton = document.querySelector("#reviews-slider-prev");
-  const nextButton = document.querySelector("#reviews-slider-next");
+  // const prevButton = document.querySelector("#reviews-slider-prev");
+  // const nextButton = document.querySelector("#reviews-slider-next");
   const dotsContainer = document.querySelector("#reviews-slider-dots");
 
   let keenSliderInstance = null;
@@ -70,9 +70,7 @@ export const reviewsKeenSliderInit = (SliderInstance) => {
       },
     });
 
-    prevButton?.addEventListener("click", () => keenSliderInstance?.prev());
-    nextButton?.addEventListener("click", () => keenSliderInstance?.next());
-  } else {
-    console.warn("Keen Slider target element #reviews-slider not found.");
+    // prevButton?.addEventListener("click", () => keenSliderInstance?.prev());
+    // nextButton?.addEventListener("click", () => keenSliderInstance?.next());
   }
 };

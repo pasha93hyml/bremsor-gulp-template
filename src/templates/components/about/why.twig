@@ -1,0 +1,20 @@
+{% from 'macro/icon.twig' import svg %}
+
+<section class="relative w-full">
+  <div class="w-full aspect-4/3 md:aspect-[1920/980]">
+    {{ picture('assets/images/about-wheel.png', 'section bacground image', {class: 'w-full aspect-4/3 md:aspect-[1920/980] object-cover'}) }}
+  </div>
+  <div class="absolute z-1 inset-0 bg-gradient-to-b from-[rgba(10,10,10,0.5)] to-[rgba(10,10,10,1)]"></div>
+  <div class="absolute max-lg:top-0 max-lg:bottom-0 max-lg:w-full lg:inset-0 z-3 flex flex-col gap-4 lg:gap-10 pt-5 lg:py-15">
+    <h2 data-aos="slide-down" class="text-[45px] font-light text-white text-center capitalize">why we started?</h2>
+    <p data-aos="fade-in" class="text-white text-sm font-light lg:max-w-80 w-full mx-auto text-balance text-center lg:mb-60">
+      We saw a gap in the market — cheap plastic covers that didn’t last or bulky metal ones that caused noise and
+      vibration. That’s why we created BREMSOR, a brand dedicated to precision-engineered, high-quality caliper covers
+      that look sleek, last for years, and fit your vehicle perfectly.
+    </p>
+    <button data-aos="fade-up" type="button" aria-label="scroll down one section"
+            class="absolute z-5 left-1/2 -translate-x-1/2 bottom-0 max-lg:mb-10 lg:bottom-30 mt-0 lg:w-12 w-10 lg:h-12 h-10 lg:min-w-12 min-w-10 rounded-full border border-white flex items-center justify-center text-white cursor-pointer group js-scroll-down-btn" data-target="step_2">
+      {{ svg('chevron-down', 'w-3 h-3 min-w-3 transition duration-400 ease group-hover:translate-y-1/2') }}
+    </button>
+  </div>
+</section>

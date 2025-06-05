@@ -21,6 +21,8 @@ import { Pagination } from "./components/pagination.js";
 import { SimpleDropdown } from "./components/simple-dropdown.js";
 import { SearchList } from "./components/search-list.js";
 import { SimpleImageUpload } from "./components/simple-images-upload.js";
+import { aboutKeenSlider } from "./libs/about-slider.js";
+import {ScrollIntoView} from "./components/scroll-into-view.js";
 
 import { ModelViewer } from "./libs/enhanced-viewer/viewer.js";
 
@@ -33,6 +35,9 @@ const vh = viewportHeight * 0.01;
 document.documentElement.style.setProperty("--vh", `${vh}px`);
 
 document.addEventListener("DOMContentLoaded", () => {
+  const headerHeight = document.querySelector('header').getBoundingClientRect().height;
+  document.documentElement.style.setProperty('--header-height', `${headerHeight}px`)
+
   window.siteLoader.init();
   new Loader();
   initHeader();
@@ -40,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
   plyrInit(Plyr);
   reviewsKeenSliderInit(KeenSlider);
   gridSliderInit(KeenSlider);
+  aboutKeenSlider(KeenSlider);
   comparisonSliderInitAnimation();
 
   const dropdowns = document.querySelectorAll(".js-dropdown-wrap");
@@ -154,34 +160,67 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   if (customCaliperContainer) {
     const initCaliperDots = () => {
-      const isMobile = window.innerWidth < 768;
-      new ImageAnnotationSystem({
-        imageContainerClass: "js-custom-caliper-container",
-        svgId: "annotation-svg",
-        annotations: [
-          {
-            dotId: "dot1",
-            lineColor: "white",
-            lineWidth: 1,
-            targetOffset: { x: isMobile ? 30 : 60, y: isMobile ? 40 : 60 },
-          },
-          {
-            dotId: "dot2",
-            lineColor: "white",
-            lineWidth: 1,
-            targetOffset: {
-              x: isMobile ? -30 : -60,
-              y: isMobile ? -40 : -50,
+      const isSmallContainer =
+        customCaliperContainer.classList.contains("js-smaller-offset");
+      if (isSmallContainer) {
+        const isMobile = window.innerWidth < 576;
+        new ImageAnnotationSystem({
+          imageContainerClass: "js-custom-caliper-container",
+          svgId: "annotation-svg",
+          annotations: [
+            {
+              dotId: "dot1",
+              lineColor: "white",
+              lineWidth: 1,
+              targetOffset: { x: isMobile ? 30 : 55, y: isMobile ? 40 : 35 },
             },
-          },
-          {
-            dotId: "dot3",
-            lineColor: "white",
-            lineWidth: 1,
-            targetOffset: { x: isMobile ? 30 : 60, y: isMobile ? -40 : -50 },
-          },
-        ],
-      }).initialize();
+            {
+              dotId: "dot2",
+              lineColor: "white",
+              lineWidth: 1,
+              targetOffset: {
+                x: isMobile ? -30 : -30,
+                y: isMobile ? -40 : -40,
+              },
+            },
+            {
+              dotId: "dot3",
+              lineColor: "white",
+              lineWidth: 1,
+              targetOffset: { x: isMobile ? 30 : 40, y: isMobile ? -40 : -30 },
+            },
+          ],
+        }).initialize();
+      } else {
+        const isMobile = window.innerWidth < 768;
+        new ImageAnnotationSystem({
+          imageContainerClass: "js-custom-caliper-container",
+          svgId: "annotation-svg",
+          annotations: [
+            {
+              dotId: "dot1",
+              lineColor: "white",
+              lineWidth: 1,
+              targetOffset: { x: isMobile ? 30 : 60, y: isMobile ? 40 : 60 },
+            },
+            {
+              dotId: "dot2",
+              lineColor: "white",
+              lineWidth: 1,
+              targetOffset: {
+                x: isMobile ? -30 : -60,
+                y: isMobile ? -40 : -50,
+              },
+            },
+            {
+              dotId: "dot3",
+              lineColor: "white",
+              lineWidth: 1,
+              targetOffset: { x: isMobile ? 30 : 60, y: isMobile ? -40 : -50 },
+            },
+          ],
+        }).initialize();
+      }
     };
     const dotsPromise = new Promise((res, rej) => {
       res(initCaliperDots);
@@ -248,5 +287,13 @@ document.addEventListener("DOMContentLoaded", () => {
     imageUploadButtons.forEach((btn) => {
       new SimpleImageUpload(btn);
     });
+  }
+
+
+  const scrollToBtns = document.querySelectorAll('.js-scroll-down-btn')
+  if(scrollToBtns && scrollToBtns.length > 0) {
+    scrollToBtns.forEach(btn => {
+      new ScrollIntoView(btn)
+    })
   }
 });

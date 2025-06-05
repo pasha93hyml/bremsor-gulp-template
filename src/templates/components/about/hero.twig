@@ -13,9 +13,11 @@
   </div>
   {% include 'components/homepage/hero/hero-socials.twig' %}
 
-  <h1 data-aos="fade-in" class="absolute z-5 top-[33%] left-1/2 -translate-x-1/2 text-white text-center font-light text-4xl lg:text-[80px] tracking-[5px] leading-[125%] uppercase">About <br/>bremsor</h1>
+  <h1 data-aos="fade-in" class="absolute z-5 top-[33%] left-1/2 -translate-x-1/2 text-white text-center font-light max-xs:text-[50px] text-4xl lg:text-[80px] tracking-[5px] leading-[125%] uppercase">About <br/>bremsor</h1>
 
-  {% include 'components/shared/ui/down-button.twig' %}
+  {% include 'components/shared/ui/down-button.twig' with {
+    target: 'step_1'
+  } %}
 {#  <button type="button" aria-label="scroll down one section" class="absolute z-5 left-1/2 -translate-x-1/2 bottom-30 w-15 h-15 min-w-15 rounded-full border border-white flex items-center justify-center text-white cursor-pointer group">#}
 {#    {{ svg('chevron-down', 'w-3 h-3 min-w-3 transition duration-400 ease group-hover:translate-y-1/2') }}#}
 {#  </button>#}

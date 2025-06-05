@@ -1,23 +1,27 @@
-<div class="relative flex items-center justify-center max-md:py-17 py-12">
-  <div class="relative js-custom-caliper-container">
-    {{ picture('/assets/images/product-calipers.png', 'custom caliper image' ,{width: "499", height: "409", class: "max-w-80 md:max-w-125"}) }}
+<div data-aos="{{ aos | default('') }}" class='{{ container_classes | default("relative flex items-center justify-center max-md:py-17 py-12") }}'>
+  <div class="relative js-custom-caliper-container {{ caliper_container_class | default('') }}">
+    {{ picture('/assets/images/product-calipers.png', 'custom caliper image' ,{width: "499", height: "409", class: img_class | default("max-w-80 md:max-w-125"), loading: 'eager'  }) }}
 
-    <svg id="annotation-svg" class="absolute top-[50%] max-md:-translate-y-[50%] md:top-0 left-0 w-full md:h-full h-[130%] pointer-events-none"
+    <svg id="annotation-svg"
+         class="absolute top-[50%] max-md:-translate-y-[50%] md:top-0 left-0 w-full md:h-full h-[130%] pointer-events-none"
          xmlns="http://www.w3.org/2000/svg">
     </svg>
 
-    <div class="absolute -top-[6%] left-[32%] md:-top-[3%] md:left-[22%] flex items-center ">
-      <div class="annotation-text text-white text-[10px] md:text-sm lg:text-base mr-2">Custom logo</div>
+    <div class="{{ pos_1 | default('absolute -top-[6%] left-[32%] md:-top-[3%] md:left-[22%] flex items-center') }}">
+      <div class="{{ dot_1 | default('annotation-text text-white text-[10px] md:text-sm lg:text-base mr-2') }}">Custom logo</div>
       <div id="dot1" class="annotation-dot md:w-1.5 md:h-1.5 md:min-w-1.5 w-1 h-1 min-w-1 bg-white rounded-full"></div>
     </div>
 
-    <div class="absolute bottom-[12%] md:bottom-[23%] -right-[14%] md:-right-[30%] flex md:items-center">
-      <div id="dot2" class="annotation-dot md:w-1.5 md:h-1.5 md:min-w-1.5 w-1 h-1 min-w-1 bg-white rounded-full mr-2"></div>
-      <div class="annotation-text text-white text-[10px] md:text-sm lg:text-base max-md:max-w-28 max-md:text-balance">Unique shape to fit your <br class="hidden md:block" />brakes</div>
+    <div class="{{ pos_2 | default('absolute bottom-[12%] md:bottom-[23%] -right-[14%] md:-right-[30%] flex md:items-center') }}">
+      <div id="dot2"
+           class="annotation-dot md:w-1.5 md:h-1.5 md:min-w-1.5 w-1 h-1 min-w-1 bg-white rounded-full mr-2"></div>
+      <div class="{{ dot_2 | default('annotation-text text-white text-[10px] md:text-sm lg:text-base max-md:max-w-28 max-md:text-balance') }}">
+        Unique shape to fit your <br class="{{ br_class | default('hidden md:block') }}"/>brakes
+      </div>
     </div>
 
-    <div class="absolute -bottom-[15%] md:bottom-[0%] left-[2%] md:-left-[13%] flex md:items-center max-md:max-w-19">
-      <div class="annotation-text text-white text-[10px] md:text-sm lg:text-base mr-2">Color of your choice</div>
+    <div class="{{ pos_3 | default('absolute -bottom-[15%] md:bottom-[0%] left-[2%] md:-left-[13%] flex md:items-center max-md:max-w-19') }}">
+      <div class="{{ dot_3 | default('annotation-text text-white text-[10px] md:text-sm lg:text-base mr-2') }}">Color of your choice</div>
       <div id="dot3" class="annotation-dot md:w-1.5 md:h-1.5 md:min-w-1.5 w-1 h-1 min-w-1 bg-white rounded-full"></div>
     </div>
 

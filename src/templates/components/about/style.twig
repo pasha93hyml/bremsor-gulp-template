@@ -1,0 +1,22 @@
+<section class="w-full py-15">
+  <div class="max-w-366 w-full px-5 mx-auto flex max-lg:flex-col max-lg:items-center justify-center flex-wrap gap-15">
+    <div data-aos="fade-right" class="flex flex-col gap-10 max-w-95 w-full">
+      <h2 class="text-4xl md:text-[50px] tracking-[5px] max-md:text-center text-white uppercase font-light leading-none">your car <br/>your style</h2>
+      <p class="text-white text-base font-light text-justify">We know that every car enthusiast has their own vision. That’s why we offer customization options, allowing you to choose colors, text, or logos to create a look that’s uniquely yours.</p>
+      <a href="/request-order.html" class="max-w-75 max-md:mx-auto w-full flex items-center justify-center py-2 px-5 mt-auto text-white font-bold capitalize text-sm border border-white rounded-[57px] hover:bg-white hover:text-black-main transition duration-400 ease">Request Custom Order</a>
+    </div>
+    {% include 'components/shared/caliper.twig' with {
+      img_class: 'xs:max-w-110 max-w-80',
+      container_classes: 'mt-auto max-w-80 xs:max-w-110 w-full pt-5 xs:pt-20',
+      caliper_container_class: 'js-smaller-offset',
+      dot_1: 'annotation-text text-white text-[10px] xs:text-sm mr-2',
+      dot_2: 'annotation-text text-white text-[10px] xs:text-sm max-xs:max-w-28 text-balance',
+      dot_3: 'annotation-text text-white text-[10px] xs:text-sm mr-2',
+      pos_1: 'absolute -top-[6%] left-[32%] xs:top-[0%] xs:left-[28%] flex items-center',
+      pos_2: 'absolute bottom-[12%] xs:bottom-[20%] -right-[14%] xs:-right-[17%] flex xs:items-center',
+      pos_3: 'absolute -bottom-[15%] xs:bottom-[0%] left-[2%] xs:-left-[13%] flex xs:items-center max-xs:max-w-19',
+      br_class: 'hidden xs:block',
+      aos: 'fade-left'
+    } %}
+  </div>
+</section>
