@@ -1,0 +1,20 @@
+<section class="w-full pt-10 pb-20">
+  <div class="flex flex-col gap-10 max-w-303 px-5 mx-auto">
+    <h2 class="text-white text-4xl font-light capitalize text-center">tools required</h2>
+    <p class="text-white text-base text-center font-light">Before beginning the installation process, ensure you have
+      the
+      following tools:</p>
+
+    <div class="grid grid-cols-5 gap-2">
+      {% for item in tools.tools %}
+        <div class="flex flex-col gap-4 items-center max-w-57 w-full">
+          <div data-aos="flip-left" data-aos-delay="{{ 100 + (loop.index * 200) }}" class="relative w-full md:aspect-228/393 border border-white rounded-[10px] overflow-hidden group">
+            {{ picture(item.src, 'Tool image ' ~ loop.index, { width: 228, height: 393, class: 'w-full aspect-228/393 object-cover group-hover:scale-[1.1] transition duration-400 ease' }) }}
+            <span class="text-white text-4xl font-light absolute top-5 right-6 z-1">0{{ loop.index }}.</span>
+          </div>
+          <p data-aos="fade-in" data-aos-delay="{{ 100 + (loop.index * 200) }}" class="text-sm text-white font-light self-start">{{ item.description }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

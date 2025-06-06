@@ -1,0 +1,38 @@
+{% from 'macro/icon.twig' import svg %}
+
+<section class="relative w-full h-[calc(var(--vh,_1vh)_*_100)] overflow-hidden">
+  <div class="absolute inset-0 z-0 aspect-9/16 md:aspect-16/9">
+    {{ picture('assets/images/installation-hero.png', 'installation page background image', {
+      width: '1920',
+      height: '1080',
+      class: 'absolute z-2 top-0 left-0 object-cover w-full h-[calc(var(--vh,_1vh)_*_100)] aspect-9/16 md:aspect-16/9 hidden md:block touch-none'
+    }) }}
+    {{ picture('assets/images/installation-hero-mobile.png', 'installation page background image', {
+      width: '1920',
+      height: '1080',
+      class: 'absolute z-2 top-0 left-0 object-cover w-full h-[calc(var(--vh,_1vh)_*_100)] aspect-9/16 md:aspect-16/9 block md:hidden touch-none'
+    }) }}
+  </div>
+  <div class="absolute inset-0 z-1 bg-gradient-to-b from-[rgba(10,10,10,0)] to-[#0A0A0A] opacity-75">
+
+  </div>
+  {% include 'components/homepage/hero/hero-socials.twig' %}
+
+  <div class="absolute inset-0 z-3 flex flex-col items-center max-md:justify-center md:pt-[20%] md:pb-[10%] gap-8 px-5">
+    <h1 data-aos="fade-in"
+        class="text-white text-center font-light max-xs:text-[40px] text-4xl lg:text-[60px] tracking-[5px] leading-[125%] uppercase">
+      INSTALLATION</h1>
+    <p class="text-white text-sm text-balance text-center leading-[125%] font-light max-w-105">While BREMSOR Caliper
+      Covers are designed for easy installation, we recommend professional installation at a body shop or local tire
+      shop for optimal results. However, if you prefer to install them at home, it's entirely possible with the right
+      tools. With detailed guidance from our instructional videos on the BREMSOR YouTube Channel, you can install
+      BREMSOR Brake Covers within 1 hour.</p>
+
+    <button type="button" aria-label="scroll down one section"
+            class="mt-15 md:mt-auto w-12 h-12 min-w-12 rounded-full border border-white flex items-center justify-center text-white cursor-pointer group js-scroll-down-btn"
+            data-target="step_1">
+      {{ svg('chevron-down', 'w-3 h-3 min-w-3 transition duration-400 ease group-hover:translate-y-1/2') }}
+    </button>
+  </div>
+
+</section>

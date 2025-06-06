@@ -1,0 +1,24 @@
+{
+  "tools": [
+    {
+      "src": "assets/images/installation/toll_1.png",
+      "description": "Auto glass glue or windshield glue, such as 3M"
+    },
+    {
+      "src":"assets/images/installation/toll_2.png",
+      "description": "Isopropyl alcohol (also known as rubbing alcohol)"
+    },
+    {
+      "src":"assets/images/installation/toll_3.png",
+      "description": "Lug wrench (or impact wrench for faster removal)"
+    },
+    {
+      "src":"assets/images/installation/toll_4.png",
+      "description": "Wheel spacers (only for specific rims)"
+    },
+    {
+      "src":"assets/images/installation/toll_5.png",
+      "description": "Car jack and jack stand"
+    }
+  ]
+}
