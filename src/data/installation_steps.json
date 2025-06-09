@@ -1,0 +1,54 @@
+{
+  "steps": [
+    {
+      "src": "assets/images/installation/steps/1.png",
+      "title": "Remove Wheels",
+      "text": "Remove the wheels from your vehicle to access the calipers."
+    },
+    {
+      "src": "assets/images/installation/steps/2.png",
+      "title": "Fitment Check",
+      "text": "Ensure that the caliper covers align perfectly with your vehicle's calipers for a professional finish."
+    },
+    {
+      "src": "assets/images/installation/steps/3.png",
+      "title": "Clean Calipers",
+      "text": "Thoroughly clean the brake calipers with isopropyl alcohol to create a pristine surface for adhesive application."
+    },
+    {
+      "src": "assets/images/installation/steps/4.png",
+      "title": "Prepare Glue",
+      "text": "Identify the areas on the caliper where the glue will be applied and prepare the adhesive accordingly."
+    },
+    {
+      "src": "assets/images/installation/steps/5.png",
+      "title": "Apply Adhesive",
+      "text": "Apply the glue to the designated areas on the brake caliper, ensuring sufficient coverage to fill gaps between the caliper covers and the brake calipers."
+    },
+    {
+      "src": "assets/images/installation/steps/6.png",
+      "title": "Secure Cover",
+      "text": "Align the cover carefully and apply firm hand pressure to ensure it is securely attached."
+    },
+    {
+      "src": "assets/images/installation/steps/7.png",
+      "title": "Final Cleaning",
+      "text": "Gently clean the caliper cover with a microfiber cloth for a polished finish."
+    },
+    {
+      "src": "assets/images/installation/steps/8.png",
+      "title": "Repeat Steps for Rear Calipers",
+      "text": "Repeat the same steps for the rear calipers, ensuring precise installation for a consistent look."
+    },
+    {
+      "src": "assets/images/installation/steps/9.png",
+      "title": "Allow Drying Time",
+      "text": "Give the adhesive at least 2 hours to dry fully before driving."
+    },
+    {
+      "src": "assets/images/installation/steps/10.png",
+      "title": "Enjoy Your Enhanced Vehicle",
+      "text": "Your vehicle is now equipped with sleek, modern caliper covers. Drive safe and in style!"
+    }
+  ]
+}

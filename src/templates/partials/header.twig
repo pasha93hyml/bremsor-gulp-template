@@ -1,5 +1,7 @@
 {% from './../macro/icon.twig' import svg %}
 
+
+
 <header
     data-header
     class="{{ current_page == 'index' ? 'w-full fixed h-14 lg:h-18 flex items-center z-51 transition:background-color duration-500 bg-black-main/65 top-9 lg:top-10 hover:bg-black-main -translate-y-[1px]' : 'w-full fixed h-14 lg:h-18 flex items-center z-51 transition:background-color duration-500 bg-black-main/65 top-0 lg:top-0 hover:bg-black-main' }}"
@@ -11,7 +13,7 @@
 
   <div class="container h-full">
     <div
-        class="{{ current_page == 'index' ? 'w-full h-full flex items-center gap-2' : 'w-full h-full flex items-center gap-2 border-b border-white/[.45]' }}">
+        class="{{ header_variant == 'default' ? 'w-full h-full flex items-center gap-2' : 'w-full h-full flex items-center gap-2 border-b border-white/[.45]' }}">
       <button
           type="button"
           class="lg:hidden text-white"

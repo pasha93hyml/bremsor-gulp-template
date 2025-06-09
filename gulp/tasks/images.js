@@ -27,11 +27,22 @@ export const processWebP = () => {
   return gulp
     .src(config.paths.src.images)
     .pipe(
-      webp({
-        quality: 85,
-        method: 6,
-        metadata: "none",
-      }),
+      gulpif(
+        config.production,
+        webp({
+          quality: 100,
+          method: 6,
+          metadata: "none",
+        }),
+        gulpif(
+          !config.production,
+          webp({
+            quality: 100,
+            method: 0,
+            metadata: "none",
+          }),
+        )
+      )
     )
     .pipe(gulp.dest(config.paths.dist.images))
     .pipe(server.stream());

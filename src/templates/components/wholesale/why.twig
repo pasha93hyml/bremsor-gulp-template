@@ -1,0 +1,53 @@
+{% from 'macro/icon.twig' import svg %}
+
+<section class="py-25">
+  <div class="container">
+    <h2
+        data-aos="fade-up"
+        class="capitalize text-2xl lg:text-[36px] text-white font-light text-center mb-[51px] lg:mb-[110px]"
+    >
+      Why Partner with <br/>BREMSOR?
+    </h2>
+
+    <div class="max-w-250 w-full mx-auto md:px-5">
+      <ul class="grid grid-cols-[repeat(2,_1fr)] border-[#d9d9d9]/50 border-t border-b auto-rows-fr relative">
+
+
+        {% for item in partner.table_data %}
+          {% set base_classes = 'flex items-center text-white py-2 lg:py-4 lg:px-12 border border-[#d9d9d9]/50' %}
+
+          {% set conditional_classes = [
+            (item.isCheck ? 'font-bold pl-[3px] text-[10px] md:text-sm flex items-center gap-6 capitalize' : 'pl-[3px] text-[8px] md:text-small uppercase'),
+            (item.isCheck ? 'border-l-0' : 'border-r-0')
+          ] | join(' ') %}
+
+          {% set aos_animation = item.isCheck ? 'fade-right' : 'fade-left' %}
+
+          {% if item.isCheck %}
+            <li
+                data-aos="{{ aos_animation }}"
+                class="{{ base_classes }} {{ conditional_classes }}"
+            >
+              {{ svg('checkmark', 'w-6 min-w-6 h-6 text-green-main') }}
+              {{ item.text }}
+            </li>
+          {% else %}
+            <li
+                data-aos="{{ aos_animation }}"
+                class="{{ base_classes }} {{ conditional_classes }}"
+            >
+              {{ item.text }}
+            </li>
+          {% endif %}
+        {% endfor %}
+
+
+        <div
+            class="absolute inset-y-0 w-1/2 bg-gradient-to-l from-[#707070] to-[#0A0A0A] opacity-20 z-0"></div>
+
+      </ul>
+
+    </div>
+
+  </div>
+</section>

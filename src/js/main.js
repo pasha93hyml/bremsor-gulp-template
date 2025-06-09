@@ -22,6 +22,7 @@ import { SimpleDropdown } from "./components/simple-dropdown.js";
 import { SearchList } from "./components/search-list.js";
 import { SimpleImageUpload } from "./components/simple-images-upload.js";
 import { aboutKeenSlider } from "./libs/about-slider.js";
+import {toolsKeenSlider} from "./libs/tools-slider.js";
 import {ScrollIntoView} from "./components/scroll-into-view.js";
 
 import { ModelViewer } from "./libs/enhanced-viewer/viewer.js";
@@ -46,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
   reviewsKeenSliderInit(KeenSlider);
   gridSliderInit(KeenSlider);
   aboutKeenSlider(KeenSlider);
+  toolsKeenSlider(KeenSlider);
   comparisonSliderInitAnimation();
 
   const dropdowns = document.querySelectorAll(".js-dropdown-wrap");

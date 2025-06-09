@@ -1,0 +1,24 @@
+<div class="{{ classes }}"
+  {% if data_name %}data-name="{{ data_name }}"{% endif %}
+>
+  {% if title %}
+    <h3 class="{{ title_classes }}">{{ title }}</h3>
+  {% endif %}
+
+  {% if subtitle %}
+    <p class="{{ subtitle_classes }}">{{ subtitle }}</p>
+  {% endif %}
+
+  <div class="{{ fields_classes }}">
+    {% for field in fields %}
+      {% if field.type == 'text' or field.type == 'email' or field.type == 'tel' %}
+        {% include 'components/contact/form/input-field.twig' with field %}
+      {% elseif field.type == 'textarea' %}
+        {% include 'components/contact/form/textarea-field.twig' with field %}
+      {% elseif field.type == 'image-upload' %}
+        {% include 'components/contact/form/image-upload-field.twig' with field %}
+      {% endif %}
+    {% endfor %}
+  </div>
+
+</div>

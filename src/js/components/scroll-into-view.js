@@ -10,7 +10,6 @@ export class ScrollIntoView {
 
   _init() {
     this.btn.addEventListener("click", this.handleClick);
-    console.log("init scroll with target:", this.target);
   }
 
   handleClick = () => {

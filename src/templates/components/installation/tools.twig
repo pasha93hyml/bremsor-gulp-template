@@ -1,14 +1,16 @@
+{% from 'macro/icon.twig' import svg %}
+
 <section class="w-full pt-10 pb-20">
   <div class="flex flex-col gap-10 max-w-303 px-5 mx-auto">
     <h2 class="text-white text-4xl font-light capitalize text-center">tools required</h2>
-    <p class="text-white text-base text-center font-light">Before beginning the installation process, ensure you have
+    <p class="text-white text-base text-center font-light max-xs:text-balance">Before beginning the installation process, ensure you have
       the
       following tools:</p>
 
-    <div class="grid grid-cols-5 gap-2">
+    <div class="hidden xs:grid grid-cols-5 gap-2">
       {% for item in tools.tools %}
         <div class="flex flex-col gap-4 items-center max-w-57 w-full">
-          <div data-aos="flip-left" data-aos-delay="{{ 100 + (loop.index * 200) }}" class="relative w-full md:aspect-228/393 border border-white rounded-[10px] overflow-hidden group">
+          <div data-aos="flip-left" data-aos-delay="{{ 100 + (loop.index * 200) }}" class="relative w-full xs:aspect-228/393 border border-white rounded-[10px] overflow-hidden group">
             {{ picture(item.src, 'Tool image ' ~ loop.index, { width: 228, height: 393, class: 'w-full aspect-228/393 object-cover group-hover:scale-[1.1] transition duration-400 ease' }) }}
             <span class="text-white text-4xl font-light absolute top-5 right-6 z-1">0{{ loop.index }}.</span>
           </div>
@@ -16,5 +18,43 @@
         </div>
       {% endfor %}
     </div>
+
+    <div data-aos="fade-up" class="xs:hidden w-full relative">
+      <div id="tools-slider" class="keen-slider max-w-55 w-full mx-auto">
+        {% for item in tools.tools %}
+          <div class="keen-slider__slide flex flex-col gap-4 items-center max-w-55 w-full">
+            {% set sliderImageOptions = {
+              class: 'w-full aspect-[218/377] object-cover',
+              width: '218',
+              height: '377',
+              loading: 'lazy'
+            } %}
+            <div class="relative w-full aspect-218/377 border border-white rounded-[10px] overflow-hidden group">
+              {{ picture(item.src, 'Tool slide image ' ~ loop.index, sliderImageOptions) | raw }}
+              <span class="text-white text-4xl font-light absolute top-5 right-6 z-1">0{{ loop.index }}.</span>
+            </div>
+            <p class="text-sm text-white font-light text-center text-balance">{{ item.description }}</p>
+          </div>
+        {% endfor %}
+      </div>
+
+        <button
+            aria-label="Previous image"
+            id="tools-slider-prev"
+            class="absolute top-[40%] left-0 h-12 w-12 rounded-full bg-white/[.15] active:bg-white/50 flex items-center justify-center transition"
+        >
+          {{ svg('chevron-left', 'text-white w-3 h-3 transition-transform translate-x-[2px]') }}
+        </button>
+        <button
+            aria-label="Next image"
+            id="tools-slider-next"
+            class="absolute top-[40%] right-0 h-12 w-12 rounded-full bg-white/[.15] active:bg-white/50 flex items-center justify-center transition"
+        >
+          {{ svg('chevron-left', 'text-white w-3 h-3 transition-transform -translate-x-[2px] rotate-180') }}
+        </button>
+
+
+    </div>
+
   </div>
 </section>

@@ -1,0 +1,21 @@
+<section class="w-full pt-10 pb-10 md:pb-25">
+  <div class="max-w-303 px-5 w-full mx-auto flex flex-col gap-5">
+    <h2 class="text-4xl font-light text-white text-center">Installation steps</h2>
+    <p class="text-white text-base text-center font-light mb-5 max-md:text-balance">Before beginning the installation process, ensure you have the following tools:</p>
+
+    <div class="flex flex-col w-full">
+      {% for step in installation_steps.steps %}
+      <div data-aos="fade-up" class="max-md:flex-col-reverse flex items-center gap-7 md:gap-20 py-7 md:py-10 {{ loop.index < 10 ? 'border-b border-white' : '' }}">
+        <div class="text-[80px] text-white tracking-[2px] font-light hidden md:block">{{ loop.index < 10 ? '0' ~ loop.index : loop.index }}.</div>
+        <div class="flex flex-col max-md:items-center gap-5 flex-1 mx-auto">
+          <h4 class="text-white text-2xl md:text-3xl font-bold md:text-left text-center max-md:text-balance"><span class="md:hidden">{{ loop.index < 10 ? '0' ~ loop.index : loop.index }}. </span>{{ step.title }}</h4>
+          <p class="text-white text-sm md:text-base max-md:text-center max-md:text-balance">{{ step.text }}</p>
+        </div>
+        <div class="w-50 min-w-50 aspect-1/1 rounded-[10px] overflow-hidden">
+          {{ picture(step.src, 'step ' ~ loop.index, {width: 200, height: 200, class: 'w-full aspect-1/1 object-cover'}) }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

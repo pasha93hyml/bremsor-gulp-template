@@ -1,0 +1,44 @@
+{
+  "table_data": [
+    {
+      "text": "Custom-Made for Each Vehicle",
+      "isCheck": true
+    },
+    {
+      "text": "No generic, one-size-fits-all designs.",
+      "isCheck": false
+    },
+    {
+      "text": "Premium Materials",
+      "isCheck": true
+    },
+    {
+      "text": "Heat-resistant, lightweight, and aerodynamic.",
+      "isCheck": false
+    },
+    {
+      "text": "Sleek High-Gloss Finish",
+      "isCheck": true
+    },
+    {
+      "text": "Elevates any vehicle's appearance.",
+      "isCheck": false
+    },
+    {
+      "text": "Durability You Can Trust",
+      "isCheck": true
+    },
+    {
+      "text": "Backed by a 2-year warranty.",
+      "isCheck": false
+    },
+    {
+      "text": "Customization Options",
+      "isCheck": true
+    },
+    {
+      "text": "Offer your customers colors, logos, and text personalization.",
+      "isCheck": false
+    }
+  ]
+}

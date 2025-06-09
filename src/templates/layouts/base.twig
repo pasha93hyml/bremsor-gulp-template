@@ -1,6 +1,10 @@
 {# block variables #}
 {% set current_page = getCurrentPage() %}
 
+{% block variables %}
+  {% set header_variant = 'default' %}
+{% endblock %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,11 +27,9 @@
 <body class="font-riviera bg-black-main overflow-x-hidden min-h-screen">
 
 
-{# LOADER #}
-{% if current_page != '3d-viewer' %}
-  {% include './../loader/loader.twig' %}
 
-{% endif %}
+{# LOADER #}
+{% include './../loader/loader.twig' %}
 
 
 <div class="hidden">{{ getSvgSprite() | raw }}</div>
