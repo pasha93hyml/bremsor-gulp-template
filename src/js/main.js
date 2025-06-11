@@ -23,8 +23,9 @@ import { SimpleDropdown } from "./components/simple-dropdown.js";
 import { SearchList } from "./components/search-list.js";
 import { SimpleImageUpload } from "./components/simple-images-upload.js";
 import { aboutKeenSlider } from "./libs/about-slider.js";
-import {toolsKeenSlider} from "./libs/tools-slider.js";
-import {ScrollIntoView} from "./components/scroll-into-view.js";
+import { toolsKeenSlider } from "./libs/tools-slider.js";
+import { ScrollIntoView } from "./components/scroll-into-view.js";
+import { AccordionItem } from "./components/accordion.js";
 
 import { ModelViewer } from "./libs/enhanced-viewer/viewer.js";
 
@@ -37,8 +38,13 @@ const vh = viewportHeight * 0.01;
 document.documentElement.style.setProperty("--vh", `${vh}px`);
 
 document.addEventListener("DOMContentLoaded", () => {
-  const headerHeight = document.querySelector('header').getBoundingClientRect().height;
-  document.documentElement.style.setProperty('--header-height', `${headerHeight}px`)
+  const headerHeight = document
+    .querySelector("header")
+    .getBoundingClientRect().height;
+  document.documentElement.style.setProperty(
+    "--header-height",
+    `${headerHeight}px`,
+  );
 
   window.siteLoader.init();
   new Loader();
@@ -293,11 +299,17 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  const scrollToBtns = document.querySelectorAll(".js-scroll-down-btn");
+  if (scrollToBtns && scrollToBtns.length > 0) {
+    scrollToBtns.forEach((btn) => {
+      new ScrollIntoView(btn);
+    });
+  }
 
-  const scrollToBtns = document.querySelectorAll('.js-scroll-down-btn')
-  if(scrollToBtns && scrollToBtns.length > 0) {
-    scrollToBtns.forEach(btn => {
-      new ScrollIntoView(btn)
-    })
+  const accordionItems = document.querySelectorAll(".js-accordion-item");
+  if (accordionItems && accordionItems.length > 0) {
+    accordionItems.forEach((item) => {
+      new AccordionItem(item);
+    });
   }
 });

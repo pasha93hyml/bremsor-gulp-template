@@ -1,0 +1,53 @@
+{#
+Reusable Accordion Item Component
+
+Parameters:
+- title: string (required) - The accordion header text
+- description: string (required) - The accordion content (can contain HTML)
+- button: object (optional) - Button configuration {text: string, url: string, target: string}
+- id: string (optional) - Unique identifier for the accordion item
+- isOpen: boolean (optional) - Whether the accordion starts open (default: false)
+#}
+
+{% set accordionId = id|default('accordion-' ~ random()) %}
+{% set isOpenClass = isOpen|default(false) ? 'accordion-open' : '' %}
+
+<div class="js-accordion-item flex flex-col w-full py-2 px-4 border border-white rounded-[20px] transition duration-400  {{ isOpenClass }}" data-accordion-id="{{ accordionId }}">
+  <button
+      class="accordion-header w-full flex items-center justify-between text-left bg-transparent text-white transition-colors focus:outline-none"
+      aria-expanded="{{ isOpen|default(false) ? 'true' : 'false' }}"
+      aria-controls="{{ accordionId }}-content"
+  >
+    <span class="accordion-title text-sm transition duration-400">{{ title|raw }}</span>
+    <span class="accordion-icon flex-shrink-0 ml-4 w-6 h-6 flex items-center justify-center relative">
+      <svg class="plus-icon w-6 h-6 transition-opacity duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+      </svg>
+      <svg class="minus-icon w-6 h-6 transition-opacity duration-200 opacity-0 absolute" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M18 12H6"/>
+      </svg>
+    </span>
+  </button>
+
+  <div
+      id="{{ accordionId }}-content"
+      class="accordion-content overflow-hidden transition-all duration-300 ease-in-out"
+      style="max-height: {{ isOpen|default(false) ? 'none' : '0' }};"
+  >
+    <div class="accordion-body pt-5 pb-3 text-white leading-[180%] text-small font-light flex flex-col gap-3">
+      {{ description|raw }}
+
+      {% if button and button.text and button.url %}
+        <div class="mt-4">
+          <a
+              href="{{ button.url }}"
+              target="{{ button.target|default('_blank') }}"
+              class="inline-flex items-center px-4 py-2 text-black-main text-small font-bold uppercase bg-white border border-white rounded-[57px] hover:bg-black-main hover:text-white transition duration-400 ease cursor-pointer"
+          >
+            {{ button.text }}
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
