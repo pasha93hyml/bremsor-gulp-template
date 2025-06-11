@@ -15,6 +15,7 @@ import { ColorPick } from "./components/color-pick.js";
 import { Form } from "./components/form.js";
 import { CustomBtn } from "./components/custom-btn.js";
 import { comparisonSliderInitAnimation } from "./libs/img-comparsion-slider.js";
+import { initModals } from "./components/modal.js";
 
 import { ImageAnnotationSystem } from "./components/custom-caliper.js";
 import { Pagination } from "./components/pagination.js";
@@ -43,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
   new Loader();
   initHeader();
   initHero();
+  initModals();
   plyrInit(Plyr);
   reviewsKeenSliderInit(KeenSlider);
   gridSliderInit(KeenSlider);

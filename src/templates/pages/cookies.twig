@@ -1,0 +1,15 @@
+{% extends "layouts/base.twig" %}
+
+{% block variables %}
+  {% set header_variant = 'border' %}
+{% endblock %}
+
+{% block title %}Cookies Policies{% endblock %}
+
+{% block content %}
+  {% include 'components/cookies/cookies.twig' %}
+{% endblock %}
+
+{% block modals %}
+  {% include 'components/cookies/modal.twig' %}
+{% endblock %}

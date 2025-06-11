@@ -20,10 +20,10 @@
   }
 
   .dashed-border {
-      width: 100px;
-      aspect-ratio: 1/1;
-      background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='white' stroke-width='3' stroke-dasharray='10' stroke-dashoffset='23' stroke-linecap='square'/%3e%3c/svg%3e");
-      border-radius: 10px;
+    width: 100px;
+    aspect-ratio: 1/1;
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='white' stroke-width='3' stroke-dasharray='10' stroke-dashoffset='23' stroke-linecap='square'/%3e%3c/svg%3e");
+    border-radius: 10px;
 
     &.file-upload-border {
       @media screen and (max-width: 640px) {
@@ -43,5 +43,52 @@
 
   .default-color-pick-btn {
     @apply flex flex-col gap-[3px] cursor-pointer;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.3s ease,
+      visibility 0.3s ease;
+
+    &.is-open {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+      visibility: visible;
+      pointer-events: all;
+      padding-inline: 1rem;
+    }
+
+    &__overlay {
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+    }
+
+    &__container {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      margin: 2rem auto;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      transform: translateY(-20px);
+      transition: transform 0.3s ease;
+    }
+
+    &.is-open &__container {
+      transform: translateY(0);
+    }
   }
 }

@@ -27,7 +27,6 @@
 <body class="font-riviera bg-black-main overflow-x-hidden min-h-screen">
 
 
-
 {# LOADER #}
 {% include './../loader/loader.twig' %}
 
@@ -46,6 +45,10 @@
 </main>
 
 {% include './../partials/footer.twig' %}
+
+<div class="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
+  {% block modals %}{% endblock %}
+</div>
 
 <script src="/assets/js/main.bundle.js"></script>
 </body>

@@ -1,0 +1,22 @@
+{# Cookies Modal #}
+<div class="modal" data-modal="cookies" data-force-open="true">
+  <div class="modal__overlay"></div>
+  <div class="modal__container">
+    <div class="relative flex flex-col gap-6 items-center px-4 xs:px-15 py-10">
+      <button class="absolute top-5 right-5" data-modal-close aria-label="Close modal">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round"/>
+        </svg>
+      </button>
+
+      <h2 class="text-2xl font-bold text-black-main">We use cookies</h2>
+      <p class="text-small font-light leading-[140%] text-center text-balance">We use cookies to enhance your experience on our website. <br/>By continuing, you agree to our use of
+        cookies.</p>
+      <div class="flex items-center justify-center gap-3 xs:gap-10 mt-5">
+        <button class="flex items-center justify-center uppercase text-small text-black-main uppercase py-2 px-5 rounded-[57px] min-w-40 border border-black-main hover:bg-black-main hover:text-white transition duration-400 ease cursor-pointer" data-modal-close>Accept</button>
+        <button class="flex items-center justify-center uppercase text-small text-white bg-black-main uppercase py-2 px-5 rounded-[57px] min-w-40 border border-black-main hover:bg-white hover:text-black-main transition duration-400 ease cursor-pointer" data-modal-close>learn more</button>
+      </div>
+    </div>
+  </div>
+</div>
