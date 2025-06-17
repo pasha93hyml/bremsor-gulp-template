@@ -1,0 +1,146 @@
+{% from 'macro/icon.twig' import svg %}
+
+<section class="w-full py-25 lg:py-40">
+  <div class="w-full max-w-303 px-5 mx-auto flex flex-col gap-5">
+    <h1 class="text-white text-4xl font-light mb-10 capitalize">Customer Gallery</h1>
+
+    <div class="flex max-sm:flex-wrap max-sm:gap-y-4 items-center justify-between w-full relative z-5">
+      <div class="flex items-end gap-3">
+        <span class="text-white text-sm">Check out our customers' photos!</span>
+      </div>
+      <div class="flex items-center gap-3 sm:ml-auto max-sm:justify-between max-sm:w-full">
+        <div class="relative js-simple-dropdown">
+          <button type="button"
+                  class="flex items-center justify-between w-60 text-xs text-white capitalize py-2 px-3 border border-white rounded-[100px] js-dropdown-trigger"
+                  aria-label="reviews filter button"
+                  data-default-value="most recent">
+            <span class="js-dropdown-value">All makes</span>
+            {{ svg('chevron-down', 'w-3 h-3 transition duration-400 ease dropdown-icon') }}
+          </button>
+          <div
+              class="absolute w-full left-0 top-[calc(100%_+_10px)] rounded-[10px] bg-white grid-row-animation-container js-dropdown-content"
+          >
+            <ul class="w-full min-h-0 flex flex-col gap-2.5">
+              <li>
+                <button type="button"
+                        aria-label="filter by make all makes"
+                        class="text-sm text-black-main w-full hover:bg-black-main/30 cursor-pointer text-left p-2 rounded js-dropdown-option"
+                        data-value="all makes">
+                  All Makes
+                </button>
+              </li>
+              <li>
+                <button type="button"
+                        aria-label="filter by make Dodge"
+                        class="text-sm text-black-main w-full hover:bg-black-main/30 cursor-pointer text-left p-2 rounded js-dropdown-option"
+                        data-value="Dodge">
+                  Dodge
+                </button>
+              </li>
+              <li>
+                <button type="button"
+                        aria-label="filter by make mercedes-benz"
+                        class="text-sm text-black-main w-full hover:bg-black-main/30 cursor-pointer text-left p-2 rounded js-dropdown-option"
+                        data-value="Mercedes-Benz">
+                  Mercedes-Benz
+                </button>
+              </li>
+              <li>
+                <button type="button"
+                        aria-label="filter by make audi"
+                        class="text-sm text-black-main w-full hover:bg-black-main/30 cursor-pointer text-left p-2 rounded js-dropdown-option"
+                        data-value="audi">
+                  Audi
+                </button>
+              </li>
+              <li>
+                <button type="button"
+                        aria-label="filter by make bmw"
+                        class="text-sm text-black-main w-full hover:bg-black-main/30 cursor-pointer text-left p-2 rounded js-dropdown-option"
+                        data-value="BMW">
+                  BMW
+                </button>
+              </li>
+              <li>
+                <button type="button"
+                        aria-label="filter by make Porsche"
+                        class="text-sm text-black-main w-full hover:bg-black-main/30 cursor-pointer text-left p-2 rounded js-dropdown-option"
+                        data-value="Porsche">
+                  Porsche
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <button type="button" aria-label="clear reviews filter" class="text-xs text-white underline js-dropdown-clear">
+          Clean filter
+        </button>
+      </div>
+    </div>
+
+    {# gallery #}
+    <div class="flex flex-col w-full gap-0" id="customer-gallery">
+      {% if gridImages and images_data.images %}
+        {% set gridClasses = ["grid lg:grid-cols-[3fr_1.5fr_1fr] xs:grid-cols-2 lg:grid-rows-6 gap-0", "grid lg:grid-cols-[1.5fr_1fr_3fr] xs:grid-cols-2 lg:grid-rows-6 gap-0"] %}
+        {% for obj in images_data.images %}
+          {% set classIndex = loop.index0 % 2 %}
+          <div class="{{ gridClasses[classIndex] }}">
+            {% for item in obj.imageData %}
+              {% set gridImageOptions = {
+                pictureClass: item.className,
+                class: "object-cover w-full group-hover:scale-[1.2] scale-[1.01] transition duration-400 ease",
+                width: item.size,
+                height: item.size,
+                loading: 'lazy',
+                'data-aos': aosEffect
+              } %}
+              <button type="button"
+                      aria-label="open gallery picture in popup"
+                      class="{{ item.className }} group overflow-hidden relative w-full js-gallery-trigger"
+                      data-image-src="{{ item.image_src }}"
+                      data-grid-index="{{ loop.parent.loop.index0 }}"
+                      data-image-index="{{ loop.index0 }}">
+                {{ picture(item.image_src, 'image ' ~ loop.index, gridImageOptions) | raw }}
+              </button>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+
+
+    {% include 'components/shared/ui/pagination.twig' with { margin_top: '5' } %}
+
+  </div>
+</section>
+
+{# Gallery Modal #}
+<div id="gallery-modal" class="fixed max-xs:top-0 max-xs:bottom-0 max-xs:left-5 max-xs:right-5 xs:inset-0 bg-black/80 md:py-30 md:px-20 z-50 hidden items-center justify-center">
+  <div class="relative w-fit mx-auto flex items-center justify-center xs:p-6">
+    <button
+        id="gallery-close"
+        class="absolute -top-9 md:top-10 right-0 md:right-6 z-10 h-8 w-8 flex items-center justify-center transition cursor-pointer group"
+        aria-label="Close gallery">
+      {{ svg('close', 'text-white w-4 h-4 group-hover:scale-110') }}
+    </button>
+
+    <div id="gallery-slider" class="keen-slider w-full max-w-80 md:max-w-145 aspect-1/1 rounded-[10px]">
+      {# Slides will be generated dynamically #}
+    </div>
+
+    <button
+        aria-label="Previous image"
+        id="gallery-slider-prev"
+        class="absolute -left-10 top-1/2 -translate-y-1/2 h-8 w-8 xs:h-12 xs:w-12 rounded-full bg-white/[.15] hover:bg-white/50 flex items-center justify-center transition cursor-pointer group z-10">
+      {{ svg('chevron-left', 'text-white w-3 h-3 transition-transform translate-x-[2px] group-hover:scale-110') }}
+    </button>
+
+    <button
+        aria-label="Next image"
+        id="gallery-slider-next"
+        class="absolute -right-10 top-1/2 -translate-y-1/2 h-8 w-8 xs:h-12 xs:w-12 rounded-full bg-white/[.15] hover:bg-white/50 flex items-center justify-center transition cursor-pointer group z-10">
+      {{ svg('chevron-left', 'text-white w-3 h-3 transition-transform -translate-x-[2px] group-hover:scale-110 rotate-180') }}
+    </button>
+  </div>
+</div>

@@ -26,6 +26,8 @@ import { aboutKeenSlider } from "./libs/about-slider.js";
 import { toolsKeenSlider } from "./libs/tools-slider.js";
 import { ScrollIntoView } from "./components/scroll-into-view.js";
 import { AccordionItem } from "./components/accordion.js";
+import {CustomerGallery} from "./components/customer-gallery.js";
+import {imagesData} from "./data/images-gallery.js";
 
 import { ModelViewer } from "./libs/enhanced-viewer/viewer.js";
 
@@ -57,6 +59,10 @@ document.addEventListener("DOMContentLoaded", () => {
   aboutKeenSlider(KeenSlider);
   toolsKeenSlider(KeenSlider);
   comparisonSliderInitAnimation();
+
+  if(document.getElementById('customer-gallery')) {
+    new CustomerGallery(KeenSlider, imagesData)
+  }
 
   const dropdowns = document.querySelectorAll(".js-dropdown-wrap");
   dropdowns.forEach((trigger) => {
@@ -312,4 +318,5 @@ document.addEventListener("DOMContentLoaded", () => {
       new AccordionItem(item);
     });
   }
+
 });

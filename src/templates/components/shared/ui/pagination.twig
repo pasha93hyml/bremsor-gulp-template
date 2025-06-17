@@ -31,10 +31,8 @@
 
       <span class="js-pagination-middle-pages flex items-center gap-2 md:gap-5"></span>
 
-      {# Ellipsis at end #}
       <span class="text-lg js-pagination-end-ellipsis">...</span>
 
-      {# Last page always visible #}
       <button class="w-4 min-w-4 md:w-6 h-6 md:min-w-6 flex items-center justify-center text-sm md:text-lg cursor-pointer relative pagination-page-button js-pagination-page-button {{ color ? 'with-black' : ''}} {{ totalPages == currentPage ? 'active' : '' }}" data-page="{{ totalPages }}">
         {{ totalPages }}
       </button>
